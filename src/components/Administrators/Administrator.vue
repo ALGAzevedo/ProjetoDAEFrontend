@@ -6,27 +6,30 @@
       @confirmed="leaveConfirmed"
   >
   </confirmation-dialog>
-  <AdministratorDetail
-      :admin="admin"
+  <UsersDetail
+      :user="admin"
       :errors="errors"
       :countries="country"
       :maritalStatus="maritalStatus"
       :genders="gender"
       :operationType="operation"
+      :show-institutional-phone-number="false"
+      :show-institutional-email="false"
       @save="save"
       @cancel="cancel"
-  ></AdministratorDetail>
+  ></UsersDetail>
 </template>
 
 <script>
 
 
-import AdministratorDetail from "./AdministratorDetail";
+
+import UsersDetail from "../UsersCommon/UsersDetail";
 
 export default {
   name: 'Administrator',
   components: {
-    AdministratorDetail
+    UsersDetail
   },
   props: {
     usernameIn: {
