@@ -87,9 +87,21 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'HealthcareProfessionals'}"
+                  :to="{ name: 'HealthcareProfessionals'}"><i class="bi bi-house"></i>
+                Healthcare Professionals
+              </router-link>
 
             </li>
             <li class="nav-item" >
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'Patients'}"
+                  :to="{ name: 'Patients'}"><i class="bi bi-house"></i>
+                Patients
+              </router-link>
 
             </li>
             <li  class="nav-item">

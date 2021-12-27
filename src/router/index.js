@@ -31,6 +31,10 @@ import RequestMoney from "../components/Dashboards/RequestMoney";
 import Notifications from "../components/Notifications/Notifications";
 import Administrators from "../components/Administrators/Administrators";
 import Administrator from "../components/Administrators/Administrator";
+import HealthcareProfessionals from "../components/HealthcareProfessionals/HealthcareProfessionals";
+import HealthcareProfessional from "../components/HealthcareProfessionals/HealthcareProfessional";
+import Patients from "../components/Patients/Patients";
+import Patient from "../components/Patients/Patient";
 
 const routes = [
     {
@@ -63,11 +67,42 @@ const routes = [
         props: true
 
     },
+    {
+        path: '/HealthcareProfessionals',
+        name: 'HealthcareProfessionals',
+        component: HealthcareProfessionals
+    },
+    {
+        path: '/HealthcareProfessional/new',
+        name: 'NewHealthcareProfessional',
+        component: HealthcareProfessional,
+        props: () => ({username: ''})
+    },
+    {
+        path: '/HealthcareProfessional/:usernameIn',
+        name: 'EditHealthcareProfessional',
+        component: HealthcareProfessional,
+        props: true
 
+    },
+    {
+        path: '/Patients',
+        name: 'Patients',
+        component: Patients
+    },
+    {
+        path: '/Patient/new',
+        name: 'NewPatient',
+        component: Patient,
+        props: () => ({username: ''})
+    },
+    {
+        path: '/Patient/:usernameIn',
+        name: 'EditPatient',
+        component: Patient,
+        props: true
 
-
-
-
+    },
 
 
 

@@ -7,7 +7,7 @@
   >
   </confirmation-dialog>
   <UsersDetail
-      :user="admin"
+      :user="patient"
       :errors="errors"
       :countries="country"
       :maritalStatus="maritalStatus"
@@ -27,7 +27,7 @@
 import UsersDetail from "../UsersCommon/UsersDetail";
 
 export default {
-  name: 'Administrator',
+  name: 'Patient',
   components: {
     UsersDetail
   },
@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      admin: this.newAdmin(),
+      patient: this.newPatient(),
       errors: null,
       country: [],
       maritalStatus: [],
@@ -54,11 +54,11 @@ export default {
   },
   watch: {
     // beforeRouteUpdate was not fired correctly
-    // Used this watcher instead to update the username
+    // Used this watcher instead to update the ID
     username: {
       immediate: true,
       handler(newValue) {
-        this.loadAdmin(newValue)
+        this.loadPatient(newValue)
       }
     },
   },
@@ -81,27 +81,26 @@ export default {
     },
 
     dataAsString() {
-      return JSON.stringify(this.admin)
+      return JSON.stringify(this.patient)
     },
-    newAdmin() {
+    newPatient() {
       return {
         username : ''
       }
 
     },
-    loadAdmin (username) {
-      console.log(username)
+    loadPatient (username) {
       this.errors = null
       if (!username) {
-        this.admin = this.newAdmin()
+        this.patient = this.newPatient()
         this.originalValueStr = this.dataAsString()
       } else {
-        this.$axios.get('administrators/' + username)
+        this.$axios.get('patients/' + username)
             .then((response) => {
               //we need to take type of dto of admin data
-              this.admin = response.data
-              if(this.admin.type)
-                delete this.admin.type
+              this.patient = response.data
+              if(this.patient.type)
+                delete this.patient.type
 
               this.originalValueStr = this.dataAsString()
             })
@@ -127,36 +126,36 @@ export default {
       this.errors = null
       if (this.operation == 'insert') {
 
-        this.$axios.post('administrators', this.admin)
+        this.$axios.post('patients/', this.patient)
             .then((response) => {
-              this.admin = response.data
+              this.patient = response.data
               this.$router.back()
             })
             .catch((error) => {
               console.log(error.response)
               if (error.response.status == 400) {
-                this.$toast.error('Admin was not created due to validation errors!')
+                this.$toast.error('Patient was not created due to validation errors!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
               } else {
-                this.$toast.error('Admin was not created due to unknown server error!')
+                this.$toast.error('Patient was not created due to unknown server error!')
               }
             })
       } else {
-        console.log(this.admin)
-        this.$axios.put('administrators/' + this.admin.username, this.admin)
+
+        this.$axios.put('patients/' + this.patient.username, this.patient)
             .then((response) => {
-              this.$toast.success('Admin "' + response.data.name + '" was updated successfully.')
-              this.admin = response.data
+              this.$toast.success('Patient "' + response.data.name + '" was updated successfully.')
+              this.patient = response.data
               this.originalValueStr = this.dataAsString()
               this.$router.back()
             })
             .catch((error) => {
               if (error.response.status == 400) {
-                this.$toast.error('Admin #' + this.username + ' was not updated due to validation errors!')
+                this.$toast.error('Patient #' + this.username + ' was not updated due to validation errors!')
                 this.errors = error.response.data
               } else {
-                this.$toast.error('Admin #' + this.username + ' was not updated due to unknown server error!')
+                this.$toast.error('Patient #' + this.username + ' was not updated due to unknown server error!')
               }
             })
       }
@@ -172,7 +171,7 @@ export default {
   },
   mounted() {
     this.loadDemographicData()
-    this.loadAdmin(this.usernameIn)
+    this.loadPatient(this.usernameIn)
   },
 
   beforeRouteLeave(to, from, next) {
