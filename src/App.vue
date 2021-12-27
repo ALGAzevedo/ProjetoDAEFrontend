@@ -33,6 +33,12 @@
 
             </li>
             <li  class="nav-item">
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'BiomedicalIndicators'}"
+                  :to="{ name: 'BiomedicalIndicators'}"><i class="bi bi-house"></i>
+                BiomedicalIndicators
+              </router-link>
 
             </li>
             <li  class="nav-item">

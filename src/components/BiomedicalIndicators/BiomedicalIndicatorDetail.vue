@@ -1,139 +1,121 @@
 <template>
-  <div class="row">
-  <div class="col-12 col-lg-10">
-  <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
   <form class="row g-3 needs-validation" @submit.prevent="save">
-
-      <div class="form-group col-12 col-md-3">
-        <label for="fUserName" class="form-label">Nome</label>
-        <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
+    <hr>
+    <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputAddress">Name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="John Doe"
                required v-model="editingUser.name">
-        <field-error-message :errors="errors" fieldName="name"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-3">
-        <label for="inputAddress" class="form-label">Birthdate</label>
+      <field-error-message :errors="errors" fieldName="name"></field-error-message>
+      <div class="form-group col-md-2">
+        <label for="inputAddress">Birthdate</label>
         <input type="Date" class="form-control" id="inputBirthday" placeholder=""
                required v-model="editingUser.birthdate">
-
         <field-error-message :errors="errors" fieldName="birthdate"></field-error-message>
       </div>
 
-      <div class="form-group  col-12 col-md-3">
-        <label for="inputGender" class="form-label">Gender</label>
+      <div class="form-group col-md-2">
+        <label for="inputGender">Gender</label>
         <select id="inputGender" class="form-control" v-model="editingUser.gender">
           <option v-for="gender in genders" :value="gender" v-bind:key="gender">{{gender}} </option>
         </select>
-        <field-error-message :errors="errors" fieldName="gender"></field-error-message>
       </div>
-
-      <div class="form-group  col-12 col-md-3">
-        <label for="inputMaritalStatus" class="form-label">Marital Status</label>
+      <field-error-message :errors="errors" fieldName="gender"></field-error-message>
+      <div class="form-group col-md-2">
+        <label for="inputMaritalStatus">Marital Status</label>
         <select id="inputMaritalStatus" class="form-control" v-model="editingUser.maritalStatus">
           <option v-for="status in maritalStatus" :value="status" v-bind:key="status">{{status}} </option>
         </select>
-        <field-error-message :errors="errors" fieldName="maritalStatus"></field-error-message>
       </div>
-
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputEmail4" class="form-label">Email</label>
+      <field-error-message :errors="errors" fieldName="maritalStatus"></field-error-message>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputEmail4">Email</label>
         <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
                required v-model="editingUser.email">
-        <field-error-message :errors="errors" fieldName="email"></field-error-message>
       </div>
-
-        <div class="form-group col-12 col-md-4">
-          <label for="inputUsername" class="form-label">Username</label>
+      <field-error-message :errors="errors" fieldName="email"></field-error-message>
+        <div class="form-group col-md-2">
+          <label for="inputUsername">Username</label>
           <input type="email" class="form-control" id="inputUsername" placeholder="Username"
                  required v-model="editingUser.username">
-          <field-error-message :errors="errors" fieldName="email"></field-error-message>
         </div>
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputPassword4" class="form-label">Password</label>
+        <field-error-message :errors="errors" fieldName="email"></field-error-message>
+      <div class="form-group col-md-4">
+        <label for="inputPassword4">Password</label>
         <input type="password" class="form-control" id="inputPassword4"
                placeholder="Password"
                required v-model="editingUser.password">
-        <field-error-message :errors="errors" fieldName="password"></field-error-message>
       </div>
-
-
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputAddress" class="form-label">Address</label>
+      <field-error-message :errors="errors" fieldName="password"></field-error-message>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="inputAddress">Address</label>
         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"
                required v-model="editingUser.address">
-        <field-error-message :errors="errors" fieldName="adress"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-3">
-        <label for="inputAddress" class="form-label">Zip code</label>
+      <field-error-message :errors="errors" fieldName="adress"></field-error-message>
+      <div class="form-group col-md-1">
+        <label for="inputAddress">Zip code</label>
         <input type="text" class="form-control" id="inputZipCode" placeholder="2420-200"
                required v-model="editingUser.postalCode">
-        <field-error-message :errors="errors" fieldName="postalCode"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-3">
-        <label for="inputAddress" class="form-label">City</label>
+      <field-error-message :errors="errors" fieldName="postalCode"></field-error-message>
+      <div class="form-group col-md-2">
+        <label for="inputAddress">City</label>
         <input type="text" class="form-control" id="inputCity" placeholder="Leiria"
                required v-model="editingUser.city">
-        <field-error-message :errors="errors" fieldName="city"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-2">
-        <label for="inputAddress" class="form-label">Country</label>
+      <field-error-message :errors="errors" fieldName="city"></field-error-message>
+      <div class="form-group col-md-3">
+        <label for="inputAddress">Country</label>
         <select id="inputCountry" class="form-control" v-model="editingUser.country">
           <option v-for="country in countries" :value="country" v-bind:key="country">{{country}} </option>
         </select>
-        <field-error-message :errors="errors" fieldName="country"></field-error-message>
+
       </div>
-
-
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputEmergencyPhoneNumber" class="form-label">Emergency Phone Number</label>
+      <field-error-message :errors="errors" fieldName="country"></field-error-message>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="inputEmergencyPhoneNumber">Emergency Phone Number</label>
         <input type="text"  class="form-control" id="inputEmergencyPhone" placeholder=""
                required v-model="editingUser.emergencyPhoneNumber">
-        <field-error-message :errors="errors" fieldName="emergencyPhoneNumber"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputAddress" class="form-label">Phone Number</label>
+      <field-error-message :errors="errors" fieldName="emergencyPhoneNumber"></field-error-message>
+      <div class="form-group col-md-3">
+        <label for="inputAddress">Phone Number</label>
         <input type="text" class="form-control" id="inputPhoneNumber" placeholder=""
                required v-model="editingUser.phoneNumber">
-        <field-error-message :errors="errors" fieldName="phoneNumber"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputAddress" class="form-label">Social Security Number</label>
+      <field-error-message :errors="errors" fieldName="phoneNumber"></field-error-message>
+      <div class="form-group col-md-3">
+        <label for="inputAddress">Social Security Number</label>
         <input type="text" class="form-control" id="inputsocialSecurityNumber" placeholder=""
                required v-model="editingUser.socialSecurityNumber">
-        <field-error-message :errors="errors" fieldName="socialSecurityNumber"></field-error-message>
       </div>
-
-
-
-    <div class="row px-0 mx-0" v-if="showInstitutionalEmail">
-      <div class="form-group col-12 col-md-6">
-        <label for="inputInstitutionalPhoneNumber" class="form-label">Institutional Phone Number</label>
+      <field-error-message :errors="errors" fieldName="socialSecurityNumber"></field-error-message>
+    </div>
+    <hr>
+    <div class="form-row" v-if="showInstitutionalEmail">
+      <div class="form-group col-md-3">
+        <label for="inputInstitutionalPhoneNumber">Institutional Phone Number</label>
         <input type="text"  class="form-control" id="inputIntitutionalPhone" placeholder=""
                required v-model="editingUser.institutionalPhone">
-        <field-error-message :errors="errors" fieldName="institutionalPhone"></field-error-message>
       </div>
-
-      <div class="form-group col-12 col-md-6 mt-3 mt-md-0">
-        <label for="inputInstEmail" class="form-label">Institutonal Email</label>
+      <field-error-message :errors="errors" fieldName="institutionalPhone"></field-error-message>
+      <div class="form-group col-md-3">
+        <label for="inputInstEmail">Institutonal Email</label>
         <input type="text" class="form-control" id="inputInstitutionalEmail" placeholder=""
                required v-model="editingUser.institutionalEmail">
-        <field-error-message :errors="errors" fieldName="institutionalEmail"></field-error-message>
       </div>
-
+      <field-error-message :errors="errors" fieldName="institutionalEmail"></field-error-message>
     </div>
-
-    <div class="col-12"><hr></div>
-
-    <div class="d-flex mt-3 flex-wrap">
+    <div class="d-flex mt-3">
       <div class="p-2">
         <button
             type="button"
@@ -152,8 +134,6 @@
       </div>
     </div>
   </form>
-  </div>
-  </div>
 </template>
 
 <script>
@@ -222,8 +202,7 @@ export default {
     cancel() {
       this.$emit('cancel', this.editingUser)
     }
-  },
-
+  }
 }
 </script>
 

@@ -35,6 +35,8 @@ import HealthcareProfessionals from "../components/HealthcareProfessionals/Healt
 import HealthcareProfessional from "../components/HealthcareProfessionals/HealthcareProfessional";
 import Patients from "../components/Patients/Patients";
 import Patient from "../components/Patients/Patient";
+import BiomedicalIndicators from "../components/BiomedicalIndicators/BiomedicalIndicators";
+
 
 const routes = [
     {
@@ -103,6 +105,16 @@ const routes = [
         props: true
 
     },
+    {
+        path: '/BiomedicalIndicators',
+        name: 'BiomedicalIndicators',
+        component: BiomedicalIndicators
+    },
+
+
+
+
+
 
 
 
