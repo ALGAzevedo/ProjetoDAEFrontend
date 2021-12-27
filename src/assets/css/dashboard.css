@@ -94,3 +94,29 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
+
+
+.avatar-img {
+  margin: 0 0.8rem;
+  width:25px;
+  height: 25px;
+}
+
+.avatar-text {
+  line-height: 2.2rem;
+  margin: 1rem 0.5rem -2rem 0;
+  padding-top: 1rem;
+}
+
+.dropdown-item {
+  font-size: 0.875rem;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#sidebarMenu {
+  overflow-y: auto;
+}
