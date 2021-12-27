@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-  <div class="col-12 col-lg-5 mx-auto">
+  <div class="col-12 col-lg-12">
   <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
   <form class="row g-3 needs-validation" @submit.prevent="save">
 
