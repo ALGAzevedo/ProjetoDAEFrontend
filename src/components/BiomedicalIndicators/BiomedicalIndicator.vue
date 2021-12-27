@@ -7,7 +7,7 @@
   >
   </confirmation-dialog>
   <UsersDetail
-      :user="patient"
+      :user="Indicator"
       :errors="errors"
       :countries="country"
       :maritalStatus="maritalStatus"
@@ -27,38 +27,38 @@
 import UsersDetail from "../UsersCommon/UsersDetail";
 
 export default {
-  name: 'Patient',
+  name: 'BiomedicalIndicatorDetail',
   components: {
     UsersDetail
   },
   props: {
-    usernameIn: {
+    id: {
+      type: Number,
+      default: -1
+    },
+    indicatorType: {
       type: String,
       default: ''
     },
   },
   data() {
     return {
-      patient: this.newPatient(),
+      Indicator: this.newIndicator(),
       errors: null,
-      country: [],
-      maritalStatus: [],
-      gender: [],
-
     }
   },
   computed: {
     operation() {
-      return (!this.usernameIn) ? 'insert' : 'update'
+      return (!this.id) ? 'insert' : 'update'
     },
   },
   watch: {
     // beforeRouteUpdate was not fired correctly
     // Used this watcher instead to update the ID
-    username: {
+    id: {
       immediate: true,
       handler(newValue) {
-        this.loadPatient(newValue)
+        this.loadIndicator(newValue)
       }
     },
   },
@@ -81,26 +81,31 @@ export default {
     },
 
     dataAsString() {
-      return JSON.stringify(this.patient)
+      return JSON.stringify(this.Indicator)
     },
-    newPatient() {
+    newIndicator() {
       return {
         username : ''
       }
 
     },
-    loadPatient (username) {
+    loadIndicator (id) {
       this.errors = null
-      if (!username) {
-        this.patient = this.newPatient()
+      if (!id || id < 0) {
+        this.Indicator = this.newIndicator()
         this.originalValueStr = this.dataAsString()
       } else {
-        this.$axios.get('patients/' + username)
+        let url = ''
+        if(this.indicatorType == "QUALITATIVE")
+          url = 'biomedicalindicators/qualitative/' + id
+        else
+          url = 'biomedicalindicators/quantitative/' + id
+        this.$axios.get(url)
             .then((response) => {
               //we need to take type of dto of admin data
-              this.patient = response.data
-              if(this.patient.type)
-                delete this.patient.type
+              this.Indicator = response.data
+              if(this.Indicator.type)
+                delete this.Indicator.type
 
               this.originalValueStr = this.dataAsString()
             })
@@ -109,26 +114,13 @@ export default {
             })
       }
     },
-    loadDemographicData() {
-      this.$axios.get('demographicdata')
-          .then((response) => {
-            this.country = response.data[0]
-            this.maritalStatus = response.data[1]
-            this.gender = response.data[2]
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-
-    },
-
     save() {
       this.errors = null
       if (this.operation == 'insert') {
 
-        this.$axios.post('patients/', this.patient)
+        this.$axios.post('patients/', this.Indicator)
             .then((response) => {
-              this.patient = response.data
+              this.Indicator = response.data
               this.$router.back()
             })
             .catch((error) => {
@@ -143,10 +135,10 @@ export default {
             })
       } else {
 
-        this.$axios.put('patients/' + this.patient.username, this.patient)
+        this.$axios.put('patients/' + this.Indicator.username, this.Indicator)
             .then((response) => {
               this.$toast.success('Patient "' + response.data.name + '" was updated successfully.')
-              this.patient = response.data
+              this.Indicator = response.data
               this.originalValueStr = this.dataAsString()
               this.$router.back()
             })
@@ -170,8 +162,7 @@ export default {
     }
   },
   mounted() {
-    this.loadDemographicData()
-    this.loadPatient(this.usernameIn)
+    this.loadIndicator(this.id)
   },
 
   beforeRouteLeave(to, from, next) {

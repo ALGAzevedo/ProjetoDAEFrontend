@@ -90,7 +90,6 @@ export default {
 
     },
     loadAdmin (username) {
-      console.log(username)
       this.errors = null
       if (!username) {
         this.admin = this.newAdmin()
