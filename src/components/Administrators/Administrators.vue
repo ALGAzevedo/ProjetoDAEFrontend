@@ -33,6 +33,8 @@
       :show-edit-button="true"
       :show-emergency-phone-number="false"
       :show-social-security-number="false"
+      :show-institutional-email="false"
+      :show-institutional-phone-number="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>
