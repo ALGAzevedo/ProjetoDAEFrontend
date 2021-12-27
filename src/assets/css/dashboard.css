@@ -12,6 +12,26 @@ body {
   margin-right: 0.1rem;
 }
 
+/* Navbar */
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
 /*
  * Sidebar
  */
@@ -64,29 +84,6 @@ body {
   text-transform: uppercase;
 }
 
-/*
- * Navbar
- */
-
-.navbar-brand {
-  padding-top: .75rem;
-  padding-bottom: .75rem;
-  font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-}
-
-.navbar .navbar-toggler {
-  top: .25rem;
-  right: 1rem;
-}
-
-.navbar .form-control {
-  padding: .75rem 1rem;
-  border-width: 0;
-  border-radius: 0;
-}
-
 .form-control-dark {
   color: #fff;
   background-color: rgba(255, 255, 255, .1);
@@ -96,4 +93,30 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+
+.avatar-img {
+  margin: 0 0.8rem;
+  width:25px;
+  height: 25px;
+}
+
+.avatar-text {
+  line-height: 2.2rem;
+  margin: 1rem 0.5rem -2rem 0;
+  padding-top: 1rem;
+}
+
+.dropdown-item {
+  font-size: 0.875rem;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#sidebarMenu {
+  overflow-y: auto;
 }
