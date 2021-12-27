@@ -27,23 +27,25 @@
     </div>
   </div>
   <hr>
-  <AdministratorsTable
-      :admins="admins"
-      :show-delete-button=true
+  <users-table
+      :users="admins"
+      :show-delete-button="true"
       :show-edit-button="true"
+      :show-emergency-phone-number="false"
+      :show-social-security-number="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
-  ></AdministratorsTable>
+  ></users-table>
 </template>
 
 
 <script>
-import AdministratorsTable from "./AdministratorsTable";
+import UsersTable from "../UsersCommon/UsersTable";
 
 export default {
   name: "Administrators",
   components: {
-    AdministratorsTable
+    UsersTable,
   },
   data() {
     return {
