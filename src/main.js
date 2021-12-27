@@ -13,6 +13,11 @@ import ConfirmationDialog from "./components/global/ConfirmationDialog";
 
 import CustomConfirmationDialog from "./components/global/CustomConfirmationDialog";
 
+// Import Shared compontents
+import './assets/css/dashboard.css';
+
+import AppHeader from "./components/shared/AppHeader";
+
 
 let toastOptions = {
     position: 'top',
@@ -46,6 +51,8 @@ app.config.globalProperties.$axios = axios
 app.component('field-error-message', FieldErrorMessage)
 app.component('confirmation-dialog', ConfirmationDialog)
 app.component('custom-confirmation-dialog', CustomConfirmationDialog)
+
+app.component('AppHeader',AppHeader)
 
 
 
