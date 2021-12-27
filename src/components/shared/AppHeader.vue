@@ -75,8 +75,17 @@
 </template>
 
 <script>
+import userAvatar from  '../../assets/img/default-avatar.png';
 export default {
-  name: "AppHeader"
+  name: "AppHeader",
+  props:{
+    userPhotoUrl: {
+      type: String,
+      default: function () {
+        return  userAvatar
+      }
+    }
+  }
 }
 </script>
 
