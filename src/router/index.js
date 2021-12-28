@@ -35,6 +35,8 @@ import HealthcareProfessionals from "../components/HealthcareProfessionals/Healt
 import HealthcareProfessional from "../components/HealthcareProfessionals/HealthcareProfessional";
 import Patients from "../components/Patients/Patients";
 import Patient from "../components/Patients/Patient";
+import Prcs from "../components/PRCs/Prcs";
+import PrcDetail from "../components/PRCs/PrcDetail";
 
 const routes = [
     {
@@ -102,6 +104,20 @@ const routes = [
         component: Patient,
         props: true
 
+    },
+    {
+        path: '/PRCs',
+        name: 'Prcs',
+        component: Prcs,
+        props: true
+    },
+    {
+        path: '/PRCs/:prcCode',
+        name: 'EditPrc',
+        component: PrcDetail,
+        // props: true
+
+        props: route => ({prcCode: parseInt(route.params.prcCode)})
     },
 
 
