@@ -8,6 +8,12 @@
   <div class="d-flex justify-content-between">
     <div class="mx-2">
       <h3 class="mt-4">Biomedical Indicators</h3>
+
+      <router-link
+          class="nav-link"
+          :to="{ name: 'BiomedicalIndicatorDetail'}">
+        Details
+      </router-link>
     </div>
     <div class="mx-2 total-records">
       <h5 class="mt-4">Total: {{ totalIndicators}}</h5>
