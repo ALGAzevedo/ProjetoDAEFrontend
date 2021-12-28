@@ -2,7 +2,7 @@
   <confirmation-dialog
       ref="confirmationDialog"
       confirmationBtn="Delete user"
-      :msg="`Do you really want to delete the user ${ adminToDeleteName } ?`"
+      :msg="`Do you really want to delete the user ${ prcToDeleteCode } ?`"
       @confirmed="deleteConfirmed">
   </confirmation-dialog>
   <div class="d-flex justify-content-between">
@@ -20,11 +20,11 @@
       <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
 
     </div>
-    <div class="mx-2 mt-2">
-      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addAdmin">
-        <i class="bi bi-xs bi-plus-circle"></i> Add Administrator
-      </button>
-    </div>
+    <!--    <div class="mx-2 mt-2">-->
+    <!--      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addAdmin">-->
+    <!--        <i class="bi bi-xs bi-plus-circle"></i> Add Administrator-->
+    <!--      </button>-->
+    <!--    </div>-->
   </div>
   <hr>
   <prcs-table
@@ -33,7 +33,7 @@
       :show-edit-button="true"
       :show-prc-button="true"
       @edit="editPrc"
-      @delete="deletePrc"
+      @cancel="cancel"
   ></prcs-table>
 </template>
 
@@ -76,19 +76,22 @@ export default {
       this.$router.push({name: 'NewAdministrator'})
     },
     editPrc(prc) {
-      this.$router.push({ name: 'EditPrc', params: {prcCode: prc.code} })
+      this.$router.push({name: 'EditPrc', params: {prcCode: prc.code}})
     },
-    deleteConfirmed() {
-      this.$axios.delete('administrators/' + this.adminToDelete.username, this.adminToDelete)
-          .then(() => {
-            this.loadAdmins();
-            this.$toast.success(`Account ${this.adminToDelete.username} (${this.adminToDelete.name}) was deleted successfully.`)
-          })
-          .catch((error) => {
-            this.$toast.success('There was an issue deleting this account')
-            console.log(error)
-          })
+    cancel() {
+      this.$router.back()
     },
+    // deleteConfirmed() {
+    //   this.$axios.delete('administrators/' + this.adminToDelete.username, this.adminToDelete)
+    //       .then(() => {
+    //         this.loadAdmins();
+    //         this.$toast.success(`Account ${this.adminToDelete.username} (${this.adminToDelete.name}) was deleted successfully.`)
+    //       })
+    //       .catch((error) => {
+    //         this.$toast.success('There was an issue deleting this account')
+    //         console.log(error)
+    //       })
+    // },
     deleteAdmin(admin) {
       /*TODO admin cant delete himself
       if (admin.id != this.$store.state.user.id) {
