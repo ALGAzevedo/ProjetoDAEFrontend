@@ -6,45 +6,42 @@
       @confirmed="leaveConfirmed"
   >
   </confirmation-dialog>
-  <UsersDetail
-      :user="Indicator"
+  <BiomedicalIndicatorDetail
+      :biomedical="bIndicator"
       :errors="errors"
-      :countries="country"
-      :maritalStatus="maritalStatus"
-      :genders="gender"
-      :operationType="operation"
-      :show-institutional-phone-number="false"
-      :show-institutional-email="false"
       @save="save"
       @cancel="cancel"
-  ></UsersDetail>
+  ></BiomedicalIndicatorDetail>
 </template>
 
 <script>
 
 
 
-import UsersDetail from "../UsersCommon/UsersDetail";
+
+import BiomedicalIndicatorDetail from "./BiomedicalIndicatorDetail";
 
 export default {
-  name: 'BiomedicalIndicatorDetail',
+  name: 'BiomedicalIndicator',
   components: {
-    UsersDetail
+    BiomedicalIndicatorDetail
   },
   props: {
     id: {
       type: Number,
-      default: -1
+      default: null
     },
-    indicatorType: {
-      type: String,
+    indicatorType : {
+      type : String,
       default: ''
-    },
+    }
+
   },
   data() {
     return {
-      Indicator: this.newIndicator(),
+      bIndicator: this.newBIndicator(),
       errors: null,
+
     }
   },
   computed: {
@@ -54,17 +51,18 @@ export default {
   },
   watch: {
     // beforeRouteUpdate was not fired correctly
-    // Used this watcher instead to update the ID
+    // Used this watcher instead to update the username
     id: {
       immediate: true,
       handler(newValue) {
-        this.loadIndicator(newValue)
+        this.loadBIndicator(newValue)
       }
     },
   },
   methods: {
     splitErrormessage(msg) {
-
+      if(!msg)
+        return
       var erros = msg.split(';');
 
       var errosTransformed = [[], []];
@@ -81,31 +79,33 @@ export default {
     },
 
     dataAsString() {
-      return JSON.stringify(this.Indicator)
+      return JSON.stringify(this.bIndicator)
     },
-    newIndicator() {
+    newBIndicator() {
       return {
-        username : ''
+        id : null,
+        name : ''
       }
 
     },
-    loadIndicator (id) {
+    loadBIndicator (id) {
       this.errors = null
-      if (!id || id < 0) {
-        this.Indicator = this.newIndicator()
+      if (!id) {
+        this.admin = this.newBIndicator()
         this.originalValueStr = this.dataAsString()
       } else {
         let url = ''
-        if(this.indicatorType == "QUALITATIVE")
-          url = 'biomedicalindicators/qualitative/' + id
+        if(this.indicatorType === 'QUALITATIVE')
+          url = "biomedicalindicators/qualitative"
         else
-          url = 'biomedicalindicators/quantitative/' + id
-        this.$axios.get(url)
+          url = "biomedicalindicators/quantitative"
+        this.$axios.get(url + "/" + id)
             .then((response) => {
               //we need to take type of dto of admin data
-              this.Indicator = response.data
-              if(this.Indicator.type)
-                delete this.Indicator.type
+              this.bIndicator = response.data
+              this.bIndicator.indicatorType = this.indicatorType
+              if(this.bIndicator.type)
+                delete this.bIndicator.type
 
               this.originalValueStr = this.dataAsString()
             })
@@ -114,40 +114,51 @@ export default {
             })
       }
     },
+
     save() {
+      console.log(this.bIndicator)
       this.errors = null
       if (this.operation == 'insert') {
-
-        this.$axios.post('patients/', this.Indicator)
+        let url = "biomedicalindicators/"+ this.bIndicator.newType.toLowerCase()
+        this.$axios.post(url, this.bIndicator)
             .then((response) => {
-              this.Indicator = response.data
+              this.admin = response.data
               this.$router.back()
             })
             .catch((error) => {
               console.log(error.response)
               if (error.response.status == 400) {
-                this.$toast.error('Patient was not created due to validation errors!')
+                this.$toast.error('Admin was not created due to validation errors!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
               } else {
-                this.$toast.error('Patient was not created due to unknown server error!')
+                this.$toast.error('Admin was not created due to unknown server error!')
               }
             })
       } else {
+        let url =''
+        //indicatortype == newType? ->Simple update
+        if(!this.bIndicator.newType || this.bIndicator.newType == this.bIndicator.indicatorType)
+          url = "biomedicalindicators/"+ this.bIndicator.indicatorType.toLowerCase()
 
-        this.$axios.put('patients/' + this.Indicator.username, this.Indicator)
+        else
+          //indicatorType != typr ->change in type
+          url = "biomedicalindicators"
+
+
+        this.$axios.put(url + "/" + this.bIndicator.id, this.bIndicator)
             .then((response) => {
-              this.$toast.success('Patient "' + response.data.name + '" was updated successfully.')
-              this.Indicator = response.data
+              this.$toast.success('Indicator "' + response.data.name + '" was updated successfully.')
+              this.admin = response.data
               this.originalValueStr = this.dataAsString()
               this.$router.back()
             })
             .catch((error) => {
               if (error.response.status == 400) {
-                this.$toast.error('Patient #' + this.username + ' was not updated due to validation errors!')
+                this.$toast.error('Admin #' + this.username + ' was not updated due to validation errors!')
                 this.errors = error.response.data
               } else {
-                this.$toast.error('Patient #' + this.username + ' was not updated due to unknown server error!')
+                this.$toast.error('Admin #' + this.username + ' was not updated due to unknown server error!')
               }
             })
       }
@@ -162,7 +173,7 @@ export default {
     }
   },
   mounted() {
-    this.loadIndicator(this.id)
+    this.loadBIndicator(this.usernameIn)
   },
 
   beforeRouteLeave(to, from, next) {

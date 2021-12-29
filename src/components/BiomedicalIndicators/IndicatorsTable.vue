@@ -11,7 +11,7 @@
     <tr v-for="indicator in indicators" :key="indicator.id">
       <td class="align-middle">{{ indicator.id }}</td>
       <td class="align-middle">{{ indicator.name }}</td>
-      <td class="align-middle">{{ indicator.type }}</td>
+      <td class="align-middle">{{ indicator.indicatorType }}</td>
 
       <td class="text-end align-middle" v-if="showEditButton">
         <div class="d-flex justify-content-end">

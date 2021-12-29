@@ -5,88 +5,89 @@
       <form class="row g-3 needs-validation" @submit.prevent="save">
 
         <div class="form-group col-12 col-md-6">
-          <label for="fUserName" class="form-label">Nome</label>
+          <label for="fUserName" class="form-label">Name</label>
           <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
-                 required >
+                 required v-model="editingBiomedical.name">
           <field-error-message :errors="errors" fieldName="name"></field-error-message>
         </div>
         <div class="form-group col-12 col-md-7">
           <span class="form-label d-block mb-2 ">Pick ... </span>
-        <div class="form-check-inline">
-          <input type="radio" class="btn-check" name="options" v-model="selected" id="option1" autocomplete="off"  value="A">
-          <label class="btn btn-outline-primary" for="option1">Qualitative</label>
+          <div class="form-check-inline">
+            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option1" autocomplete="off"
+                   value="QUALITATIVE">
+            <label class="btn btn-outline-primary" for="option1">Qualitative</label>
 
+          </div>
+          <div class="form-check-inline">
+            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option2" autocomplete="off"
+                   value="QUANTITATIVE">
+            <label class="btn btn-outline-primary" for="option2">Quantitative</label>
+
+          </div>
         </div>
-        <div class="form-check-inline">
-          <input type="radio" class="btn-check" name="options" v-model="selected"  id="option2" autocomplete="off"  value="B">
-          <label class="btn btn-outline-primary" for="option2">Quantitative</label>
-
-        </div>
-        </div>
-        <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+        <div class="mt-3">Selected: <strong>{{ biomedical.indicatorType }}</strong></div>
 
 
-        <div class="row px-0 mx-0 mt-3" v-if="selected === 'A'">
+        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
 
           <div class="col-12 col-md-4">
             <label for="inputMin" class="form-label">Min</label>
-            <input type="text" class="form-control" id="inputMin">
+            <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min">
           </div>
           <div class="col-12 col-md-4">
             <label for="inputMax" class="form-label">Max</label>
-            <input type="text" class="form-control" id="inputMax">
+            <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max">
           </div>
 
           <div class="col-12 col-md-2">
             <label for="inputUnity" class="form-label">Unity</label>
-            <input type="text" class="form-control" id="inputUnity">
+            <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity">
           </div>
 
         </div>
 
-        <div class="row px-0 mx-0 mt-3" v-if="selected === 'B'">
-
-          <div class="col-12 col-md-4"  v-for="(field, key) in quantiFields" :key="key">
-            <label for="inputAlta" class="form-label">Alta</label>
-            <input type="text" v-model="field.name"  placeholder="Add a value" class="form-control" id="inputAlta">
-            <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(field)">
-              <i class="bi bi-trash"></i>
-             Remove
-            </button>
-          </div>
-
+        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUALITATIVE'">
           <div class="col-12">
             <div class="col-12 col-lg-3 mt-3">
-          <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField">
-            <i class="bi bi-xs bi-plus-circle"></i> Add new field
-          </button>
-              </div>
+              <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField">
+                <i class="bi bi-xs bi-plus-circle"></i> Add new field
+              </button>
+            </div>
           </div>
 
-        </div>
-
-
-
-        <div class="col-12"><hr></div>
-
-        <div class="d-flex mt-3 flex-wrap">
-          <div class="p-2">
-            <button
-                type="button"
-                class="btn btn-primary px-5"
-                @click="save"
-            >Save
-            </button>
+            <div class="col-12 col-md-4" v-for="(field, key) in quantiFields" :key="key">
+              <label for="inputAlta" class="form-label">Value</label>
+              <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta">
+              <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(key)">
+                <i class="bi bi-trash"></i>
+                Remove
+              </button>
+            </div>
           </div>
-          <div class="p-2">
-            <button
-                type="button"
-                class="btn btn-light px-5"
-                @click="cancel"
-            >Cancel
-            </button>
+
+
+          <div class="col-12">
+            <hr>
           </div>
-        </div>
+
+          <div class="d-flex mt-3 flex-wrap">
+            <div class="p-2">
+              <button
+                  type="button"
+                  class="btn btn-primary px-5"
+                  @click="save"
+              >Save
+              </button>
+            </div>
+            <div class="p-2">
+              <button
+                  type="button"
+                  class="btn btn-light px-5"
+                  @click="cancel"
+              >Cancel
+              </button>
+            </div>
+          </div>
       </form>
     </div>
   </div>
@@ -96,12 +97,15 @@
 <script>
 export default {
   name: 'BiomedicalIndicatorDetail',
-  components: {},
   props: {
     biomedical: {
       type: Object,
-      required: false
-    }
+      required: true
+    },
+    errors: {
+      type: Array,
+      default: () => [],
+    },
   },
   emits: [
     'save',
@@ -111,32 +115,47 @@ export default {
     return {
       editingBiomedical: this.biomedical,
       selected: false,
-      quantiFields: [{ name: ''}],
+      quantiFields: [],
     }
   },
   watch: {
-    user(newBiomedical) {
+    biomedical(newBiomedical) {
+      //console.log("aqui")
+      //console.log(newBiomedical)
       this.editingBiomedical = newBiomedical
+      this.editingBiomedical.newType = newBiomedical.indicatorType
+      this.FillFields()
     }
   },
   methods: {
+    FillFields() {
+      if(!this.editingBiomedical.possibleValues)
+        return
+      this.editingBiomedical.possibleValues.forEach(v => this.quantiFields.push({name: v,}))
+
+    },
+    CleanEmptyFieldsFromArray() {
+      this.quantiFields = this.quantiFields.filter(v => v.name!='')
+      this.quantiFields = this.quantiFields.map(v => v.name);
+    },
     AddField: function (e) {
-      this.quantiFields.push({ name: '',}); //Aqyui falta pegar o valor do imput
+      this.quantiFields.push({name: '',})
       e.preventDefault()
     },
 
-    RemoveField: function (event) {
-      this.quantiFields.splice(event); // Está mal, apaga tudo :(
+    RemoveField: function (key) {
+      this.quantiFields.splice(key, 1);
     },
     save() {
-      console.log(' save()')
-      //this.$emit('save', this.editingUser)
+      this.CleanEmptyFieldsFromArray()
+      this.editingBiomedical.possibleValues = Object.values(this.quantiFields)
+      console.log(this.editingBiomedical)
+      this.$emit('save', this.editingBiomedical)
     },
     cancel() {
-      console.log('cancel()')
-      //this.$emit('cancel', this.editingUser)
+      this.$emit('cancel', this.editingBiomedical)
     }
-  }
+  },
 }
 </script>
 

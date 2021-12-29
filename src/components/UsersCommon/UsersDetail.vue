@@ -5,7 +5,7 @@
   <form class="row g-3 needs-validation" @submit.prevent="save">
 
       <div class="form-group col-12 col-md-3">
-        <label for="fUserName" class="form-label">Nome</label>
+        <label for="fUserName" class="form-label">Name</label>
         <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
                required v-model="editingUser.name">
         <field-error-message :errors="errors" fieldName="name"></field-error-message>
@@ -14,7 +14,7 @@
       <div class="form-group col-12 col-md-3">
         <label for="inputAddress" class="form-label">Birthdate</label>
         <input type="Date" class="form-control" id="inputBirthday" placeholder=""
-               required v-model="editingUser.birthdate">
+               required v-model="editingUser.birthDate">
 
         <field-error-message :errors="errors" fieldName="birthdate"></field-error-message>
       </div>
@@ -47,7 +47,7 @@
           <label for="inputUsername" class="form-label">Username</label>
           <input type="email" class="form-control" id="inputUsername" placeholder="Username"
                  required v-model="editingUser.username">
-          <field-error-message :errors="errors" fieldName="email"></field-error-message>
+          <field-error-message :errors="errors" fieldName="username"></field-error-message>
         </div>
 
       <div class="form-group col-12 col-md-4">
@@ -64,7 +64,7 @@
         <label for="inputAddress" class="form-label">Address</label>
         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"
                required v-model="editingUser.address">
-        <field-error-message :errors="errors" fieldName="adress"></field-error-message>
+        <field-error-message :errors="errors" fieldName="address"></field-error-message>
       </div>
 
       <div class="form-group col-12 col-md-3">

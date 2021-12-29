@@ -9,11 +9,6 @@
     <div class="mx-2">
       <h3 class="mt-4">Biomedical Indicators</h3>
 
-      <router-link
-          class="nav-link"
-          :to="{ name: 'BiomedicalIndicatorDetail'}">
-        Details
-      </router-link>
     </div>
     <div class="mx-2 total-records">
       <h5 class="mt-4">Total: {{ totalIndicators}}</h5>
@@ -35,8 +30,8 @@
   <hr>
   <IndicatorsTable
       :indicators="indicators"
-      @edit="editPatient"
-      @delete="deletePatient"
+      @edit="editIndicator"
+      @delete="deleteIndicator"
   ></IndicatorsTable>
 </template>
 
@@ -79,28 +74,28 @@ export default {
           })
     },
     addIndicator() {
-      this.$router.push({name: 'NewPatient'})
+      this.$router.push({name: 'NewBiomedicalIndicator'})
     },
-    editPatient(patient) {
-      this.$router.push({ name: 'EditPatient', params: {usernameIn: patient.username} })
+    editIndicator(indicator) {
+      this.$router.push({ name: 'EditBiomedicalIndicator', params: {id: indicator.id, indicatorType : indicator.indicatorType} })
     },
     deleteConfirmed() {
-      this.$axios.delete('patients/' + this.BIToDelete.username, this.BIToDelete)
+      this.$axios.delete('biomedicalindicators/' + this.BIToDelete.id)
           .then(() => {
             this.loadIndicators();
-            this.$toast.success(`Patient ${this.BIToDelete.username} (${this.BIToDelete.name}) was deleted successfully.`)
+            this.$toast.success(`Patient ${this.BIToDelete.id} (${this.BIToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
             this.$toast.success('There was an issue deleting this account')
             console.log(error)
           })
     },
-    deletePatient(patient) {
+    deleteIndicator(indicator) {
       /*TODO admin cant delete himself
       if (admin.id != this.$store.state.user.id) {
 
        */
-        this.BIToDelete = patient
+        this.BIToDelete = indicator
         let dlg = this.$refs.confirmationDialog
         dlg.show()
       }

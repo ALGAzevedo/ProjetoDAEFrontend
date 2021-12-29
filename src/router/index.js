@@ -36,7 +36,8 @@ import HealthcareProfessional from "../components/HealthcareProfessionals/Health
 import Patients from "../components/Patients/Patients";
 import Patient from "../components/Patients/Patient";
 import BiomedicalIndicators from "../components/BiomedicalIndicators/BiomedicalIndicators";
-import BiomedicalIndicatorDetail from "../components/BiomedicalIndicators/BiomedicalIndicatorDetail";
+import BiomedicalIndicator from "../components/BiomedicalIndicators/BiomedicalIndicator";
+
 
 
 const routes = [
@@ -112,9 +113,19 @@ const routes = [
         component: BiomedicalIndicators
     },
     {
-        path: '/BiomedicalIndicatorDetail',
-        name: 'BiomedicalIndicatorDetail',
-        component: BiomedicalIndicatorDetail
+        path: '/BiomedicalIndicators/new',
+        name: 'NewBiomedicalIndicator',
+        component: BiomedicalIndicator,
+        props: () => ({id: null})
+    },
+
+    {
+        path: '/BiomedicalIndicators/:id/:indicatorType',
+        name: 'EditBiomedicalIndicator',
+        component: BiomedicalIndicator,
+        props: route => ({id:parseInt(route.params.id),
+            indicatorType:route.params.indicatorType}),
+
     },
 
 
