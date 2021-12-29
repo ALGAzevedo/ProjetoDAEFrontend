@@ -30,8 +30,8 @@
                   :to="{ name: 'Patients'}"><i class="bi bi-house"></i>
                 Patients
               </router-link>
-
             </li>
+
             <li  class="nav-item">
               <router-link
                   class="nav-link"
@@ -39,8 +39,17 @@
                   :to="{ name: 'BiomedicalIndicators'}"><i class="bi bi-house"></i>
                 BiomedicalIndicators
               </router-link>
-
             </li>
+
+            <li  class="nav-item">
+            <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'Prcs'}"
+                  :to="{ name: 'Prcs'}"><i class="bi bi-house"></i>
+                PRCs
+              </router-link>
+            </li>
+
             <li  class="nav-item">
 
             </li>
