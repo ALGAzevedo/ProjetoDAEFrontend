@@ -1,6 +1,10 @@
 <template>
  <AppHeader />
 
+
+
+
+
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -111,6 +115,13 @@
 
                   </li>
                   <li>
+                    <router-link
+                        class="nav-link"
+                        :class="{active: $route.name === 'Login'}"
+                        :to="{ name: 'Login'}"
+                    ><i class="bi bi-box-arrow-in-right"></i>
+                      Login
+                    </router-link>
 
                   </li>
                   <li>

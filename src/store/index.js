@@ -105,21 +105,16 @@ export default createStore({
     },
 
     actions: {
-
         async login(context, credentials) {
             try {
-                let response = await axios.post('login', credentials)
+                let response = await axios.post('auth/login', credentials)
                 axios.defaults.headers.common.Authorization =
-                    "Bearer " + response.data.access_token
-                sessionStorage.setItem('token', response.data.access_token)
-                response = await axios.get('users/me')
-                context.commit('setUser', response.data.data)
-                sessionStorage.setItem('user_type', response.data.data.type)
-                this.$socket.emit('logged_in', response.data.data)
-                //if it is an admin we wont load a vcard
-                if (response.data.data.type === "V") {
-                    await context.dispatch('loadVcard')
-                }
+                    "Bearer " + response.data.token
+                sessionStorage.setItem('token', response.data.token)
+                response = await axios.get('auth/user')
+                context.commit('setUser', response.data)
+                sessionStorage.setItem('userType', response.data.userType)
+
 
             } catch (error) {
                 delete axios.defaults.headers.common.Authorization
