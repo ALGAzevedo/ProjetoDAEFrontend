@@ -51,8 +51,14 @@
             </li>
 
             <li  class="nav-item">
-
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'TreatmentTypes'}"
+                  :to="{ name: 'TreatmentTypes'}"><i class="bi bi-house"></i>
+                TreatmentTypes
+              </router-link>
             </li>
+
             <!-- VCard Item Menu -->
             <li  class="nav-item">
 

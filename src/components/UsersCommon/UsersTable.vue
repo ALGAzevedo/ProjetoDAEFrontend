@@ -28,6 +28,9 @@
       <td v-if="showIsSuperAdmin" class="align-middle">{{ user.isSuperAdmin }}</td>
       <td class="text-end align-middle" v-if="showEditButton">
         <div class="d-flex justify-content-end">
+          <button class="btn btn-xs btn-light" @click="showPrcsClick(user)" v-if="showPrcList">
+            <i class="bi bi-xs bi-card-list"></i>
+          </button>
           <button class="btn btn-xs btn-light" @click="editClick(user)" v-if="showEditButton">
             <i class="bi bi-xs bi-pencil"></i>
           </button>
@@ -78,6 +81,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    showPrcList:{
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     editClick(user) {
@@ -85,7 +92,11 @@ export default {
     },
     deleteClick(user) {
       this.$emit('delete', user)
+    },
+    showPrcsClick(user){
+      this.$emit('showPrcsList', user)
     }
+
   }
 }
 </script>

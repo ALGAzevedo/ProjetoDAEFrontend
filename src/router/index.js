@@ -12,6 +12,8 @@ import BiomedicalIndicators from "../components/BiomedicalIndicators/BiomedicalI
 import BiomedicalIndicator from "../components/BiomedicalIndicators/BiomedicalIndicator";
 import Prcs from "../components/PRCs/Prcs";
 import PrcDetail from "../components/PRCs/PrcDetail";
+import PatientPrcs from "../components/PRCs/PatientPrcs";
+import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
 
 
 
@@ -102,8 +104,10 @@ const routes = [
     {
         path: '/PRCs/:prcCode',
         name: 'EditPrc',
-        component: PrcDetail
-        // props: true
+        component: PrcDetail,
+        props: route => ({
+            prcCode: route.params.prcCode
+        })
     },
     {
         path: '/BiomedicalIndicators/:id/:indicatorType',
@@ -112,7 +116,28 @@ const routes = [
         props: route => ({id:parseInt(route.params.id),
             indicatorType:route.params.indicatorType}),
     },
-
+    {
+        path: '/Patient/:usernameIn/prcs',
+        name: 'PatientPrcs',
+        component: PatientPrcs,
+        props: route => ({
+            usernameIn: route.params.usernameIn
+        })
+    },
+    {
+        path: '/TreatmentTypes',
+        name: 'TreatmentTypes',
+        component: TreatmentTypes,
+        props: route => ({
+            prcCode: route.params.prcCode
+        })
+    },
+    {
+        path: '/TreatmentTypes',
+        name: 'TreatmentTypes',
+        component: TreatmentTypes,
+        props: true
+    },
 
     /**
      *
@@ -120,12 +145,6 @@ const routes = [
      *
      *
      */
-
-
-
-
-
-
     // {
     //     path: '/password',
     //     name: 'ChangePassword',
