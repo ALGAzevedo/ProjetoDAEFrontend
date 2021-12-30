@@ -20,6 +20,13 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
           <li class="nav-item">
+            <router-link
+                class="nav-link"
+                :class="{active: $route.name === 'Login'}"
+                :to="{ name: 'Login'}"
+            ><i class="bi bi-box-arrow-in-right"></i>
+              Login
+            </router-link>
           </li>
           <li class="nav-item" >
 
@@ -48,6 +55,13 @@
                 aria-labelledby="navbarDropdownMenuLink"
             >
               <li>
+                <router-link
+                    class="nav-link"
+                    :class="{active: $route.name === 'Login'}"
+                    :to="{ name: 'Login'}"
+                ><i class="bi bi-box-arrow-in-right"></i>
+                  Login
+                </router-link>
 
               </li>
               <li>
