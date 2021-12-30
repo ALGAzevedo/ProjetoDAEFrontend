@@ -12,6 +12,8 @@ import BiomedicalIndicators from "../components/BiomedicalIndicators/BiomedicalI
 import BiomedicalIndicator from "../components/BiomedicalIndicators/BiomedicalIndicator";
 import Prcs from "../components/PRCs/Prcs";
 import PrcDetail from "../components/PRCs/PrcDetail";
+import UserIndicators from "../components/BiomedicalIndicators/UserIndicators";
+import UserNewBiomedicalIndicator from "../components/BiomedicalIndicators/UserNewBiomedicalIndicator";
 
 
 
@@ -112,6 +114,24 @@ const routes = [
         props: route => ({id:parseInt(route.params.id),
             indicatorType:route.params.indicatorType}),
     },
+    {
+        path: '/UserIndicators',
+        name: 'UserIndicators',
+        component: UserIndicators
+
+    },
+    {
+        path: '/UserNewMeasure',
+        name: 'UserNewMeasure',
+        component: UserNewBiomedicalIndicator
+
+    },
+
+
+
+
+
+
 
 
     /**

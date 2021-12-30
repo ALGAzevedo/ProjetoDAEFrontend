@@ -53,6 +53,12 @@
                 PRCs
               </router-link>
             </li>
+            <router-link
+                class="nav-link"
+                :class="{active: $route.name === 'UserIndicators'}"
+                :to="{ name: 'UserIndicators'}"><i class="bi bi-house"></i>
+              Indicators
+            </router-link>
 
             <li  class="nav-item">
 

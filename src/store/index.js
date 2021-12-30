@@ -6,9 +6,6 @@ export default createStore({
 
     state: {
         user: null,
-        categories: [],
-        vcard: null,
-        notifications : [],
     },
     mutations: {
         resetUser(state) {
