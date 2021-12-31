@@ -14,7 +14,7 @@
       <div class="form-group col-12 col-md-3">
         <label for="inputAddress" class="form-label">Birthdate</label>
         <input type="Date" class="form-control" id="inputBirthday" placeholder=""
-               required v-model="editingUser.birthDate">
+               required v-model="editingUser.birthdate">
 
         <field-error-message :errors="errors" fieldName="birthdate"></field-error-message>
       </div>

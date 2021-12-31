@@ -132,7 +132,8 @@ export default {
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
               } else {
-                this.$toast.error('Admin was not created due to unknown server error!')
+                this.$toast.error('Admin was not created due to a server error!')
+                this.splitErrormessage(error.response.data)
               }
             })
       } else {

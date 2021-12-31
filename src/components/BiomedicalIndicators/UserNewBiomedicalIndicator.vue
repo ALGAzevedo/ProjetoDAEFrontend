@@ -34,44 +34,58 @@
       </table>
 
     </div>
-    <div class="col-8" v-if="indicator" >
-      <div v-if="isQualitative" class="col-2">
-        <label for="inputVal" class="form-label">Possible Values</label>
-        <select id="inputVal" class="form-control" v-model="editingmeasure.value">
-          <option v-for="val in indicator.possibleValues" :value="val" v-bind:key="val">{{val}} </option>
-        </select>
-        <field-error-message :errors="errors" fieldName="possibleValues"></field-error-message>
-      </div>
 
 
+    <div class="col-8">
+      <div class="col-12" v-if="indicator">
+        <div v-if="isQualitative" class="col-2">
+          <label for="inputVal" class="form-label">Possible Values</label>
+          <select id="inputVal" class="form-control" v-model="editingmeasure.value">
+            <option v-for="val in indicator.possibleValues" :value="val" v-bind:key="val">{{ val }}</option>
+          </select>
+          <field-error-message :errors="errors" fieldName="possibleValues"></field-error-message>
+        </div>
 
+        <div v-if="!isQualitative" class="col-2">
+          <div>
+            <label for="fname" class="form-label">Value</label>
+            <input type="text" class="form-control" name="name" id="fname" placeholder="Value"
+                   required v-model="editingmeasure.value">
 
-      <div v-if="!isQualitative" class="col-2">
-        <div>
-          <label for="fname" class="form-label">Value</label>
-          <input type="text" class="form-control" name="name" id="fname" placeholder="Value"
-                 required v-model="editingmeasure.value">
+          </div>
           <field-error-message :errors="errors" fieldName="value"></field-error-message>
+
         </div>
 
-      </div>
+        <div class="col-2">
+          <div>
+            <label for="fdate" class="form-label">Date</label>
+            <input type="date" class="form-control" name="name" id="fdate" placeholder="Value"
+                   required v-model="editingmeasure.date">
 
+          </div>
+          <field-error-message :errors="errors" fieldName="date"></field-error-message>
 
-
-
-      <div class="col-10">
-        <label for="fname" class="form-label">Adicional Info</label>
-        <input type="text" class="form-control" name="name" id="fname" placeholder="Description"
-               required v-model="editingmeasure.description">
-        <field-error-message :errors="errors" fieldName="description"></field-error-message>
-
-        <div class="my-3 d-flex justify-content-end">
-          <button
-              type="button"
-              class="btn btn-primary px-5"
-              @click="save"
-          >Save</button>
         </div>
+
+
+        <div class="col-10">
+          <label for="fname" class="form-label">Adicional Info</label>
+          <input type="text" class="form-control" name="name" id="fname" placeholder="Description"
+                 required v-model="editingmeasure.description">
+          <field-error-message :errors="errors" fieldName="description"></field-error-message>
+
+          <div class="my-3 d-flex justify-content-end">
+            <button
+                type="button"
+                class="btn btn-primary px-5"
+                @click="save"
+            >Save
+            </button>
+          </div>
+
+        </div>
+
 
       </div>
 
@@ -88,26 +102,97 @@ export default {
   name: 'UserNewBiomedicalIndicator',
   components: {},
 
+  props: {
+    patientUsername: {
+      type: String,
+      required: true
+    },
+    operationType: {
+      type: String
+    },
+    indicatorID: {
+      type: Number
+    }
+  },
+
   data() {
     return {
       indicators: [],
-      editingmeasure : Object,
-      indicator : undefined,
-      isQualitative : Boolean
+      editingmeasure: {},
+      indicator: undefined,
+      isQualitative: Boolean
     }
   },
-  methods : {
-    loadIndicators() {
-      this.$axios.get('biomedicalindicators')
+  methods: {
+    loadIndicator() {
+      let url = ''
+      if (this.editingmeasure.indicatorType === 'QUALITATIVE')
+      {
+        url = "biomedicalindicators/qualitative"
+        this.isQualitative = true
+      }
+      else
+      {
+        url = "biomedicalindicators/quantitative"
+        this.isQualitative = false
+      }
+
+      this.$axios.get(url + "/" + this.editingmeasure.indicatorId)
           .then((response) => {
-            this.indicators = response.data
+
+            this.indicator = response.data
+            this.indicators.push(this.indicator)
+
           })
           .catch((error) => {
             console.log(error)
           })
     },
+
+    loadIndicators() {
+      if (this.operationType == 'edit') {
+        this.$axios.get('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.indicatorID)
+            .then((response) => {
+              this.editingmeasure = response.data
+              this.editingmeasure.value = response.data.value.value
+
+
+              this.loadIndicator()
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      } else {
+        this.$axios.get('biomedicalindicators')
+            .then((response) => {
+              this.indicators = response.data
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
+
+    },
+    splitErrormessage(msg) {
+
+      var erros = msg.split(';');
+
+      var errosTransformed = [[], []];
+      for (var erro of erros) {
+        var temp = erro.split(':');
+        if (temp != undefined && temp.length == 2) {
+          var key = temp[0].trim()
+          var val = temp[1].trim()
+          errosTransformed[key] = val
+        }
+
+      }
+      this.errors = errosTransformed
+      console.log(this.errors)
+    },
     expand(indic) {
-      if (this.indicator)
+
+      if (this.indicator && this.indicator.name == indic.name)
         this.indicator = undefined
       else {
         this.indicator = indic
@@ -115,14 +200,49 @@ export default {
       }
     },
     save() {
-      console.log(this.editingmeasure.description)
-    }
+      if(this.operationType == 'edit') {
+        this.editingmeasure.id = this.indicator.id
+        this.$axios.post('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.editingmeasure.indicatorType.toLowerCase(), this.editingmeasure)
+            .then((response) => {
+              this.admin = response.data
+              this.$router.back()
+            })
+            .catch((error) => {
+              console.log(error.response)
+              if (error.response.status == 400) {
+                this.$toast.error('Register was not created due to validation errors!')
+                this.splitErrormessage(error.response.data)
+              } else {
+                this.$toast.error('Register was not created due to unknown server error!')
+                this.splitErrormessage(error.response.data)
+              }
+            })
 
-
+      }
+      else {
+        this.editingmeasure.id = this.indicator.id
+        this.$axios.post('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.indicator.indicatorType.toLowerCase(), this.editingmeasure)
+            .then((response) => {
+              this.admin = response.data
+              this.$router.back()
+            })
+            .catch((error) => {
+              console.log(error.response)
+              if (error.response.status == 400) {
+                this.$toast.error('Register was not created due to validation errors!')
+                this.splitErrormessage(error.response.data)
+              } else {
+                this.$toast.error('Register was not created due to unknown server error!')
+                this.splitErrormessage(error.response.data)
+              }
+            })
+      }
+    },
   },
-  mounted() {
-    this.loadIndicators();
-  }
+mounted()
+{
+  this.loadIndicators();
+}
 
 }
 </script>

@@ -65,8 +65,8 @@ export default {
   methods: {
     splitErrormessage(msg) {
 
-      var erros = msg.split(';');
 
+      var erros = msg.split(';');
       var errosTransformed = [[], []];
       for (var erro of erros) {
         var temp = erro.split(':');
@@ -138,7 +138,8 @@ export default {
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
               } else {
-                this.$toast.error('Patient was not created due to unknown server error!')
+                this.$toast.error('Patient was not created due to a server error!')
+                this.splitErrormessage(error.response.data)
               }
             })
       } else {

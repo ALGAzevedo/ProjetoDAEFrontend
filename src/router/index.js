@@ -121,9 +121,17 @@ const routes = [
 
     },
     {
-        path: '/UserNewMeasure',
+        path: '/UserNewMeasure/:patientUsername',
         name: 'UserNewMeasure',
-        component: UserNewBiomedicalIndicator
+        component: UserNewBiomedicalIndicator,
+        props : true
+
+    },
+    {
+        path: '/UserEditMeasure/:patientUsername/:indicatorID/:operationType',
+        name: 'UserEditMeasure',
+        component: UserNewBiomedicalIndicator,
+        props : true
 
     },
 
