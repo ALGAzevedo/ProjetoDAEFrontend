@@ -14,6 +14,7 @@ import Prcs from "../components/PRCs/Prcs";
 import PrcDetail from "../components/PRCs/PrcDetail";
 import PatientPrcs from "../components/PRCs/PatientPrcs";
 import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
+import TreatmentType from "../components/TreatmentTypes/TreatmentType";
 
 
 
@@ -137,6 +138,23 @@ const routes = [
         name: 'TreatmentTypes',
         component: TreatmentTypes,
         props: true
+    },
+    {
+        path: '/treatmentTypes/new/:prcCode',
+        name: 'NewTreatmentType',
+        component: TreatmentType,
+        props: route => ({treatmentTypeCode: -1,
+            prcCode:route.params.prcCode}),
+    },
+    {
+        path: '/treatmentTypes/:treatmentTypeCode/:treatmentTypeType/:prcCode',
+        name: 'EditTreatmentType',
+        component: TreatmentType,
+        props: route => ({
+            treatmentTypeCode: route.params.treatmentTypeCode,
+            treatmentTypeType: route.params.treatmentTypeType,
+            prcCode: route.params.prcCode
+        })
     },
 
     /**

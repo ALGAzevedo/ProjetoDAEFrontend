@@ -21,7 +21,7 @@
               <field-error-message :errors="errors" fieldName="startDate"></field-error-message>
             </div>
           </div>
-          <div class="col w-100 py-2">
+          <div class="col w-100">
             <div class="form-group col-12 col-md-12">
               <label for="inputEndDate" class="form-label fs-5 fw-bold">End Date</label>
               <input type="Date" class="form-control" id="inputEndDate" placeholder=""

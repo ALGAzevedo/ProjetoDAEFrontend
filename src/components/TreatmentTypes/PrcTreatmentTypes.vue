@@ -19,6 +19,11 @@
       <label for="selectName" class="form-label">Filter by Name:</label>
       <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
     </div>
+    <div class="mx-2 mt-2">
+      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addTreatment">
+        <i class="bi bi-xs bi-plus-circle"></i> Add Treatment Type
+      </button>
+    </div>
 
     <treatment-types-table
     :treatmentTypes="treatmentTypes"
@@ -74,11 +79,12 @@ export default {
             console.log(error)
           })
     },
-    addPrc() {
-      this.$router.push({name: 'NewAdministrator'})
+    addTreatment() {
+      this.$router.push({name: 'NewTreatmentType'})
     },
-    editPrc(prc) {
-      this.$router.push({name: 'EditPrc', params: {prcCode: prc.code}})
+    editPrc(treatment) {
+      console.log(treatment)
+      this.$router.push({name: 'EditTreatmentType', params: {treatmentTypeType: treatment.treatmentType, treatmentTypeCode: treatment.code, prcCode: this.prcCode}})
     },
     cancel() {
       this.$router.back()
