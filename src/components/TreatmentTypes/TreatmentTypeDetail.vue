@@ -51,8 +51,8 @@
         </div>
         <div class="row py-2">
           <div class="form-group col-12 col-md-12">
-            <label for="patientUsername" class="form-label fs-5 fw-bold">Healthcare Professional</label>
-            <input type="text" class="form-control" name="name" id="patientUsername" placeholder="Healthcare Professional Username"
+            <label for="healthcareProfessionalUsername" class="form-label fs-5 fw-bold">Healthcare Professional</label>
+            <input type="text" class="form-control" name="name" id="healthcareProfessionalUsername" placeholder="Healthcare Professional Username"
                    required v-model="editingTreatment.healthcareProfessionalUsername">
             <field-error-message :errors="errors" fieldName="healthcareProfessionalUsername"></field-error-message>
           </div>
@@ -148,6 +148,10 @@ export default {
     showDropDown(){
       return this.operationType === 'insert' ? true : false
     },
+    showHealthcareProfessional(){
+      return this.operationType === 'insert' ? false : true
+
+    }
   },
   methods: {
     newTreatmentType() {
@@ -164,6 +168,7 @@ export default {
             .then((response) => {
               //we need to take type of dto of admin data
               this.editingTreatment = response.data
+              this.editingTreatment.healthcareProfessionalUsername = this.editingTreatment.healthcareProfessional.username
             })
             .catch((error) => {
               console.log(error)
@@ -174,7 +179,6 @@ export default {
       console.log(this.treatmentType)
       this.editingTreatment.treatmentType = this.value
       this.editingTreatment.prcCode = this.prcCode
-      console.log(this.editingTreatment)
       this.$emit('save', this.editingTreatment)
     },
     cancel() {
