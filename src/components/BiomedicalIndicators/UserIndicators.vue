@@ -144,7 +144,6 @@ export default {
     loadIndicators() {
       this.$axios.get('patients/' + this.patientUsername + '/biomedicalRegisters')
           .then((response) => {
-            console.log(response.data)
             if(response.data[0] == null) {
               this.indicators = undefined
               this.indicatorsName = undefined
@@ -166,7 +165,6 @@ export default {
 
     },
     editClick(indicator) {
-      console.log(indicator)
       this.$router.push({name: 'UserEditMeasure', params: {patientUsername: this.patientUsername, indicatorID: indicator.id, operationType: 'edit'}})
     },
     deleteClick(indicator) {

@@ -14,6 +14,8 @@ import Prcs from "../components/PRCs/Prcs";
 import PrcDetail from "../components/PRCs/PrcDetail";
 import UserIndicators from "../components/BiomedicalIndicators/UserIndicators";
 import UserNewBiomedicalIndicator from "../components/BiomedicalIndicators/UserNewBiomedicalIndicator";
+import HealthcareProfessionalIndicators
+    from "../components/HealthCareProfessionalIndicators/HealthcareProfessionalIndicators";
 
 
 
@@ -134,6 +136,15 @@ const routes = [
         props : true
 
     },
+    {
+        path: '/HealthcareProfessionalIndicators',
+        name: 'HealthcareProfessionalIndicators',
+        component: HealthcareProfessionalIndicators
+
+    },
+
+
+
 
 
 

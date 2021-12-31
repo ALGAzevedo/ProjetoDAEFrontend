@@ -66,6 +66,15 @@
           </div>
           <field-error-message :errors="errors" fieldName="date"></field-error-message>
 
+
+
+        </div>
+        <div class="col-2">
+          <label for="ftime" class="form-label">Time of day</label>
+          <input type="time" id="appt" name="appt"
+                 min="00:00" max="24:00" required
+          v-model="editingmeasure.time">
+
         </div>
 
 
@@ -120,7 +129,8 @@ export default {
       indicators: [],
       editingmeasure: {},
       indicator: undefined,
-      isQualitative: Boolean
+      isQualitative: Boolean,
+      separatedDate : []
     }
   },
   methods: {
@@ -139,7 +149,6 @@ export default {
 
       this.$axios.get(url + "/" + this.editingmeasure.indicatorId)
           .then((response) => {
-
             this.indicator = response.data
             this.indicators.push(this.indicator)
 
@@ -153,11 +162,17 @@ export default {
       if (this.operationType == 'edit') {
         this.$axios.get('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.indicatorID)
             .then((response) => {
+
               this.editingmeasure = response.data
               this.editingmeasure.value = response.data.value.value
+              let date = response.data.date
 
+
+              this.editingmeasure.date = response.data.date.split('T')[0]
+              this.editingmeasure.time = date.split('T')[1]
 
               this.loadIndicator()
+
             })
             .catch((error) => {
               console.log(error)
@@ -200,9 +215,11 @@ export default {
       }
     },
     save() {
+      console.log(this.editingmeasure.value)
+      this.editingmeasure.date = this.editingmeasure.date + "T" + this.editingmeasure.time
       if(this.operationType == 'edit') {
-        this.editingmeasure.id = this.indicator.id
-        this.$axios.post('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.editingmeasure.indicatorType.toLowerCase(), this.editingmeasure)
+
+        this.$axios.put('patients/' + this.patientUsername + '/biomedicalRegisters/' + this.editingmeasure.id, this.editingmeasure)
             .then((response) => {
               this.admin = response.data
               this.$router.back()
