@@ -9,17 +9,19 @@
     <div class="row mt-5">
       <div class="col">
         Biomedical Indicators History
-
       </div>
     </div>
-    <div class="row m-5">
-      <div class="text-end" v-if="indicators">
-        Last Insertion {{LastInsertion}}
+  </div>
+  <IndicatorsFilterBody
+      :show-name="false"
+      :show-username="false"
+      @filter="filterInd"
+  >
 
-      </div>
-    </div>
+  </IndicatorsFilterBody>
+  <div>
     <div class="row m-5">
-      <div class="text-end mx-2 mt-2">
+      <div class="text-end">
         <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewIndicator">
           <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
         </button>
@@ -90,6 +92,8 @@
 </template>
 
 <script>
+import IndicatorsFilterBody from "./IndicatorsFilterBody";
+
 export default {
   name: "UserIndicators",
   props: {
@@ -97,7 +101,9 @@ export default {
       type: Object
     },
   },
-
+  components : {
+    IndicatorsFilterBody,
+  },
   data () {
     return {
       indicators: [],
@@ -141,6 +147,42 @@ export default {
 
 
     },
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+    filterInd(filterBody) {
+      const str = this.parameters(filterBody)
+
+
+      this.$axios.get('patients/' + this.patientUsername + '/biomedicalRegisters' + str)
+          .then((response) => {
+            if(response.data[0] == null) {
+              this.indicators = undefined
+              this.indicatorsName = undefined
+            }
+
+            else
+            {
+              this.indicators = response.data
+              //distinct names
+              this.indicatorsName = [...new Set(this.indicators.map(item => item.indicator))];
+              this.selectedIndicator = this.indicators.filter(e => e.indicator == this.selectedIndicatorName)
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+
+    },
+
     loadIndicators() {
       this.$axios.get('patients/' + this.patientUsername + '/biomedicalRegisters')
           .then((response) => {

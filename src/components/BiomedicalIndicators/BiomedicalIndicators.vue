@@ -66,7 +66,6 @@ export default {
     loadIndicators() {
       this.$axios.get('biomedicalindicators')
           .then((response) => {
-            console.log(response.data)
             this.indicators = response.data
           })
           .catch((error) => {

@@ -13,13 +13,11 @@
     </div>
   </div>
   <hr>
-  <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search"
-            >
-    </div>
-  </div>
+  <IndicatorsFilterBody
+  @filter="filterInd">
+
+  </IndicatorsFilterBody>
+
   <hr>
 
   <IndicatorsHPTable
@@ -37,7 +35,7 @@
 
 import ConfirmationDialog from "../global/ConfirmationDialog";
 import IndicatorsHPTable from "./IndicatorsHPTable";
-
+import IndicatorsFilterBody from "../BiomedicalIndicators/IndicatorsFilterBody";
 
 
 
@@ -46,6 +44,7 @@ export default {
   components: {
     ConfirmationDialog,
     IndicatorsHPTable,
+    IndicatorsFilterBody,
 
   },
   data () {
@@ -58,15 +57,39 @@ export default {
     this.loadIndicators();
   },
   computed: {
-
     indicatorToDeleteDescription () {
       return this.indicatorToDelete
           ? `#${this.indicatorToDelete.id} (${this.indicatorToDelete.indicator})`
           : ''
-    }
+    },
+
 
   },
   methods: {
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+        str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+    filterInd(filterBody) {
+      const str = this.parameters(filterBody)
+
+
+      this.$axios.get('patients/biomedicalRegisters'+str)
+          .then((response) => {
+            console.log(response)
+            this.indicators = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
 
     loadIndicators() {
       this.$axios.get('patients/biomedicalRegisters')
