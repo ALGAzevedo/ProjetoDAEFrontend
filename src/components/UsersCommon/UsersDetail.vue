@@ -39,26 +39,18 @@
       <div class="form-group col-12 col-md-4">
         <label for="inputEmail4" class="form-label">Email</label>
         <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
-               required v-model="editingUser.email">
+               required v-model="editingUser.email"
+               :disabled="operationType === 'update' ? '' : disabled">
         <field-error-message :errors="errorsMsg" fieldName="email"></field-error-message>
       </div>
 
         <div class="form-group col-12 col-md-4">
           <label for="inputUsername" class="form-label">Username</label>
           <input type="email" class="form-control" id="inputUsername" placeholder="Username"
-                 required v-model="editingUser.username">
+                 required v-model="editingUser.username"
+          :disabled="operationType === 'update' ? '' : disabled">
           <field-error-message :errors="errorsMsg" fieldName="username"></field-error-message>
         </div>
-
-      <div class="form-group col-12 col-md-4">
-        <label for="inputPassword4" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword4"
-               placeholder="Password"
-               required v-model="editingUser.password">
-        <field-error-message :errors="errorsMsg" fieldName="password"></field-error-message>
-      </div>
-
-
 
       <div class="form-group col-12 col-md-4">
         <label for="inputAddress" class="form-label">Address</label>
