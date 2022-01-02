@@ -26,6 +26,11 @@
           <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
         </button>
       </div>
+      <div class="text-end">
+        <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewDocument">
+          <i class="bi bi-xs bi-plus-circle"></i> Add Document
+        </button>
+      </div>
     </div>
     <div class="row m-5" v-if="indicatorsName">
       <div class="col-5">
@@ -131,6 +136,9 @@ export default {
     },
   },
   methods: {
+    addNewDocument() {
+      this.$router.push({name:'DocumentUpload'})
+    },
     addNewIndicator() {
       this.$router.push({name:'UserNewMeasure', params: {patientUsername: this.patientUsername.toString()}})
     },

@@ -274,8 +274,6 @@ export default {
       if(this.verifyForm())
         this.$emit('save', this.editingUser)
 
-
-
     },
     cancel() {
       this.$emit('cancel', this.editingUser)

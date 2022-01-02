@@ -36,9 +36,11 @@
       :show-institutional-email="false"
       :show-institutional-phone-number="false"
       :show-is-super-admin="false"
+      :show-document-list="true"
       @edit="editPatient"
       @delete="deletePatient"
       @showPrcsList="showPrcsList"
+      @showDocumentsClick="showDocumentsClick"
   ></users-table>
 </template>
 
@@ -95,10 +97,7 @@ export default {
           })
     },
     deletePatient(patient) {
-      /*TODO admin cant delete himself
-      if (admin.id != this.$store.state.user.id) {
 
-       */
       this.patientToDelete = patient
       let dlg = this.$refs.confirmationDialog
       dlg.show()
@@ -106,6 +105,10 @@ export default {
     showPrcsList(patient) {
       this.$router.push({name: 'PatientPrcs', params: {usernameIn: patient.username}})
     },
+    showDocumentsClick(patient) {
+      console.log("aqui")
+      this.$router.push({name: 'DocumentUserTable', params: {username: patient.username}})
+    }
   },
   mounted() {
     this.loadPatients()

@@ -26,8 +26,11 @@
       <td v-if="showSocialSecurityNumber" class="align-middle">{{ user.socialSecurityNumber }}</td>
       <td v-if="showEmergencyPhoneNumber" class="align-middle">{{ user.emergencyPhoneNumber }}</td>
       <td v-if="showIsSuperAdmin" class="align-middle">{{ user.isSuperAdmin }}</td>
-      <td class="text-end align-middle" v-if="showEditButton">
+      <td class="text-end align-middle">
         <div class="d-flex justify-content-end">
+          <button class="btn btn-xs btn-light" @click="showDocumentsClick(user)" v-if="showDocumentsList">
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+          </button>
           <button class="btn btn-xs btn-light" @click="showPrcsClick(user)" v-if="showPrcList">
             <i class="bi bi-xs bi-card-list"></i>
           </button>
@@ -84,6 +87,10 @@ export default {
     showPrcList:{
       type: Boolean,
       default: true
+    },
+    showDocumentsList:{
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -95,6 +102,9 @@ export default {
     },
     showPrcsClick(user){
       this.$emit('showPrcsList', user)
+    },
+    showDocumentsClick(user) {
+      this.$emit('showDocumentsClick', user)
     }
 
   }

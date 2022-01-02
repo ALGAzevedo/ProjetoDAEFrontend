@@ -36,6 +36,7 @@
       :show-institutional-email="true"
       :show-institutional-phone-number="true"
       :show-is-super-admin="false"
+      :show-document-list="false"
       @edit="editHP"
       @delete="deleteHP"
   ></users-table>

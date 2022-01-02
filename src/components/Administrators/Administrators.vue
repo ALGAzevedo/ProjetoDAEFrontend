@@ -36,6 +36,7 @@
       :show-institutional-email="false"
       :show-institutional-phone-number="false"
       :show-pcr-list="false"
+      :showDocumentsList="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>
