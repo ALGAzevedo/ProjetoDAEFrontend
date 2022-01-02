@@ -1,7 +1,6 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 
-import Login from "../components/auth/Login.vue"
 import Administrators from "../components/Administrators/Administrators";
 import Administrator from "../components/Administrators/Administrator";
 import HealthcareProfessionals from "../components/HealthcareProfessionals/HealthcareProfessionals";
@@ -16,6 +15,9 @@ import UserIndicators from "../components/BiomedicalIndicators/UserIndicators";
 import UserNewBiomedicalIndicator from "../components/BiomedicalIndicators/UserNewBiomedicalIndicator";
 import HealthcareProfessionalIndicators
     from "../components/HealthCareProfessionalIndicators/HealthcareProfessionalIndicators";
+import Login from "../components/auth/Login";
+import Confirm from "../components/auth/Confirm";
+
 
 
 
@@ -30,8 +32,20 @@ const routes = [
         name: 'Login',
         component: Login
     },
+    {
+        path: '/confirm',
+        name: 'Confirm',
+        component: Confirm,
+        meta: { requiresAuth: false },
+        beforeEnter: (to, from, next) => {
+            if (!to.query.token){
+                next({name: 'Home'})
+            }else {
+                next()
+            }
+        }
+    },
 
-    //DAE A PARTIR DAQUI
     {
         path: '/administrators',
         name: 'Administrators',
@@ -142,6 +156,7 @@ const routes = [
         component: HealthcareProfessionalIndicators
 
     },
+
 
 
 
@@ -371,9 +386,31 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
+
+
+
+router.beforeEach((to, from, next) => {
+    if ((to.name == 'Login') || (to.name == 'Home') || (to.name == 'Register') || (to.name == 'Confirm')) {
+        next()
+        return
+    }
+    if (!sessionStorage.getItem('token')) {
+        next({name: 'Login'})
+        return
+    }
+
+
+
+    next()
+
+
+
+})
+
+
 
 
 export default router

@@ -162,7 +162,27 @@ export default {
   name: 'RootComponent',
   //components: {AppHeader},
   computed: {
+    user() {
+      return this.$store.state.user
+    },
+    userName() {
+      return this.$store.state.user ? this.$store.state.user.username : ''
+    },
+    isAdministrator() {
+      return this.isAuthenticated && this.user.userType == 'Administrator'
+    },
+    isPatient() {
+      return this.isAuthenticated && this.user.type == 'Patient'
+    },
+    isHealthcareProfessiona() {
+      return this.isAuthenticated && this.user.type == 'HealthcareProfessional'
+    },
 
+    isAuthenticated() {
+      if (this.user)
+        return true
+      return false
+    },
   },
   created () {
 
@@ -178,7 +198,6 @@ export default {
             this.$router.push('/')
           }
         })
-
   },
 
 

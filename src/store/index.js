@@ -130,21 +130,13 @@ export default createStore({
             }
         },
 
-        async logout(context, isDeleted = false) {
-            try {
-                if(!isDeleted){
-                    await axios.post('logout')
-                }
-            } finally {
-                delete axios.defaults.headers.common.Authorization
-                sessionStorage.removeItem('token')
-                sessionStorage.removeItem('user_type')
-                context.commit('resetUser', null)
-                context.commit('resetVcard', null)
-                context.commit('resetCategories', null)
-                context.commit('resetPaymentTypes', null)
-                context.commit('resetNotifications', null)
-            }
+        async logout(context) {
+
+            delete axios.defaults.headers.common.Authorization
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('user_type')
+            context.commit('resetUser', null)
+
         },
         async restoreToken (context) {
             let storedToken = sessionStorage.getItem('token')

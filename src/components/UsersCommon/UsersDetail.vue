@@ -222,29 +222,52 @@ export default {
   methods: {
     verifyForm() {
 
+      let flag = true
+
       this.errorsMsg = []
-      if(this.editingUser.username.trim().length == 0)
+      if(this.editingUser.username.trim().length == 0) {
         this.errorsMsg['username']='username cant be null'
-      if(!this.editingUser.name || this.editingUser.name.trim().length == 0)
+        flag = false
+      }
+
+      if(!this.editingUser.name || this.editingUser.name.trim().length == 0) {
         this.errorsMsg['name']='name cant be null'
+        flag =false
+      }
+
       if(!this.editingUser.email || this.editingUser.email.trim().length == 0)
+      {
         this.errorsMsg['email']='email cant be null'
-      if(!this.editingUser.gender || this.editingUser.gender.trim().length == 0)
+        flag = false
+      }
+
+      if(!this.editingUser.gender || this.editingUser.gender.trim().length == 0) {
         this.errorsMsg['gender']='gender cant be null'
+        flag = false
+      }
+
       if(!this.editingUser.birthdate || this.editingUser.birthdate.trim().length == 0)
+      {
         this.errorsMsg['birthdate']='birthdate cant be null'
+        flag = false
+      }
+
       if(!this.editingUser.country || this.editingUser.country.trim().length == 0)
+      {
         this.errorsMsg['country']='country cant be null'
-      if(!this.editingUser.phoneNumber || this.editingUser.phoneNumber.trim().length == 0)
+        flag = false
+      }
+      if(!this.editingUser.phoneNumber || this.editingUser.phoneNumber.trim().length == 0) {
         this.errorsMsg['phoneNumber']='phoneNumber cant be null'
-      if(!this.editingUser.socialSecurityNumber || this.editingUser.socialSecurityNumber.trim().length == 0)
+        flag = false
+      }
+
+      if(!this.editingUser.socialSecurityNumber || this.editingUser.socialSecurityNumber.trim().length == 0) {
         this.errorsMsg['socialSecurityNumber']='socialSecurityNumber cant be null'
+        flag = false
+      }
 
-      if(this.errors.length === 0)
-        return true
-
-
-      return false
+      return flag
     },
     save() {
 

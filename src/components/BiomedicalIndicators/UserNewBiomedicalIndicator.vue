@@ -148,11 +148,7 @@ export default {
         this.errors['value']='value should be between ' + this.indicator.min + ' and ' + this.indicator.max
         flag = false
       }
-
-
       return flag
-
-
     },
     loadIndicator() {
       let url = ''
@@ -237,7 +233,6 @@ export default {
     save() {
       if(!this.verifyFields())
         return
-
 
       this.editingmeasure.date = this.editingmeasure.date + "T" + this.editingmeasure.time
       if(this.operationType == 'edit') {
