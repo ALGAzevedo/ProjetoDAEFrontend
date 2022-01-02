@@ -18,6 +18,9 @@ import HealthcareProfessionalIndicators
 import Login from "../components/auth/Login";
 import Confirm from "../components/auth/Confirm";
 
+import PatientPrcs from "../components/PRCs/PatientPrcs";
+import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
+import TreatmentType from "../components/TreatmentTypes/TreatmentType";
 
 
 
@@ -120,8 +123,10 @@ const routes = [
     {
         path: '/PRCs/:prcCode',
         name: 'EditPrc',
-        component: PrcDetail
-        // props: true
+        component: PrcDetail,
+        props: route => ({
+            prcCode: route.params.prcCode
+        })
     },
     {
         path: '/BiomedicalIndicators/:id/:indicatorType',
@@ -156,16 +161,46 @@ const routes = [
         component: HealthcareProfessionalIndicators
 
     },
+    {
 
-
-
-
-
-
-
-
-
-
+        path: '/Patient/:usernameIn/prcs',
+        name: 'PatientPrcs',
+        component: PatientPrcs,
+        props: route => ({
+            usernameIn: route.params.usernameIn
+        })
+    },
+    {
+        path: '/TreatmentTypes',
+        name: 'TreatmentTypes',
+        component: TreatmentTypes,
+        props: route => ({
+            prcCode: route.params.prcCode
+        })
+    },
+    {
+        path: '/TreatmentTypes',
+        name: 'TreatmentTypes',
+        component: TreatmentTypes,
+        props: true
+    },
+    {
+        path: '/treatmentTypes/new/:prcCode',
+        name: 'NewTreatmentType',
+        component: TreatmentType,
+        props: route => ({treatmentTypeCode: -1,
+            prcCode:route.params.prcCode}),
+    },
+    {
+        path: '/treatmentTypes/:treatmentTypeCode/:treatmentTypeType/:prcCode',
+        name: 'EditTreatmentType',
+        component: TreatmentType,
+        props: route => ({
+            treatmentTypeCode: route.params.treatmentTypeCode,
+            treatmentTypeType: route.params.treatmentTypeType,
+            prcCode: route.params.prcCode
+        })
+    },
 
 
     /**
@@ -174,12 +209,6 @@ const routes = [
      *
      *
      */
-
-
-
-
-
-
     // {
     //     path: '/password',
     //     name: 'ChangePassword',

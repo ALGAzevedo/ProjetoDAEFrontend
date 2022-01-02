@@ -67,7 +67,15 @@
                   :to="{ name: 'HealthcareProfessionalIndicators'}"><i class="bi bi-house"></i>
                 Patients Indicators
               </router-link>
+                </li>
+            <li  class="nav-item">
+              <router-link
+                  :class="{active: $route.name === 'TreatmentTypes'}"
+                  :to="{ name: 'TreatmentTypes'}"><i class="bi bi-house"></i>
+                TreatmentTypes
+              </router-link>
             </li>
+
             <!-- VCard Item Menu -->
             <li  class="nav-item">
 

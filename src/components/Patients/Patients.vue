@@ -38,6 +38,7 @@
       :show-is-super-admin="false"
       @edit="editPatient"
       @delete="deletePatient"
+      @showPrcsList="showPrcsList"
   ></users-table>
 </template>
 
@@ -80,7 +81,7 @@ export default {
       this.$router.push({name: 'NewPatient'})
     },
     editPatient(patient) {
-      this.$router.push({ name: 'EditPatient', params: {usernameIn: patient.username} })
+      this.$router.push({name: 'EditPatient', params: {usernameIn: patient.username}})
     },
     deleteConfirmed() {
       this.$axios.delete('patients/' + this.patientToDelete.username, this.patientToDelete)
@@ -98,11 +99,14 @@ export default {
       if (admin.id != this.$store.state.user.id) {
 
        */
-        this.patientToDelete = patient
-        let dlg = this.$refs.confirmationDialog
-        dlg.show()
-      }
+      this.patientToDelete = patient
+      let dlg = this.$refs.confirmationDialog
+      dlg.show()
     },
+    showPrcsList(patient) {
+      this.$router.push({name: 'PatientPrcs', params: {usernameIn: patient.username}})
+    },
+  },
   mounted() {
     this.loadPatients()
   }

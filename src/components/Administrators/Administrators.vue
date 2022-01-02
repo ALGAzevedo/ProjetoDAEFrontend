@@ -35,6 +35,7 @@
       :show-social-security-number="false"
       :show-institutional-email="false"
       :show-institutional-phone-number="false"
+      :show-pcr-list="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>

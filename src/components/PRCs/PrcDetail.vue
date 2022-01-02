@@ -21,7 +21,7 @@
               <field-error-message :errors="errors" fieldName="startDate"></field-error-message>
             </div>
           </div>
-          <div class="col w-100 py-2">
+          <div class="col w-100">
             <div class="form-group col-12 col-md-12">
               <label for="inputEndDate" class="form-label fs-5 fw-bold">End Date</label>
               <input type="Date" class="form-control" id="inputEndDate" placeholder=""
@@ -67,13 +67,21 @@
         </div>
       </form>
     </div>
+
+    <PrcTreatmentTypes :prcCode="prcCode"></PrcTreatmentTypes>
+
   </div>
 </template>
 
 <script>
+
+import PrcTreatmentTypes from "../TreatmentTypes/PrcTreatmentTypes";
+
 export default {
   name: "PrcDetail",
-  components: {},
+  components: {
+    PrcTreatmentTypes
+  },
   props: {
     prcCode: {
       type: Number,
@@ -91,6 +99,7 @@ export default {
   data() {
     return {
       prc: {
+        code: '',
         name: '',
         startDate: '',
         endDate: '',
@@ -117,12 +126,11 @@ export default {
       // this.admin = this.newAdmin()
       // this.originalValueStr = this.dataAsString()
       // } else {
-      console.log(prcCode)
       this.$axios.get('prcs/' + prcCode)
           .then((response) => {
             //we need to take type of dto of admin data
             this.prc = response.data
-            console.log(this.prc)
+            // console.log(this.prc)
           })
           .catch((error) => {
             console.log(error)
@@ -149,7 +157,6 @@ export default {
               }
             })
       } else {
-        console.log(this.admin)
         this.$axios.put('prcs/' + this.prc.code, this.prc)
             .then((response) => {
               this.$toast.success('PRC "' + response.data.name + '" was updated successfully.')
