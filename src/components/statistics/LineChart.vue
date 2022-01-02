@@ -79,7 +79,6 @@ export default {
       this.dataToFill = newData
 
       this.loadChart()
-      //console.log(this.dataToFill[0])
     },
 
 
