@@ -1,7 +1,6 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 
-import Login from "../components/auth/Login.vue"
 import Administrators from "../components/Administrators/Administrators";
 import Administrator from "../components/Administrators/Administrator";
 import HealthcareProfessionals from "../components/HealthcareProfessionals/HealthcareProfessionals";
@@ -12,6 +11,13 @@ import BiomedicalIndicators from "../components/BiomedicalIndicators/BiomedicalI
 import BiomedicalIndicator from "../components/BiomedicalIndicators/BiomedicalIndicator";
 import Prcs from "../components/PRCs/Prcs";
 import PrcDetail from "../components/PRCs/PrcDetail";
+import UserIndicators from "../components/BiomedicalIndicators/UserIndicators";
+import UserNewBiomedicalIndicator from "../components/BiomedicalIndicators/UserNewBiomedicalIndicator";
+import HealthcareProfessionalIndicators
+    from "../components/HealthCareProfessionalIndicators/HealthcareProfessionalIndicators";
+import Login from "../components/auth/Login";
+import Confirm from "../components/auth/Confirm";
+
 import PatientPrcs from "../components/PRCs/PatientPrcs";
 import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
 import TreatmentType from "../components/TreatmentTypes/TreatmentType";
@@ -29,8 +35,20 @@ const routes = [
         name: 'Login',
         component: Login
     },
+    {
+        path: '/confirm',
+        name: 'Confirm',
+        component: Confirm,
+        meta: { requiresAuth: false },
+        beforeEnter: (to, from, next) => {
+            if (!to.query.token){
+                next({name: 'Home'})
+            }else {
+                next()
+            }
+        }
+    },
 
-    //DAE A PARTIR DAQUI
     {
         path: '/administrators',
         name: 'Administrators',
@@ -118,6 +136,33 @@ const routes = [
             indicatorType:route.params.indicatorType}),
     },
     {
+        path: '/UserIndicators',
+        name: 'UserIndicators',
+        component: UserIndicators
+
+    },
+    {
+        path: '/UserNewMeasure/:patientUsername',
+        name: 'UserNewMeasure',
+        component: UserNewBiomedicalIndicator,
+        props : true
+
+    },
+    {
+        path: '/UserEditMeasure/:patientUsername/:indicatorID/:operationType',
+        name: 'UserEditMeasure',
+        component: UserNewBiomedicalIndicator,
+        props : true
+
+    },
+    {
+        path: '/HealthcareProfessionalIndicators',
+        name: 'HealthcareProfessionalIndicators',
+        component: HealthcareProfessionalIndicators
+
+    },
+    {
+
         path: '/Patient/:usernameIn/prcs',
         name: 'PatientPrcs',
         component: PatientPrcs,
@@ -156,6 +201,7 @@ const routes = [
             prcCode: route.params.prcCode
         })
     },
+
 
     /**
      *
@@ -369,9 +415,31 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes
 })
+
+
+
+router.beforeEach((to, from, next) => {
+    if ((to.name == 'Login') || (to.name == 'Home') || (to.name == 'Register') || (to.name == 'Confirm')) {
+        next()
+        return
+    }
+    if (!sessionStorage.getItem('token')) {
+        next({name: 'Login'})
+        return
+    }
+
+
+
+    next()
+
+
+
+})
+
+
 
 
 export default router

@@ -23,7 +23,6 @@
 <script>
 
 
-
 import UsersDetail from "../UsersCommon/UsersDetail";
 
 export default {
@@ -65,8 +64,8 @@ export default {
   methods: {
     splitErrormessage(msg) {
 
-      var erros = msg.split(';');
 
+      var erros = msg.split(';');
       var errosTransformed = [[], []];
       for (var erro of erros) {
         var temp = erro.split(':');
@@ -85,11 +84,11 @@ export default {
     },
     newPatient() {
       return {
-        username : ''
+        username: ''
       }
 
     },
-    loadPatient (username) {
+    loadPatient(username) {
       this.errors = null
       if (!username) {
         this.patient = this.newPatient()
@@ -99,7 +98,7 @@ export default {
             .then((response) => {
               //we need to take type of dto of admin data
               this.patient = response.data
-              if(this.patient.type)
+              if (this.patient.type)
                 delete this.patient.type
 
               this.originalValueStr = this.dataAsString()
@@ -137,8 +136,13 @@ export default {
                 this.$toast.error('Patient was not created due to validation errors!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
+              } else if (error.response.status == 409) {
+                this.$toast.error('Patient already exists!')
+                this.splitErrormessage(error.response.data)
+                //this.errors = error.response.data
               } else {
-                this.$toast.error('Patient was not created due to unknown server error!')
+                this.$toast.error('Patient was not created due to a server error!')
+                this.splitErrormessage(error.response.data)
               }
             })
       } else {

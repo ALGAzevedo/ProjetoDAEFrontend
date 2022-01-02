@@ -6,14 +6,10 @@ export default createStore({
 
     state: {
         user: null,
-        categories: [],
-        vcard: null,
-        notifications : [],
     },
     mutations: {
         resetUser(state) {
             if (state.user) {
-                this.$socket.emit('logged_out', state.user)
                 state.user = null
             }
 
@@ -125,9 +121,8 @@ export default createStore({
         },
         async loadLoggedInUser(context) {
             try {
-                let response = await axios.get('users/me')
-                context.commit('setUser', response.data.data)
-                this.$socket.emit('logged_in', response.data.data)
+                let response = await axios.get('/auth/user')
+                context.commit('setUser', response.data)
             } catch (error) {
                 delete axios.defaults.headers.common.Authorization
                 context.commit('resetUser', null)
@@ -135,21 +130,13 @@ export default createStore({
             }
         },
 
-        async logout(context, isDeleted = false) {
-            try {
-                if(!isDeleted){
-                    await axios.post('logout')
-                }
-            } finally {
-                delete axios.defaults.headers.common.Authorization
-                sessionStorage.removeItem('token')
-                sessionStorage.removeItem('user_type')
-                context.commit('resetUser', null)
-                context.commit('resetVcard', null)
-                context.commit('resetCategories', null)
-                context.commit('resetPaymentTypes', null)
-                context.commit('resetNotifications', null)
-            }
+        async logout(context) {
+
+            delete axios.defaults.headers.common.Authorization
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('user_type')
+            context.commit('resetUser', null)
+
         },
         async restoreToken (context) {
             let storedToken = sessionStorage.getItem('token')
@@ -359,11 +346,6 @@ export default createStore({
             let userPromise = context.dispatch('loadLoggedInUser')
             await userPromise
 
-            if(context.state.user.type == 'V') {
-                let vcardPromise = context.dispatch('loadVcard')
-                await vcardPromise
-
-            }
 
 
         },

@@ -53,10 +53,23 @@
                 PRCs
               </router-link>
             </li>
+            <router-link
+                class="nav-link"
+                :class="{active: $route.name === 'UserIndicators'}"
+                :to="{ name: 'UserIndicators'}"><i class="bi bi-house"></i>
+              Indicators
+            </router-link>
 
             <li  class="nav-item">
               <router-link
                   class="nav-link"
+                  :class="{active: $route.name === 'HealthcareProfessionalIndicators'}"
+                  :to="{ name: 'HealthcareProfessionalIndicators'}"><i class="bi bi-house"></i>
+                Patients Indicators
+              </router-link>
+                </li>
+            <li  class="nav-item">
+              <router-link
                   :class="{active: $route.name === 'TreatmentTypes'}"
                   :to="{ name: 'TreatmentTypes'}"><i class="bi bi-house"></i>
                 TreatmentTypes
@@ -157,7 +170,27 @@ export default {
   name: 'RootComponent',
   //components: {AppHeader},
   computed: {
+    user() {
+      return this.$store.state.user
+    },
+    userName() {
+      return this.$store.state.user ? this.$store.state.user.username : ''
+    },
+    isAdministrator() {
+      return this.isAuthenticated && this.user.userType == 'Administrator'
+    },
+    isPatient() {
+      return this.isAuthenticated && this.user.type == 'Patient'
+    },
+    isHealthcareProfessiona() {
+      return this.isAuthenticated && this.user.type == 'HealthcareProfessional'
+    },
 
+    isAuthenticated() {
+      if (this.user)
+        return true
+      return false
+    },
   },
   created () {
 
@@ -166,7 +199,13 @@ export default {
   },
 
   mounted () {
-
+    this.$store.dispatch('restoreToken')
+        .then((token) => {
+          if (token) {
+            this.$store.dispatch('refresh')
+            this.$router.push('/')
+          }
+        })
   },
 
 

@@ -116,7 +116,6 @@ export default {
     },
 
     save() {
-      console.log(this.bIndicator)
       this.errors = null
       if (this.operation == 'insert') {
         let url = "biomedicalindicators/"+ this.bIndicator.newType.toLowerCase()
@@ -128,11 +127,18 @@ export default {
             .catch((error) => {
               console.log(error.response)
               if (error.response.status == 400) {
-                this.$toast.error('Admin was not created due to validation errors!')
+                this.$toast.error('Biomedical Indicator was not created due to validation errors!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
-              } else {
-                this.$toast.error('Admin was not created due to unknown server error!')
+              }
+              else if (error.response.status == 409) {
+                this.$toast.error('Biomedical Indicator already exists!')
+                this.splitErrormessage(error.response.data)
+                //this.errors = error.response.data
+              }
+              else {
+                this.$toast.error('Biomedical Indicator was not created due to a server error!')
+                this.splitErrormessage(error.response.data)
               }
             })
       } else {

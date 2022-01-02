@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top flex-md-nowrap p-0 shadow mh-60">
     <div class="container-fluid px-lg-4">
-      <a class="navbar-brand col-md-3 col-lg-2 me-0" href="#">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0" href="/">
         <img src="../../assets/cardiacos.svg" alt="" width="" height="32"
              class="d-inline-block align-text-center"></a>
       <button
@@ -19,7 +19,7 @@
 
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <li class="nav-item" v-if="!isAuthenticated">
             <router-link
                 class="nav-link"
                 :class="{active: $route.name === 'Login'}"
@@ -28,13 +28,8 @@
               Login
             </router-link>
           </li>
-          <li class="nav-item" >
 
-          </li>
-          <li  class="nav-item">
-
-          </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" v-if="isAuthenticated">
             <a
                 class="nav-link dropdown-toggle"
                 href="#"
@@ -48,35 +43,16 @@
                   class="rounded-circle z-depth-0 avatar-img"
                   alt="avatar image"
               >
-              <span class="avatar-text">User Name</span>
+              <span class="avatar-text">{{authenticatedUsername}}</span>
             </a>
             <ul
                 class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                 aria-labelledby="navbarDropdownMenuLink"
             >
               <li>
-                <router-link
-                    class="nav-link"
-                    :class="{active: $route.name === 'Login'}"
-                    :to="{ name: 'Login'}"
-                ><i class="bi bi-box-arrow-in-right"></i>
-                  Login
-                </router-link>
-
-              </li>
-              <li>
-
-              </li>
-              <li>
-
-              </li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li>
                 <a
                     class="dropdown-item"
-                    @click.prevent="logout"
+                    @click.prevent="userLogout"
                 ><i class="bi bi-arrow-right"></i>Logout</a>
               </li>
 
@@ -98,6 +74,20 @@ export default {
       default: function () {
         return  userAvatar
       }
+    }
+  },
+
+  methods:{
+    userLogout() {
+      this.$store.dispatch('logout')
+    }
+  },
+  computed: {
+    isAuthenticated() {
+      return this.$store.state.user;
+    },
+    authenticatedUsername() {
+      return this.$store.state.user.username;
     }
   }
 }
