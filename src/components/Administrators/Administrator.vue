@@ -137,7 +137,12 @@ export default {
                 this.$toast.error('Admin was not created due to validation errors!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
-              } else {
+              }
+              else if (error.response.status == 4009) {
+                this.$toast.error('Admin already exists!')
+                this.splitErrormessage(error.response.data)
+                //this.errors = error.response.data
+              }else {
                 this.$toast.error('Admin was not created due to server error!')
                 this.splitErrormessage(error.response.data)
               }

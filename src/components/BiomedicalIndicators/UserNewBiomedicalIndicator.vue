@@ -130,10 +130,30 @@ export default {
       editingmeasure: {},
       indicator: undefined,
       isQualitative: Boolean,
-      separatedDate : []
+      separatedDate : [],
+      errors : []
     }
   },
   methods: {
+    verifyFields() {
+      this.errors = []
+      let flag = true
+
+      if(!this.editingmeasure.value || this.editingmeasure.value.trim().length == 0) {
+        this.errors['value']='value cant be null'
+        flag = false
+      }
+
+      if(this.editingmeasure.value && this.indicator.indicatorType === 'QUANTITATIVE' && (this.editingmeasure.value < this.indicator.min || this.editingmeasure.value > this.indicator.max)) {
+        this.errors['value']='value should be between ' + this.indicator.min + ' and ' + this.indicator.max
+        flag = false
+      }
+
+
+      return flag
+
+
+    },
     loadIndicator() {
       let url = ''
       if (this.editingmeasure.indicatorType === 'QUALITATIVE')
@@ -203,7 +223,7 @@ export default {
 
       }
       this.errors = errosTransformed
-      console.log(this.errors)
+
     },
     expand(indic) {
 
@@ -215,7 +235,10 @@ export default {
       }
     },
     save() {
-      console.log(this.editingmeasure.value)
+      if(!this.verifyFields())
+        return
+
+
       this.editingmeasure.date = this.editingmeasure.date + "T" + this.editingmeasure.time
       if(this.operationType == 'edit') {
 

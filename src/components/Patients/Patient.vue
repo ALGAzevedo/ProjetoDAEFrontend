@@ -23,7 +23,6 @@
 <script>
 
 
-
 import UsersDetail from "../UsersCommon/UsersDetail";
 
 export default {
@@ -85,11 +84,11 @@ export default {
     },
     newPatient() {
       return {
-        username : ''
+        username: ''
       }
 
     },
-    loadPatient (username) {
+    loadPatient(username) {
       this.errors = null
       if (!username) {
         this.patient = this.newPatient()
@@ -99,7 +98,7 @@ export default {
             .then((response) => {
               //we need to take type of dto of admin data
               this.patient = response.data
-              if(this.patient.type)
+              if (this.patient.type)
                 delete this.patient.type
 
               this.originalValueStr = this.dataAsString()
@@ -135,6 +134,10 @@ export default {
               console.log(error.response)
               if (error.response.status == 400) {
                 this.$toast.error('Patient was not created due to validation errors!')
+                this.splitErrormessage(error.response.data)
+                //this.errors = error.response.data
+              } else if (error.response.status == 409) {
+                this.$toast.error('Patient already exists!')
                 this.splitErrormessage(error.response.data)
                 //this.errors = error.response.data
               } else {

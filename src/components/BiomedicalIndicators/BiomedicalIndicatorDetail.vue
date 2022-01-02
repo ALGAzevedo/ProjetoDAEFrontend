@@ -8,7 +8,7 @@
           <label for="fUserName" class="form-label">Name</label>
           <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
                  required v-model="editingBiomedical.name">
-          <field-error-message :errors="errors" fieldName="name"></field-error-message>
+          <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
         </div>
         <div class="form-group col-12 col-md-7">
           <span class="form-label d-block mb-2 ">Pick ... </span>
@@ -24,8 +24,9 @@
             <label class="btn btn-outline-primary" for="option2">Quantitative</label>
 
           </div>
+          <field-error-message :errors="errorsMsg" fieldName="indicatorType"></field-error-message>
         </div>
-        <div class="mt-3">Selected: <strong>{{ biomedical.indicatorType }}</strong></div>
+
 
 
         <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
@@ -33,15 +34,20 @@
           <div class="col-12 col-md-4">
             <label for="inputMin" class="form-label">Min</label>
             <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min">
+            <field-error-message :errors="errorsMsg" fieldName="min"></field-error-message>
           </div>
+
+
           <div class="col-12 col-md-4">
             <label for="inputMax" class="form-label">Max</label>
             <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max">
+            <field-error-message :errors="errorsMsg" fieldName="max"></field-error-message>
           </div>
 
           <div class="col-12 col-md-2">
             <label for="inputUnity" class="form-label">Unity</label>
             <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity">
+            <field-error-message :errors="errorsMsg" fieldName="unity"></field-error-message>
           </div>
 
         </div>
@@ -52,7 +58,9 @@
               <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField">
                 <i class="bi bi-xs bi-plus-circle"></i> Add new field
               </button>
+              <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
             </div>
+
           </div>
 
             <div class="col-12 col-md-4" v-for="(field, key) in quantiFields" :key="key">
@@ -64,6 +72,7 @@
               </button>
             </div>
           </div>
+
 
 
           <div class="col-12">
@@ -116,6 +125,7 @@ export default {
       editingBiomedical: this.biomedical,
       selected: false,
       quantiFields: [],
+      errorsMsg : this.errors,
     }
   },
   watch: {
@@ -125,9 +135,57 @@ export default {
       this.editingBiomedical = newBiomedical
       this.editingBiomedical.newType = newBiomedical.indicatorType
       this.FillFields()
+    },
+    errors(newErr) {
+      this.errorsMsg = newErr
     }
   },
+  computed : {
+    userTitle() {
+        return this.biomedical.name || 'New Indicator'
+    }
+  },
+
   methods: {
+    verifyFields() {
+      this.errorsMsg = []
+      let flag = true
+
+      if(!this.editingBiomedical.name || this.editingBiomedical.name.trim().length == 0) {
+        this.errorsMsg['name']='name cant be null'
+        flag = false
+      }
+
+
+      if(!this.editingBiomedical.newType || this.editingBiomedical.newType.trim().length == 0) {
+        this.errorsMsg['indicatorType']='indicatorType cant be null'
+        flag = false
+      }
+
+
+      if(this.editingBiomedical.newType && this.editingBiomedical.newType == "QUANTITATIVE") {
+        if(!this.editingBiomedical.min || this.editingBiomedical.min.trim().length == 0) {
+          this.errorsMsg['min']='min cant be null'
+          flag = false
+        }
+
+        if(!this.editingBiomedical.max || this.editingBiomedical.max.trim().length == 0) {
+          this.errorsMsg['max']='max cant be null'
+          flag = false
+        }
+
+        if(!this.editingBiomedical.unity || this.editingBiomedical.unity.trim().length == 0) {
+          this.errorsMsg['unity']='unity cant be null'
+          flag = false
+        }
+
+      }
+      return flag
+
+
+    },
+
+
     FillFields() {
       if(!this.editingBiomedical.possibleValues)
         return
@@ -147,10 +205,17 @@ export default {
       this.quantiFields.splice(key, 1);
     },
     save() {
-      this.CleanEmptyFieldsFromArray()
-      this.editingBiomedical.possibleValues = Object.values(this.quantiFields)
-      console.log(this.editingBiomedical)
-      this.$emit('save', this.editingBiomedical)
+
+      if(this.verifyFields()) {
+        this.CleanEmptyFieldsFromArray()
+        this.editingBiomedical.possibleValues = Object.values(this.quantiFields)
+        console.log(this.editingBiomedical)
+        this.$emit('save', this.editingBiomedical)
+      }
+
+
+
+
     },
     cancel() {
       this.$emit('cancel', this.editingBiomedical)
