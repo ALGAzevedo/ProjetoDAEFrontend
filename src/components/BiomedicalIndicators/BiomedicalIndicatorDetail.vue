@@ -13,14 +13,16 @@
         <div class="form-group col-12 col-md-7">
           <span class="form-label d-block mb-2 ">Pick ... </span>
           <div class="form-check-inline">
-            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option1" autocomplete="off"
+            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option1"
+                   autocomplete="off"
                    value="QUALITATIVE"
                    :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <label class="btn btn-outline-primary" for="option1">Qualitative</label>
 
           </div>
           <div class="form-check-inline">
-            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option2" autocomplete="off"
+            <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option2"
+                   autocomplete="off"
                    value="QUANTITATIVE"
                    :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <label class="btn btn-outline-primary" for="option2">Quantitative</label>
@@ -37,68 +39,67 @@
         </div>
 
         <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
-        <div class="row mt-2" >
+          <div class="row mt-2">
 
-          <div class="col-12 col-md-4">
-            <label for="inputMin" class="form-label">Min</label>
-            <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min"
-                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
-            <field-error-message :errors="errorsMsg" fieldName="min"></field-error-message>
+            <div class="col-12 col-md-4">
+              <label for="inputMin" class="form-label">Min</label>
+              <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min"
+                     :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
+              <field-error-message :errors="errorsMsg" fieldName="min"></field-error-message>
+            </div>
+
+
+            <div class="col-12 col-md-4">
+              <label for="inputMax" class="form-label">Max</label>
+              <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max"
+                     :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
+              <field-error-message :errors="errorsMsg" fieldName="max"></field-error-message>
+            </div>
+
+            <div class="col-12 col-md-2">
+              <label for="inputUnity" class="form-label">Unity</label>
+              <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity"
+                     :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
+              <field-error-message :errors="errorsMsg" fieldName="unity"></field-error-message>
+            </div>
           </div>
-
-
-          <div class="col-12 col-md-4">
-            <label for="inputMax" class="form-label">Max</label>
-            <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max"
-                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
-            <field-error-message :errors="errorsMsg" fieldName="max"></field-error-message>
-          </div>
-
-          <div class="col-12 col-md-2">
-            <label for="inputUnity" class="form-label">Unity</label>
-            <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity"
-                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
-            <field-error-message :errors="errorsMsg" fieldName="unity"></field-error-message>
-          </div>
-        </div>
 
         </div>
         <!--        ./form-group-->
         <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUALITATIVE'">
-        <div class="row mt-2" >
-              <div class="col-12 my-2">
-                <button type="button" class="btn btn-sm btn-success btn-block" @click="AddField">
-                  <i class="bi-xs bi-plus-circle"></i> Add new field
-                </button>
-                <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
-              </div>
-
-        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUALITATIVE'">
-          <div class="col-12">
-            <div class="col-12 col-lg-3 mt-3">
-              <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField"
-                      v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
-                <i class="bi bi-xs bi-plus-circle"></i> Add new field
+          <div class="row mt-2">
+            <div class="col-12 my-2">
+              <button type="button" class="btn btn-sm btn-success btn-block" @click="AddField">
+                <i class="bi-xs bi-plus-circle"></i> Add new field
               </button>
               <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
             </div>
 
-          </div>
+            <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUALITATIVE'">
+              <div class="col-12">
+                <div class="col-12 col-lg-3 mt-3">
+                  <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField"
+                          v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+                    <i class="bi bi-xs bi-plus-circle"></i> Add new field
+                  </button>
+                  <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
+                </div>
 
-            <div class="col-12 col-md-6 mb-1" v-for="(field, key) in quantiFields" :key="key">
-              <label for="inputAlta" class="form-label">Value</label>
-              <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta"
-                     :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
-              <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(key)"
-                      v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
-                <i class="bi bi-trash"></i>
-                Remove
-              </button>
-            </div>
+              </div>
+
+              <div class="col-12 col-md-6 mb-1" v-for="(field, key) in quantiFields" :key="key">
+                <label for="inputAlta" class="form-label">Value</label>
+                <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta"
+                       :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
+                <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(key)"
+                        v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+                  <i class="bi bi-trash"></i>
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
-<!--        ./form-group-->
-
+          <!--        ./form-group-->
 
 
           <div class="col-12">
@@ -112,7 +113,7 @@
                   class="btn btn-primary px-5"
                   @click="save"
                   v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
-              Save
+                Save
               </button>
             </div>
             <div class="p-2">
@@ -121,13 +122,12 @@
                   class="btn btn-light px-5"
                   @click="cancel"
                   v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
-              Cancel
+                Cancel
               </button>
             </div>
           </div>
         </div>
       </form>
-    </div>
     </div>
   </div>
 </template>
@@ -145,8 +145,8 @@ export default {
       type: Array,
       default: () => [],
     },
-    operation : {
-      type : String
+    operation: {
+      type: String
     }
   },
   emits: [
@@ -158,7 +158,7 @@ export default {
       editingBiomedical: this.biomedical,
       selected: false,
       quantiFields: [],
-      errorsMsg : this.errors,
+      errorsMsg: this.errors,
     }
   },
   watch: {
@@ -173,9 +173,9 @@ export default {
       this.errorsMsg = newErr
     }
   },
-  computed : {
+  computed: {
     userTitle() {
-        return this.biomedical.name || 'New Indicator'
+      return this.biomedical.name || 'New Indicator'
     }
   },
 
@@ -184,31 +184,31 @@ export default {
       this.errorsMsg = []
       let flag = true
 
-      if(!this.editingBiomedical.name || this.editingBiomedical.name.trim().length == 0) {
-        this.errorsMsg['name']='Name cant be empty'
+      if (!this.editingBiomedical.name || this.editingBiomedical.name.trim().length == 0) {
+        this.errorsMsg['name'] = 'Name cant be empty'
         flag = false
       }
 
 
-      if(!this.editingBiomedical.newType || this.editingBiomedical.newType.trim().length == 0) {
-        this.errorsMsg['indicatorType']='indicatorType cant be null'
+      if (!this.editingBiomedical.newType || this.editingBiomedical.newType.trim().length == 0) {
+        this.errorsMsg['indicatorType'] = 'indicatorType cant be null'
         flag = false
       }
 
 
-      if(this.editingBiomedical.newType && this.editingBiomedical.newType == "QUANTITATIVE") {
-        if(!this.editingBiomedical.min || this.editingBiomedical.min.trim().length == 0) {
-          this.errorsMsg['min']='min cant be null'
+      if (this.editingBiomedical.newType && this.editingBiomedical.newType == "QUANTITATIVE") {
+        if (!this.editingBiomedical.min || this.editingBiomedical.min.trim().length == 0) {
+          this.errorsMsg['min'] = 'min cant be null'
           flag = false
         }
 
-        if(!this.editingBiomedical.max || this.editingBiomedical.max.trim().length == 0) {
-          this.errorsMsg['max']='max cant be null'
+        if (!this.editingBiomedical.max || this.editingBiomedical.max.trim().length == 0) {
+          this.errorsMsg['max'] = 'max cant be null'
           flag = false
         }
 
-        if(!this.editingBiomedical.unity || this.editingBiomedical.unity.trim().length == 0) {
-          this.errorsMsg['unity']='unity cant be null'
+        if (!this.editingBiomedical.unity || this.editingBiomedical.unity.trim().length == 0) {
+          this.errorsMsg['unity'] = 'unity cant be null'
           flag = false
         }
 
@@ -220,13 +220,13 @@ export default {
 
 
     FillFields() {
-      if(!this.editingBiomedical.possibleValues)
+      if (!this.editingBiomedical.possibleValues)
         return
       this.editingBiomedical.possibleValues.forEach(v => this.quantiFields.push({name: v,}))
 
     },
     CleanEmptyFieldsFromArray() {
-      this.quantiFields = this.quantiFields.filter(v => v.name!='')
+      this.quantiFields = this.quantiFields.filter(v => v.name != '')
       this.quantiFields = this.quantiFields.map(v => v.name);
     },
     AddField: function (e) {
@@ -239,7 +239,7 @@ export default {
     },
     save() {
 
-      if(this.verifyFields()) {
+      if (this.verifyFields()) {
         this.CleanEmptyFieldsFromArray()
         this.editingBiomedical.possibleValues = Object.values(this.quantiFields)
         this.$emit('save', this.editingBiomedical)
