@@ -14,18 +14,13 @@
     </div>
   </div>
   <hr>
-  <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
+  <UsersFiltersBody
+      :show-institutional-phone="true"
+      :show-institutional-email="true"
+      @add="addHP"
+      @filter="filter"
+    ></UsersFiltersBody>
 
-    </div>
-    <div class="mx-2 mt-2">
-      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addHP">
-        <i class="bi bi-xs bi-plus-circle"></i> Add Healthcare Professional
-      </button>
-    </div>
-  </div>
   <hr>
   <users-table
       :users="hps"
@@ -36,6 +31,7 @@
       :show-institutional-email="true"
       :show-institutional-phone-number="true"
       :show-is-super-admin="false"
+      :show-document-list="false"
       @edit="editHP"
       @delete="deleteHP"
   ></users-table>
@@ -44,11 +40,13 @@
 
 <script>
 import UsersTable from "../UsersCommon/UsersTable";
+import UsersFiltersBody from "../UsersCommon/UsersFiltersBody";
 
 export default {
   name: "HealthcareProfessionals",
   components: {
     UsersTable,
+    UsersFiltersBody,
   },
   data() {
     return {
@@ -67,6 +65,28 @@ export default {
     }
   },
   methods: {
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+
+    filter(filterBody) {
+      const str = this.parameters(filterBody)
+      this.$axios.get('healthcareprofissionals'+str)
+          .then((response) => {
+            this.hps = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     loadHPs() {
       this.$axios.get('healthcareprofissionals')
           .then((response) => {

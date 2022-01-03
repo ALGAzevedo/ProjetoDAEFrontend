@@ -9,6 +9,7 @@
   <BiomedicalIndicatorDetail
       :biomedical="bIndicator"
       :errors="errors"
+      :operation="operation"
       @save="save"
       @cancel="cancel"
   ></BiomedicalIndicatorDetail>

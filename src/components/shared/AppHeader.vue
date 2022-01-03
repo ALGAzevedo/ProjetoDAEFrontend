@@ -49,6 +49,28 @@
                 class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                 aria-labelledby="navbarDropdownMenuLink"
             >
+              <li v-if="isPatient">
+                <router-link
+                    class="dropdown-item"
+                    :to="{ name: 'EditPatient', params: { usernameIn: user.username }}"
+                ><i class="bi bi-person-square"></i>Profile
+                </router-link>
+              </li>
+              <li v-if="isAdministrator">
+                <router-link
+                    class="dropdown-item"
+                    :to="{ name: 'EditAdministrator', params: { usernameIn: user.username }}"
+                ><i class="bi bi-person-square"></i>Profile
+                </router-link>
+              </li>
+              <li v-if="isHealthcareProfessional">
+                <router-link
+                    class="dropdown-item"
+                    :to="{ name: 'EditHealthcareProfessional', params: { usernameIn: user.username }}"
+                ><i class="bi bi-person-square"></i>Profile
+                </router-link>
+              </li>
+
               <li>
                 <a
                     class="dropdown-item"
@@ -83,13 +105,27 @@ export default {
     }
   },
   computed: {
+    user() {
+      return this.$store.state.user
+    },
+    isAdministrator() {
+      return this.isAuthenticated && this.user.userType == 'Administrator'
+    },
+    isPatient() {
+      console.log(this.user)
+      return this.isAuthenticated && this.user.userType == 'Patient'
+    },
+    isHealthcareProfessional() {
+      return this.isAuthenticated && this.user.userType == 'HealthcareProfessional'
+    },
     isAuthenticated() {
       return this.$store.state.user;
     },
     authenticatedUsername() {
       return this.$store.state.user.username;
     }
-  }
+  },
+
 }
 </script>
 

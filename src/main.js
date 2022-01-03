@@ -2,6 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 
+
+
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'

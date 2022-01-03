@@ -14,18 +14,14 @@
     </div>
   </div>
   <hr>
-  <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
+  <users-filters-body
+      :show-institutional-email="false"
+      :show-institutional-phone="false"
+      :show-social-security-number="false"
+      @filter="filter"
+      @add="addAdmin"
+    ></users-filters-body>
 
-    </div>
-    <div class="mx-2 mt-2">
-      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addAdmin">
-        <i class="bi bi-xs bi-plus-circle"></i> Add Administrator
-      </button>
-    </div>
-  </div>
   <hr>
   <users-table
       :users="admins"
@@ -36,6 +32,7 @@
       :show-institutional-email="false"
       :show-institutional-phone-number="false"
       :show-pcr-list="false"
+      :showDocumentsList="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>
@@ -44,11 +41,13 @@
 
 <script>
 import UsersTable from "../UsersCommon/UsersTable";
+import UsersFiltersBody from "../UsersCommon/UsersFiltersBody";
 
 export default {
   name: "Administrators",
   components: {
     UsersTable,
+    UsersFiltersBody,
   },
   data() {
     return {
@@ -67,6 +66,28 @@ export default {
     }
   },
   methods: {
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+
+    filter(filterBody) {
+      const str = this.parameters(filterBody)
+      this.$axios.get('administrators'+str)
+          .then((response) => {
+            this.admins = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     loadAdmins() {
       this.$axios.get('administrators')
           .then((response) => {

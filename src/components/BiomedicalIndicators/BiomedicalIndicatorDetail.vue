@@ -3,11 +3,11 @@
     <div class="col-12 col-lg-10">
       <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
       <form class="row g-3 needs-validation" @submit.prevent="save">
-
         <div class="form-group col-12 col-md-6">
           <label for="fUserName" class="form-label">Name</label>
           <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
-                 required v-model="editingBiomedical.name">
+                 required v-model="editingBiomedical.name"
+                 :disabled="operation === 'update' ? '' : disabled">
           <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
         </div>
         <div class="form-group col-12 col-md-7">
@@ -115,6 +115,9 @@ export default {
       type: Array,
       default: () => [],
     },
+    operation : {
+      type : String
+    }
   },
   emits: [
     'save',
@@ -209,12 +212,8 @@ export default {
       if(this.verifyFields()) {
         this.CleanEmptyFieldsFromArray()
         this.editingBiomedical.possibleValues = Object.values(this.quantiFields)
-        console.log(this.editingBiomedical)
         this.$emit('save', this.editingBiomedical)
       }
-
-
-
 
     },
     cancel() {

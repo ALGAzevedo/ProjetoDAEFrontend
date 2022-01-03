@@ -21,6 +21,9 @@ import Confirm from "../components/auth/Confirm";
 import PatientPrcs from "../components/PRCs/PatientPrcs";
 import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
 import TreatmentType from "../components/TreatmentTypes/TreatmentType";
+import DocumentUpload from "../components/Patients/DocumentUpload";
+import DocumentTable from "../components/Patients/DocumentTable";
+import BiomedicalDataHistoryCharts from "../components/Charts/BiomedicalDataHistoryCharts";
 
 
 
@@ -201,6 +204,28 @@ const routes = [
             prcCode: route.params.prcCode
         })
     },
+    {
+        path: '/DocumentUpload',
+        name: 'DocumentUpload',
+        component: DocumentUpload,
+    },
+
+    {
+        path: '/DocumentUpload/:username',
+        name: 'DocumentUserTable',
+        component: DocumentTable,
+        props: true
+    },
+    {
+        path: '/BiomedicalDataHistoryCharts',
+        name: 'BiomedicalDataHistoryCharts',
+        component: BiomedicalDataHistoryCharts,
+        props: true
+    },
+
+
+
+
 
 
     /**
