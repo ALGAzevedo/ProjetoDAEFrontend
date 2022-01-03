@@ -32,8 +32,6 @@
     @edit="editPrc"
     @cancel="cancel"
     ></treatment-types-table>
-
-  </div>
 </template>
 
 <script>

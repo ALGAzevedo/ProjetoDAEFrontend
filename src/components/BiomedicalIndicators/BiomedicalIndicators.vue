@@ -26,7 +26,6 @@
       @edit="editIndicator"
       @delete="deleteIndicator"
   ></IndicatorsTable>
-  </div>
 </template>
 
 

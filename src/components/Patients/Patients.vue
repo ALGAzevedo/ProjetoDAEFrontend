@@ -38,7 +38,6 @@
       @showPrcsList="showPrcsList"
       @showDocumentsClick="showDocumentsClick"
   ></users-table>
-  </div>
 </template>
 
 

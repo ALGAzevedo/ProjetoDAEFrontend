@@ -32,7 +32,7 @@
       @edit="editPrc"
       @cancel="cancel"
   ></prcs-table>
-  </div>
+
 </template>
 
 

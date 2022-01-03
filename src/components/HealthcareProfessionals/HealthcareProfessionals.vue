@@ -35,7 +35,6 @@
       @edit="editHP"
       @delete="deleteHP"
   ></users-table>
-  </div>
 </template>
 
 
