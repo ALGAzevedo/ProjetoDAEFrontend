@@ -14,18 +14,15 @@
     </div>
   </div>
   <hr>
-  <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
-
-    </div>
     <!--    <div class="mx-2 mt-2">-->
     <!--      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addAdmin">-->
     <!--        <i class="bi bi-xs bi-plus-circle"></i> Add Administrator-->
     <!--      </button>-->
     <!--    </div>-->
-  </div>
+  <PrcsFilterBody
+      @filter="filter"
+  ></PrcsFilterBody>
+
   <hr>
   <prcs-table
       :prcs="prcs"
@@ -40,11 +37,13 @@
 
 <script>
 import PrcsTable from "./PrcsTable";
+import PrcsFilterBody from "./PrcsFilterBody";
 
 export default {
   name: "Prcs",
   components: {
     PrcsTable,
+    PrcsFilterBody
   },
   data() {
     return {
@@ -77,6 +76,28 @@ export default {
     },
     editPrc(prc) {
       this.$router.push({name: 'EditPrc', params: {prcCode: prc.code}})
+    },
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+    filter(filterBody) {
+      const str = this.parameters(filterBody)
+      this.$axios.get('prcs'+str)
+          .then((response) => {
+            console.log(response.data)
+            this.prcs = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     },
     cancel() {
       this.$router.back()

@@ -49,14 +49,14 @@
             </div>
           </div>
         </div>
-        <div class="row py-2">
-          <div class="form-group col-12 col-md-12">
-            <label for="healthcareProfessionalUsername" class="form-label fs-5 fw-bold">Healthcare Professional</label>
-            <input type="text" class="form-control" name="name" id="healthcareProfessionalUsername" placeholder="Healthcare Professional Username"
-                   required v-model="editingTreatment.healthcareProfessionalUsername">
-            <field-error-message :errors="errors" fieldName="healthcareProfessionalUsername"></field-error-message>
-          </div>
-        </div>
+<!--        <div class="row py-2">-->
+<!--          <div class="form-group col-12 col-md-12">-->
+<!--            <label for="healthcareProfessionalUsername" class="form-label fs-5 fw-bold">Healthcare Professional</label>-->
+<!--            <input type="text" class="form-control" name="name" id="healthcareProfessionalUsername" placeholder="Healthcare Professional Username"-->
+<!--                   required v-model="editingTreatment.healthcareProfessionalUsername">-->
+<!--            <field-error-message :errors="errors" fieldName="healthcareProfessionalUsername"></field-error-message>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <div class="row py-2">
           <div class="form-group col-12 col-md-12">
@@ -176,9 +176,10 @@ export default {
       }
     },
     save() {
-      console.log(this.treatmentType)
+      // console.log(this.$store.state.user.username)
       this.editingTreatment.treatmentType = this.value
       this.editingTreatment.prcCode = this.prcCode
+      this.editingTreatment.healthcareProfessionalUsername = this.$store.state.user.username;
       this.$emit('save', this.editingTreatment)
     },
     cancel() {
