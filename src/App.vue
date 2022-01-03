@@ -1,16 +1,12 @@
 <template>
  <AppHeader />
 
-
-
-
-
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
         <div class="position-sticky pt-3">
           <ul class="nav flex-column">
-            <li class="nav-item">
+            <li class="nav-item" v-if="isAdministrator">
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'Administrators'}"
@@ -18,7 +14,7 @@
                 Administrators
               </router-link>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" v-if="isAdministrator || isHealthcareProfessional">
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'HealthcareProfessionals'}"
@@ -27,7 +23,7 @@
               </router-link>
 
             </li>
-            <li class="nav-item" >
+            <li class="nav-item" v-if="isAdministrator || isHealthcareProfessional" >
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'Patients'}"
@@ -36,7 +32,7 @@
               </router-link>
             </li>
 
-            <li  class="nav-item">
+            <li class="nav-item" v-if="isAdministrator || isHealthcareProfessional" >
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'BiomedicalIndicators'}"
@@ -53,14 +49,15 @@
                 PRCs
               </router-link>
             </li>
+            <li class="nav-item" v-if="isPatient" >
             <router-link
                 class="nav-link"
                 :class="{active: $route.name === 'UserIndicators'}"
                 :to="{ name: 'UserIndicators'}"><i class="bi bi-house"></i>
               Indicators
             </router-link>
-
-            <li  class="nav-item">
+            </li>
+            <li class="nav-item" v-if="isHealthcareProfessional" >
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'HealthcareProfessionalIndicators'}"
@@ -180,10 +177,10 @@ export default {
       return this.isAuthenticated && this.user.userType == 'Administrator'
     },
     isPatient() {
-      return this.isAuthenticated && this.user.type == 'Patient'
+      return this.isAuthenticated && this.user.userType == 'Patient'
     },
-    isHealthcareProfessiona() {
-      return this.isAuthenticated && this.user.type == 'HealthcareProfessional'
+    isHealthcareProfessional() {
+      return this.isAuthenticated && this.user.userType == 'HealthcareProfessional'
     },
 
     isAuthenticated() {

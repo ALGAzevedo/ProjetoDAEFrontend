@@ -336,15 +336,42 @@ router.beforeEach((to, from, next) => {
             return
         }
     }
-
-
-    /*
-
-
-
-
-    */
-
+    if (to.name == 'UserIndicators') {
+        if (sessionStorage.getItem('userType') != 'Patient') {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'UserNewMeasure') {
+        if (sessionStorage.getItem('userType') != 'Patient' && sessionStorage.getItem('userType') != 'HealthcareProfessional') {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'UserEditMeasure') {
+        if (sessionStorage.getItem('userType') != 'Patient' && sessionStorage.getItem('userType') != 'HealthcareProfessional') {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'HealthcareProfessionalIndicators') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional') {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'DocumentUpload') {
+        if (sessionStorage.getItem('userType') != 'Patient') {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'DocumentUserTable') {
+        if (sessionStorage.getItem('userType') != 'Patient' && sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
 
 
     next()
