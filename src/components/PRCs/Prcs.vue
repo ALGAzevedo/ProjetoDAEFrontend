@@ -92,10 +92,10 @@ export default {
       const str = this.parameters(filterBody)
       this.$axios.get('prcs'+str)
           .then((response) => {
-            console.log(response.data)
             this.prcs = response.data
           })
           .catch((error) => {
+            this.prcs = []
             console.log(error)
           })
     },

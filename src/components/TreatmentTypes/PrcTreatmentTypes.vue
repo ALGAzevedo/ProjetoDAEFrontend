@@ -14,11 +14,11 @@
     </div>
   </div>
   <hr>
+  <TreatmentTypesFilterBody
+      @filter="filter"
+  ></TreatmentTypesFilterBody>
+  <hr>
   <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
-    </div>
     <div class="mx-2 mt-2">
       <button type="button" class="btn btn-success px-4 btn-adduser" @click="addTreatment">
         <i class="bi bi-xs bi-plus-circle"></i> Add Treatment Type
@@ -41,6 +41,7 @@
 <script>
 
 import TreatmentTypesTable from "./TreatmentTypesTable";
+import TreatmentTypesFilterBody from "./TreatmentTypesFilterBody";
 
 export default {
   name: "TreatmentTypes",
@@ -52,6 +53,7 @@ export default {
   },
   components: {
     TreatmentTypesTable,
+    TreatmentTypesFilterBody
   },
   data() {
     return {
@@ -85,6 +87,30 @@ export default {
     editPrc(treatment) {
       console.log(treatment)
       this.$router.push({name: 'EditTreatmentType', params: {treatmentTypeType: treatment.treatmentType, treatmentTypeCode: treatment.code, prcCode: this.prcCode}})
+    },
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+    filter(filterBody, type) {
+      console.log(type)
+      const str = this.parameters(filterBody)
+      console.log(str)
+      this.$axios.get(type + str)
+          .then((response) => {
+            this.treatmentTypes = response.data
+          })
+          .catch((error) => {
+            this.treatmentTypes = []
+            console.log(error)
+          })
     },
     cancel() {
       this.$router.back()
