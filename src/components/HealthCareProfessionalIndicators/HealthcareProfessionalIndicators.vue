@@ -12,7 +12,7 @@
       <h3 class="mt-4">Patient Indicators</h3>
     </div>
   </div>
-  <hr>
+  <div class="main-card bg-white">
   <IndicatorsFilterBody
   @filter="filterInd">
 
@@ -27,7 +27,7 @@
       @delete="deleteIndicator">
   </IndicatorsHPTable>
 
-
+  </div>
 </template>
 
 <script>

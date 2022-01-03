@@ -2,19 +2,16 @@
  <AppHeader />
 
 
-
-
-
   <div class="container-fluid">
     <div class="row">
-      <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="position-sticky pt-3">
+      <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block sidebar collapse" v-if="isAuthenticated">
+        <div class="position-sticky pt-4">
           <ul class="nav flex-column">
             <li class="nav-item">
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'Administrators'}"
-                  :to="{ name: 'Administrators'}"><i class="bi bi-house"></i>
+                  :to="{ name: 'Administrators'}"><i class="bi bi-person"></i>
                 Administrators
               </router-link>
             </li>
@@ -26,6 +23,11 @@
                 Healthcare Professionals
               </router-link>
 
+            </li>
+            <li  class="nav-item">
+            <h6 class="sidebar-heading nav-link mt-3 mb-1">
+              <span>Patients</span>
+            </h6>
             </li>
             <li class="nav-item" >
               <router-link
@@ -53,12 +55,19 @@
                 PRCs
               </router-link>
             </li>
+            <li  class="nav-item">
+              <h6 class="sidebar-heading nav-link mt-3 mb-1">
+                <span>Indicators</span>
+              </h6>
+            </li>
+            <li  class="nav-item">
             <router-link
                 class="nav-link"
                 :class="{active: $route.name === 'UserIndicators'}"
                 :to="{ name: 'UserIndicators'}"><i class="bi bi-house"></i>
               Indicators
             </router-link>
+          </li>
 
             <li  class="nav-item">
               <router-link
@@ -70,92 +79,49 @@
                 </li>
             <li  class="nav-item">
               <router-link
+                  class="nav-link"
                   :class="{active: $route.name === 'TreatmentTypes'}"
                   :to="{ name: 'TreatmentTypes'}"><i class="bi bi-house"></i>
                 TreatmentTypes
               </router-link>
             </li>
-
-            <!-- VCard Item Menu -->
-            <li  class="nav-item">
-
-            </li>
-            <!-- Administrators Item Menu -->
-            <li  class="nav-item d-flex justify-content-between align-items-center pe-3">
-
-
-            </li>
-            <!-- "bi bi-bar-chart-line" -->
-            <li class="nav-item">
-
-
-            </li>
           </ul>
-          <div class="d-block d-md-none">
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-              <span>User</span>
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item" >
+          <div class="d-block d-md-none nav-profile">
+            <div class="dropdown-divider"></div>
+            <!-- Unauthenticated user -->
+            <div class="nav-item pb-3" v-if="!isAuthenticated">
+              <h6 class="sidebar-heading nav-link mt-3 mb-1">
+                <span>Unauthenticated</span>
+              </h6>
+              <div class="nav-link">
+                <router-link
+                    class="btn btn-primary btn-sm btn-block d-block w-100"
+                    :class="{active: $route.name === 'Login'}"
+                    :to="{ name: 'Login'}"
+                ><i class="bi bi-person"></i>
+                  Login
+                </router-link>
+              </div>
+            </div>
 
-              </li>
-              <li class="nav-item"
-                  >
-
-              </li>
-              <li  class="nav-item">
-
-              </li>
-              <li class="nav-item dropdown"
-                  >
-                <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdownMenuLink2"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                >
-                  <img
-                      :src="notImplementedYet"
-                      class="rounded-circle z-depth-0 avatar-img"
-                      alt="avatar image"
-                  >
-                  <span class="avatar-text">Username</span>
-                </a>
-                <ul
-                    class="dropdown-menu"
-                    aria-labelledby="navbarDropdownMenuLink2"
-                >
-                  <li>
-
-                  </li>
-                  <li>
-
-                  </li>
-                  <li>
-                    <router-link
-                        class="nav-link"
-                        :class="{active: $route.name === 'Login'}"
-                        :to="{ name: 'Login'}"
-                    ><i class="bi bi-box-arrow-in-right"></i>
-                      Login
-                    </router-link>
-
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li>
-                    <a class="dropdown-item" @click.prevent="logout"><i class="bi bi-arrow-right"></i>Logout</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <!-- Authenticated user -->
+            <div class="nav-item pb-3" v-if="isAuthenticated">
+              <h6 class="sidebar-heading nav-link mt-3 mb-1">
+                <span>Authenticated User</span>
+              </h6>
+              <div class="nav-link">
+                <h6>{{authenticatedName}}</h6>
+              </div>
+              <div class="nav-link">
+                <a class=" btn btn-danger btn-sm btn-block d-block w-100"
+                    @click.prevent="userLogout"
+                ><i class="bi bi-power"></i>Logout</a>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <main class="col-12  p-md-4" :class="{'ms-sm-auto col-md-9  col-lg-10': isAuthenticated}">
         <router-view></router-view>
       </main>
     </div>
@@ -191,11 +157,18 @@ export default {
         return true
       return false
     },
+    authenticatedName() {
+      return this.$store.state.user.name;
+    }
   },
   created () {
-
+      document.title = "Home | Cardiacos Monitoring System"
   },
   methods: {
+    userLogout() {
+      this.$store.dispatch('logout')
+      this.$router.push({name: 'Login'})
+    }
   },
 
   mounted () {
@@ -212,9 +185,7 @@ export default {
 }
 </script>
 
-<style lang="css">
-
-
+<style >
 
 
 </style>

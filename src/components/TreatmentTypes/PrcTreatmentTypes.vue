@@ -24,7 +24,7 @@
         <i class="bi bi-xs bi-plus-circle"></i> Add Treatment Type
       </button>
     </div>
-
+  </div>
     <treatment-types-table
     :treatmentTypes="treatmentTypes"
     :show-delete-button="true"
@@ -33,9 +33,7 @@
     @cancel="cancel"
     ></treatment-types-table>
 
-
   </div>
-  <hr>
 </template>
 
 <script>

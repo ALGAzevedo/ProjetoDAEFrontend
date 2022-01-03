@@ -5,12 +5,12 @@
       :msg="`Do you really want to delete the user ${ hpToDeleteName } ?`"
       @confirmed="deleteConfirmed">
   </confirmation-dialog>
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between my-3">
     <div class="mx-2">
-      <h3 class="mt-4">Healthcare Professionals</h3>
+      <h3 >Healthcare Professionals</h3>
     </div>
     <div class="mx-2 total-records">
-      <h5 class="mt-4">Total: {{ totalHP }}</h5>
+      <h5>Total: {{ totalHP }}</h5>
     </div>
   </div>
   <hr>
@@ -35,6 +35,7 @@
       @edit="editHP"
       @delete="deleteHP"
   ></users-table>
+  </div>
 </template>
 
 

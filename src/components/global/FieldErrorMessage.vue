@@ -25,7 +25,9 @@ export default {
 
 <style scoped>
 .validation-error {
-  color: red;
   font-size: 0.85rem;
+  width: 100%;
+  margin-top: 0.25rem;
+  color: #dc3545;
 }
 </style>

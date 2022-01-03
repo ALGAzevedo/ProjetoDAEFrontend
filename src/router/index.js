@@ -238,11 +238,10 @@ const routes = [
 ]
 
 const router = createRouter({
+    mode: 'history',
     history: createWebHistory(),
     routes
 })
-
-
 
 router.beforeEach((to, from, next) => {
     if ((to.name == 'Login') || (to.name == 'Home') || (to.name == 'Register') || (to.name == 'Confirm')) {
@@ -348,12 +347,6 @@ router.beforeEach((to, from, next) => {
 
 
     next()
-
-
-
 })
-
-
-
 
 export default router

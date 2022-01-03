@@ -1,17 +1,32 @@
 <template>
   <div class="row">
-  <div class="col-12 col-lg-10">
-  <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
+  <div class="col-xl-10 col-xxl-6">
+    <div class="main-card bg-white">
+  <h3 class="mt-2 mb-3">{{ userTitle }}</h3>
   <form class="row g-3 needs-validation" @submit.prevent="save">
 
-      <div class="form-group col-12 col-md-3">
+      <div class="form-group col-12 col-md-6">
         <label for="fUserName" class="form-label">Name</label>
         <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
-               required v-model="editingUser.name">
+               required v-model="editingUser.name" :class="{ 'is-invalid': errorsMsg }">
         <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
       </div>
 
-      <div class="form-group col-12 col-md-3">
+    <div class="form-group col-12 col-md-6">
+      <label for="inputEmail4" class="form-label">Email</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+             required v-model="editingUser.email">
+      <field-error-message :errors="errorsMsg" fieldName="email"></field-error-message>
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <label for="inputUsername" class="form-label">Username</label>
+      <input type="email" class="form-control" id="inputUsername" placeholder="Username"
+             required v-model="editingUser.username">
+      <field-error-message :errors="errorsMsg" fieldName="username"></field-error-message>
+    </div>
+
+
+      <div class="form-group col-12 col-md-6">
         <label for="inputAddress" class="form-label">Birthdate</label>
         <input type="Date" class="form-control" id="inputBirthday" placeholder=""
                required v-model="editingUser.birthdate">
@@ -21,7 +36,7 @@
 
       <div class="form-group  col-12 col-md-3">
         <label for="inputGender" class="form-label">Gender</label>
-        <select id="inputGender" class="form-control" v-model="editingUser.gender">
+        <select id="inputGender" class="form-select" v-model="editingUser.gender">
           <option v-for="gender in genders" :value="gender" v-bind:key="gender">{{gender}} </option>
         </select>
         <field-error-message :errors="errorsMsg" fieldName="gender"></field-error-message>
@@ -29,7 +44,7 @@
 
       <div class="form-group  col-12 col-md-3">
         <label for="inputMaritalStatus" class="form-label">Marital Status</label>
-        <select id="inputMaritalStatus" class="form-control" v-model="editingUser.maritalStatus">
+        <select id="inputMaritalStatus" class="form-select" v-model="editingUser.maritalStatus">
           <option v-for="status in maritalStatus" :value="status" v-bind:key="status">{{status}} </option>
         </select>
         <field-error-message :errors="errorsMsg" fieldName="maritalStatus"></field-error-message>
@@ -73,9 +88,9 @@
         <field-error-message :errors="errorsMsg" fieldName="city"></field-error-message>
       </div>
 
-      <div class="form-group col-12 col-md-2">
+      <div class="form-group col-12 col-md-6">
         <label for="inputAddress" class="form-label">Country</label>
-        <select id="inputCountry" class="form-control" v-model="editingUser.country">
+        <select id="inputCountry" class="form-select" v-model="editingUser.country">
           <option v-for="country in countries" :value="country" v-bind:key="country">{{country}} </option>
         </select>
         <field-error-message :errors="errorsMsg" fieldName="country"></field-error-message>
@@ -84,7 +99,7 @@
 
 
       <div class="form-group col-12 col-md-4">
-        <label for="inputEmergencyPhoneNumber" class="form-label">Emergency Phone Number</label>
+        <label for="inputEmergencyPhone" class="form-label">Emergency Phone Number</label>
         <input type="text"  class="form-control" id="inputEmergencyPhone" placeholder=""
                required v-model="editingUser.emergencyPhoneNumber">
         <field-error-message :errors="errorsMsg" fieldName="emergencyPhoneNumber"></field-error-message>
@@ -104,28 +119,23 @@
         <field-error-message :errors="errorsMsg" fieldName="socialSecurityNumber"></field-error-message>
       </div>
 
-
-
-    <div class="row px-0 mx-0" v-if="showInstitutionalEmail">
-      <div class="form-group col-12 col-md-6">
-        <label for="inputInstitutionalPhoneNumber" class="form-label">Institutional Phone Number</label>
+      <div class="form-group col-12 col-md-6" v-if="showInstitutionalPhoneNumber">
+        <label for="inputIntitutionalPhone" class="form-label">Institutional Phone Number</label>
         <input type="text"  class="form-control" id="inputIntitutionalPhone" placeholder=""
                required v-model="editingUser.institutionalPhone">
         <field-error-message :errors="errorsMsg" fieldName="institutionalPhone"></field-error-message>
       </div>
 
-      <div class="form-group col-12 col-md-6 mt-3 mt-md-0">
-        <label for="inputInstEmail" class="form-label">Institutonal Email</label>
+      <div class="form-group col-12 col-md-6 " v-if="showInstitutionalEmail">
+        <label for="inputInstitutionalEmail" class="form-label">Institutonal Email</label>
         <input type="text" class="form-control" id="inputInstitutionalEmail" placeholder=""
                required v-model="editingUser.institutionalEmail">
         <field-error-message :errors="errorsMsg" fieldName="institutionalEmail"></field-error-message>
       </div>
 
-    </div>
-
     <div class="col-12"><hr></div>
 
-    <div class="d-flex mt-3 flex-wrap">
+    <div class="d-flex mt-3 flex-wrap justify-content-between">
       <div class="p-2">
         <button
             type="button"
@@ -137,13 +147,14 @@
       <div class="p-2">
         <button
             type="button"
-            class="btn btn-light px-5"
+            class="btn btn-secondary px-5"
             @click="cancel"
         >Cancel
         </button>
       </div>
     </div>
   </form>
+  </div>
   </div>
   </div>
 </template>

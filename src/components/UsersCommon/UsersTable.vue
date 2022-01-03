@@ -1,13 +1,14 @@
 <template>
+  <div class="table-responsive">
   <table class="table">
     <thead>
     <tr>
       <th class="align-middle">Name</th>
       <th class="align-middle">Username</th>
       <th class="align-middle">Email</th>
-      <th v-if="showInstitutionalEmail" class="align-middle">Institutional email</th>
+      <th v-if="showInstitutionalEmail" class="align-middle d-none d-block-xxl">Institutional email</th>
       <th class="align-middle">Phone</th>
-      <th v-if="showInstitutionalPhoneNumber" class="align-middle">Institutional Phone</th>
+      <th v-if="showInstitutionalPhoneNumber" class="align-middle d-none d-block-xxl">Institutional Phone</th>
       <th class="align-middle">Gender</th>
       <th v-if="showSocialSecurityNumber" class="align-middle">Social Security</th>
       <th v-if="showEmergencyPhoneNumber" class="align-middle">Emergency Phone</th>
@@ -19,9 +20,9 @@
       <td class="align-middle">{{ user.name }}</td>
       <td class="align-middle">{{ user.username }}</td>
       <td class="align-middle">{{ user.email }}</td>
-      <td v-if="showInstitutionalEmail" class="align-middle">{{ user.institutionalEmail }}</td>
+      <td v-if="showInstitutionalEmail" class="align-middle d-none d-block-xxl">{{ user.institutionalEmail }}</td>
       <td class="align-middle">{{ user.phoneNumber }}</td>
-      <td v-if="showInstitutionalPhoneNumber" class="align-middle">{{ user.institutionalPhone }}</td>
+      <td v-if="showInstitutionalPhoneNumber" class="align-middle d-none d-block-xxl">{{ user.institutionalPhone }}</td>
       <td class="align-middle">{{ user.gender }}</td>
       <td v-if="showSocialSecurityNumber" class="align-middle">{{ user.socialSecurityNumber }}</td>
       <td v-if="showEmergencyPhoneNumber" class="align-middle">{{ user.emergencyPhoneNumber }}</td>
@@ -45,6 +46,7 @@
     </tr>
     </tbody>
   </table>
+  </div>
 </template>
 
 <script>

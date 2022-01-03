@@ -1,7 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-12 col-lg-3 mx-auto">
-      <h3 class="mt-5 mb-3">Ativate your account</h3>
+    <div class="col-12 col-sm-8 col-md-5 col-xxl-3 mx-auto">
+      <div class="card auth-form">
+        <div class="card-body">
+          <h3 class="mb-3 fw-bold">Set New Password</h3>
   <form
       class="row g-3 needs-validation"
       novalidate
@@ -11,18 +13,19 @@
     <div class="form-group col-12 ">
       <label
           for="inputPassword"
-          class="form-label fs-5"
+          class="form-label fs-label"
       >Password</label>
       <input
           type="password"
           class="form-control form-control-lg"
           id="inputPassword"
+          placeholder="Password"
           required
           v-model.trim="v$.form.password.$model"
           :class="{ 'is-invalid': v$.form.password.$errors.length }"
       >
       <div class="invalid-input" v-for="(error, index) of v$.form.password.$errors" :key="index">
-        <div class="error-msg">{{ error.$message }}</div>
+        <div class="error-msg fs-label">{{ error.$message }}</div>
       </div>
 
     </div>
@@ -30,18 +33,19 @@
     <div class="form-group col-12 ">
         <label
             for="inputConfirmPassword"
-            class="form-label fs-5"
+            class="form-label fs-label"
         >Confirm Password</label>
         <input
             type="password"
             class="form-control form-control-lg"
             id="inputConfirmPassword"
+            placeholder="Password confirmation"
             required
             v-model.trim="v$.form.confirmPassword.$model"
             :class="{ 'is-invalid': v$.form.confirmPassword.$errors.length }"
         >
       <div class="invalid-input" v-for="(error, index) of v$.form.confirmPassword.$errors" :key="index">
-        <div class="error-msg">{{ error.$message }}</div>
+        <div class="error-msg fs-label">{{ error.$message }}</div>
       </div>
       </div>
     <div class="form-group col-12 ">
@@ -54,6 +58,8 @@
       </button>
     </div>
   </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
