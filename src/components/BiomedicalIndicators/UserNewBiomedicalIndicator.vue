@@ -1,108 +1,92 @@
 <template>
-  <div class="d-flex justify-content-between">
-    <div class="mx-2">
-      <h3 class="mt-4">Add New Indicator</h3>
-    </div>
-  </div>
-  <hr>
   <div class="row">
-    <div class="col-4">
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr
-            v-for="indicator in indicators"
-            :key="indicator.id"
-        >
-          <td>{{ indicator.name }}</td>
-          <td class="text-end">
-            <div>
-              <button
-                  class="btn btn-xs btn-light"
-                  @click="expand(indicator)"
-              ><i class="bi bi-xs bi-arrow-right"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="col-12 col-lg-4">
+      <div class="main-card bg-white">
+        <h3 class="mt-2 mb-3">Add New Indicator</h3>
 
+        <table class="table">
+          <thead class="visually-hidden">
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+              v-for="indicator in indicators"
+              :key="indicator.id"
+          >
+            <td>{{ indicator.name }}</td>
+            <td class="text-end">
+              <div>
+                <button
+                    class="btn btn-xs btn-light"
+                    @click="expand(indicator)"
+                ><i class="bi bi-xs bi-arrow-right"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
     </div>
 
+    <div class="col-12 col-lg-6">
+      <div class="main-card bg-white"  v-if="indicator">
+        <form class="row g-3 needs-validation" @submit.prevent="save" >
+          <div class="form-group col-12 col-md-4" v-if="isQualitative">
+              <label for="inputVal" class="form-label">Possible Values</label>
+              <select id="inputVal" class="form-select" v-model="editingmeasure.value">
+                <option v-for="val in indicator.possibleValues" :value="val" v-bind:key="val">{{ val }}</option>
+              </select>
+              <field-error-message :errors="errors" fieldName="possibleValues"></field-error-message>
+          </div>
 
-    <div class="col-8">
-      <div class="col-12" v-if="indicator">
-        <div v-if="isQualitative" class="col-2">
-          <label for="inputVal" class="form-label">Possible Values</label>
-          <select id="inputVal" class="form-control" v-model="editingmeasure.value">
-            <option v-for="val in indicator.possibleValues" :value="val" v-bind:key="val">{{ val }}</option>
-          </select>
-          <field-error-message :errors="errors" fieldName="possibleValues"></field-error-message>
-        </div>
-
-        <div v-if="!isQualitative" class="col-2">
-          <div>
+          <div v-if="!isQualitative" class="form-group col-12 col-md-4">
             <label for="fname" class="form-label">Value</label>
             <input type="text" class="form-control" name="name" id="fname" placeholder="Value"
                    required v-model="editingmeasure.value">
-
+            <field-error-message :errors="errors" fieldName="value"></field-error-message>
           </div>
-          <field-error-message :errors="errors" fieldName="value"></field-error-message>
 
-        </div>
-
-        <div class="col-2">
-          <div>
+          <div class="form-group col-12 col-md-4">
             <label for="fdate" class="form-label">Date</label>
             <input type="date" class="form-control" name="name" id="fdate" placeholder="Value"
                    required v-model="editingmeasure.date">
-
-          </div>
-          <field-error-message :errors="errors" fieldName="date"></field-error-message>
-
-
-
-        </div>
-        <div class="col-2">
-          <label for="ftime" class="form-label">Time of day</label>
-          <input type="time" id="appt" name="appt"
-                 min="00:00" max="24:00" required
-          v-model="editingmeasure.time">
-
-        </div>
-
-
-        <div class="col-10">
-          <label for="fname" class="form-label">Adicional Info</label>
-          <input type="text" class="form-control" name="name" id="fname" placeholder="Description"
-                 required v-model="editingmeasure.description">
-          <field-error-message :errors="errors" fieldName="description"></field-error-message>
-
-          <div class="my-3 d-flex justify-content-end">
-            <button
-                type="button"
-                class="btn btn-primary px-5"
-                @click="save"
-            >Save
-            </button>
+            <field-error-message :errors="errors" fieldName="date"></field-error-message>
           </div>
 
-        </div>
+          <div class="form-group col-12 col-md-4">
+            <label for="appt" class="form-label">Time of day</label>
+            <input type="time" id="appt" name="appt" class="form-control"
+                   min="00:00" max="24:00" required
+                   v-model="editingmeasure.time">
 
+          </div>
+
+          <div class="form-group col-12 col-md-12">
+            <label for="addInfo" class="form-label">Adicional Info</label>
+            <input type="text" class="form-control" name="name" id="addInfo" placeholder="Description"
+                   required v-model="editingmeasure.description">
+            <field-error-message :errors="errors" fieldName="description"></field-error-message>
+          </div>
+
+          <div class="form-group ">
+            <div class="d-grid gap-2 d-md-block">
+              <button class="btn btn-primary px-5" type="button" @click="save">Save</button>
+            </div>
+          </div>
+
+        </form>
 
       </div>
-
-
     </div>
 
-
   </div>
+
+
 
 </template>
 

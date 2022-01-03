@@ -5,13 +5,18 @@
       :msg="`Do you really want to delete the indicator ${ indicatorToDeleteId } ?`"
       @confirmed="deleteConfirmed">
   </confirmation-dialog>
-  <div>
-    <div class="row mt-5">
-      <div class="col">
-        Biomedical Indicators History
-      </div>
+
+  <div class="d-flex justify-content-between my-3">
+    <div class="mx-2">
+      <h3 >Biomedical Indicators History</h3>
+    </div>
+    <div class="mx-2 ">
+      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewIndicator">
+        <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
+      </button>
     </div>
   </div>
+  <div class="main-card bg-white">
   <IndicatorsFilterBody
       :show-name="false"
       :show-username="false"
@@ -19,16 +24,11 @@
   >
 
   </IndicatorsFilterBody>
+    <hr class="mt-4">
   <div>
-    <div class="row m-5">
-      <div class="text-end">
-        <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewIndicator">
-          <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
-        </button>
-      </div>
-    </div>
-    <div class="row m-5" v-if="indicatorsName">
-      <div class="col-5">
+    <div class="row mt-4" v-if="indicatorsName">
+      <div class="col-12 col-md-5">
+        <div class="table-responsive">
         <table class="table">
           <thead>
           <tr>
@@ -55,7 +55,9 @@
           </tbody>
         </table>
       </div>
-      <div class="col-7" v-if="selectedIndicator">
+      </div>
+      <div class="col-12 col-md-7" v-if="selectedIndicator">
+        <div class="table-responsive">
         <table class="table">
           <thead>
           <tr>
@@ -70,9 +72,9 @@
               v-for="indicator in selectedIndicator"
               :key="indicator.id"
           >
-            <th>{{ indicator.date }}</th>
-            <th>{{ indicator.value }}</th>
-            <th>{{ indicator.description }}</th>
+            <td>{{ indicator.date }}</td>
+            <td>{{ indicator.value }}</td>
+            <td>{{ indicator.description }}</td>
             <td class="text-end align-middle">
               <div class="d-flex justify-content-end">
                 <button class="btn btn-xs btn-light" @click="editClick(indicator)">
@@ -87,7 +89,9 @@
           </tbody>
         </table>
       </div>
+      </div>
     </div>
+  </div>
   </div>
 </template>
 

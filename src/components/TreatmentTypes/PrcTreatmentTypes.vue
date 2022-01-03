@@ -13,7 +13,7 @@
       <h5 class="mt-4">Total: {{ totalTreatmentTypes }}</h5>
     </div>
   </div>
-  <hr>
+  <div class="main-card bg-white">
   <div class="mb-3 d-flex justify-content-between flex-wrap">
     <div class="mx-2 mt-2 flex-grow-1 filter-div">
       <label for="selectName" class="form-label">Filter by Name:</label>
@@ -24,7 +24,7 @@
         <i class="bi bi-xs bi-plus-circle"></i> Add Treatment Type
       </button>
     </div>
-
+  </div>
     <treatment-types-table
     :treatmentTypes="treatmentTypes"
     :show-delete-button="true"
@@ -33,9 +33,7 @@
     @cancel="cancel"
     ></treatment-types-table>
 
-
   </div>
-  <hr>
 </template>
 
 <script>

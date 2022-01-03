@@ -5,15 +5,17 @@
       :msg="`Do you really want to delete the user ${ adminToDeleteName } ?`"
       @confirmed="deleteConfirmed">
   </confirmation-dialog>
-  <div class="d-flex justify-content-between">
+
+  <div class="d-flex justify-content-between my-3">
     <div class="mx-2">
-      <h3 class="mt-4">Admins</h3>
+      <h3>Admins</h3>
     </div>
     <div class="mx-2 total-records">
-      <h5 class="mt-4">Total: {{ totalAdmins }}</h5>
+      <h5 >Total: {{ totalAdmins }}</h5>
     </div>
   </div>
-  <hr>
+
+  <div class="main-card bg-white">
   <div class="mb-3 d-flex justify-content-between flex-wrap">
     <div class="mx-2 mt-2 flex-grow-1 filter-div">
       <label for="selectName" class="form-label">Filter by Name:</label>
@@ -39,6 +41,7 @@
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>
+  </div>
 </template>
 
 

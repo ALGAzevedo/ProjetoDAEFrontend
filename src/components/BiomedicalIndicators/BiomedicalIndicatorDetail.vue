@@ -1,17 +1,13 @@
 <template>
   <div class="row">
-    <div class="col-12 col-lg-10">
-      <h3 class="mt-5 mb-3">{{ userTitle }}</h3>
-      <form class="row g-3 needs-validation" @submit.prevent="save">
+    <div class="col-12 col-xl-10 col-xxl-6">
+      <div class="main-card bg-white">
+      <h3 class="mt-2 mb-3">{{ userTitle }}</h3>
+      <form class="row g-2 needs-validation" @submit.prevent="save">
 
-        <div class="form-group col-12 col-md-6">
-          <label for="fUserName" class="form-label">Name</label>
-          <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
-                 required v-model="editingBiomedical.name">
-          <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
-        </div>
-        <div class="form-group col-12 col-md-7">
-          <span class="form-label d-block mb-2 ">Pick ... </span>
+
+        <div class="form-group col-12 col-xl-7">
+          <span class="form-label d-block mb-2 ">Select indicator type</span>
           <div class="form-check-inline">
             <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option1" autocomplete="off"
                    value="QUALITATIVE">
@@ -27,9 +23,15 @@
           <field-error-message :errors="errorsMsg" fieldName="indicatorType"></field-error-message>
         </div>
 
+        <div class="form-group col-12 col-md-6">
+          <label for="fUserName" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" id="fUserName" placeholder="Indicator name"
+                 required v-model="editingBiomedical.name">
+          <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
+        </div>
 
-
-        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
+        <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
+        <div class="row mt-2" >
 
           <div class="col-12 col-md-4">
             <label for="inputMin" class="form-label">Min</label>
@@ -49,29 +51,31 @@
             <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity">
             <field-error-message :errors="errorsMsg" fieldName="unity"></field-error-message>
           </div>
-
         </div>
 
-        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUALITATIVE'">
-          <div class="col-12">
-            <div class="col-12 col-lg-3 mt-3">
-              <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField">
-                <i class="bi bi-xs bi-plus-circle"></i> Add new field
-              </button>
-              <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
-            </div>
+        </div>
+        <!--        ./form-group-->
+        <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUALITATIVE'">
+        <div class="row mt-2" >
+              <div class="col-12 my-2">
+                <button type="button" class="btn btn-sm btn-success btn-block" @click="AddField">
+                  <i class="bi-xs bi-plus-circle"></i> Add new field
+                </button>
+                <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
+              </div>
 
-          </div>
-
-            <div class="col-12 col-md-4" v-for="(field, key) in quantiFields" :key="key">
+            <div class="col-12 col-md-6 mb-1" v-for="(field, key) in quantiFields" :key="key">
               <label for="inputAlta" class="form-label">Value</label>
-              <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta">
-              <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(key)">
-                <i class="bi bi-trash"></i>
-                Remove
-              </button>
+              <div class="input-group">
+                <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta">
+                <button type="button" class="btn btn-sm btn-danger " @click="RemoveField(key)">
+                  <i class="bi-xs bi-trash"></i> Remove
+                </button>
+              </div>
+            </div>
             </div>
           </div>
+<!--        ./form-group-->
 
 
 
@@ -79,25 +83,14 @@
             <hr>
           </div>
 
-          <div class="d-flex mt-3 flex-wrap">
-            <div class="p-2">
-              <button
-                  type="button"
-                  class="btn btn-primary px-5"
-                  @click="save"
-              >Save
-              </button>
-            </div>
-            <div class="p-2">
-              <button
-                  type="button"
-                  class="btn btn-light px-5"
-                  @click="cancel"
-              >Cancel
-              </button>
-            </div>
+        <div class="form-group ">
+          <div class="d-grid gap-2 d-md-block">
+            <button class="btn btn-primary me-md-3 px-5" type="button" @click="save">Save</button>
+            <button class="btn btn-secondary px-5" type="button"  @click="cancel">Cancel</button>
           </div>
+        </div>
       </form>
+    </div>
     </div>
   </div>
 </template>
@@ -152,7 +145,7 @@ export default {
       let flag = true
 
       if(!this.editingBiomedical.name || this.editingBiomedical.name.trim().length == 0) {
-        this.errorsMsg['name']='name cant be null'
+        this.errorsMsg['name']='Name cant be empty'
         flag = false
       }
 

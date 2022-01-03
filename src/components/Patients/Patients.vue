@@ -13,7 +13,10 @@
       <h5 class="mt-4">Total: {{ totalPatients }}</h5>
     </div>
   </div>
-  <hr>
+
+
+  <div class="main-card bg-white">
+
   <div class="mb-3 d-flex justify-content-between flex-wrap">
     <div class="mx-2 mt-2 flex-grow-1 filter-div">
       <label for="selectName" class="form-label">Filter by Name:</label>
@@ -40,6 +43,7 @@
       @delete="deletePatient"
       @showPrcsList="showPrcsList"
   ></users-table>
+  </div>
 </template>
 
 

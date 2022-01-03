@@ -1,9 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top flex-md-nowrap p-0 shadow mh-60">
     <div class="container-fluid px-lg-4">
-      <a class="navbar-brand col-md-3 col-lg-2 me-0" href="/">
+      <router-link
+          class="navbar-brand col-md-3 col-lg-2 me-0"
+          :to="{ name: 'Home'}"
+      >
         <img src="../../assets/cardiacos.svg" alt="" width="" height="32"
-             class="d-inline-block align-text-center"></a>
+             class="d-inline-block align-text-center">
+      </router-link>
+
+
       <button
           id="buttonSidebarExpandId"
           class="navbar-toggler"
@@ -87,7 +93,7 @@ export default {
       return this.$store.state.user;
     },
     authenticatedUsername() {
-      return this.$store.state.user.username;
+      return this.$store.state.user.name;
     }
   }
 }

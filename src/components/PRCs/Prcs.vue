@@ -13,7 +13,9 @@
       <h5 class="mt-4">Total: {{ totalPrcs }}</h5>
     </div>
   </div>
-  <hr>
+
+  <div class="main-card bg-white">
+
   <div class="mb-3 d-flex justify-content-between flex-wrap">
     <div class="mx-2 mt-2 flex-grow-1 filter-div">
       <label for="selectName" class="form-label">Filter by Name:</label>
@@ -35,6 +37,7 @@
       @edit="editPrc"
       @cancel="cancel"
   ></prcs-table>
+  </div>
 </template>
 
 
