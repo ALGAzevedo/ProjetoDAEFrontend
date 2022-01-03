@@ -37,7 +37,6 @@
       @edit="editAdmin"
       @delete="deleteAdmin"
   ></users-table>
-  </div>
 </template>
 
 
