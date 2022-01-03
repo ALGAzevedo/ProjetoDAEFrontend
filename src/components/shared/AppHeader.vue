@@ -30,7 +30,7 @@
                 class="nav-link"
                 :class="{active: $route.name === 'Login'}"
                 :to="{ name: 'Login'}"
-            ><i class="bi bi-box-arrow-in-right"></i>
+            ><i class="bi bi-person"></i>
               Login
             </router-link>
           </li>
@@ -86,6 +86,7 @@ export default {
   methods:{
     userLogout() {
       this.$store.dispatch('logout')
+      this.$router.push({name: 'Login'})
     }
   },
   computed: {

@@ -1,7 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-12 col-md-5 col-xxl-3 mx-auto">
-      <h3 class="mt-5 mb-3">Set New Password</h3>
+    <div class="col-12 col-sm-8 col-md-5 col-xxl-3 mx-auto">
+      <div class="card auth-form">
+        <div class="card-body">
+          <h3 class="mb-3 fw-bold">Set New Password</h3>
   <form
       class="row g-3 needs-validation"
       novalidate
@@ -56,6 +58,8 @@
       </button>
     </div>
   </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>

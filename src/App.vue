@@ -4,7 +4,7 @@
 
   <div class="container-fluid">
     <div class="row">
-      <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+      <nav id="sidebarMenu"  class="col-md-3 col-lg-2 d-md-block sidebar collapse" v-if="isAuthenticated">
         <div class="position-sticky pt-4">
           <ul class="nav flex-column">
             <li class="nav-item">
@@ -121,7 +121,7 @@
           </div>
         </div>
       </nav>
-      <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
+      <main class="col-12  p-md-4" :class="{'ms-sm-auto col-md-9  col-lg-10': isAuthenticated}">
         <router-view></router-view>
       </main>
     </div>
@@ -167,6 +167,7 @@ export default {
   methods: {
     userLogout() {
       this.$store.dispatch('logout')
+      this.$router.push({name: 'Login'})
     }
   },
 
