@@ -15,18 +15,11 @@
     </div>
   </div>
   <hr>
-  <div class="mb-3 d-flex justify-content-between flex-wrap">
-    <div class="mx-2 mt-2 flex-grow-1 filter-div">
-      <label for="selectName" class="form-label">Filter by Name:</label>
-      <input type="text" id="selectName" class="form-control" placeholder="Enter name to search">
+  <biomedical-indicators-table-filter
+    @filter="filter"
+    @add="addIndicator">
+  </biomedical-indicators-table-filter>
 
-    </div>
-    <div class="mx-2 mt-2">
-      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addIndicator">
-        <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
-      </button>
-    </div>
-  </div>
   <hr>
   <IndicatorsTable
       :indicators="indicators"
@@ -40,11 +33,13 @@
 
 
 import IndicatorsTable from "./IndicatorsTable";
+import BiomedicalIndicatorsTableFilter from "./BiomedicalIndicatorsTableFilter";
 
 export default {
   name: "BiomedicalIndicators",
   components: {
     IndicatorsTable,
+    BiomedicalIndicatorsTableFilter
   },
   data() {
     return {
@@ -65,6 +60,28 @@ export default {
   methods: {
     loadIndicators() {
       this.$axios.get('biomedicalindicators')
+          .then((response) => {
+            this.indicators = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
+    parameters(filterBody) {
+      if(filterBody == null)
+        return ''
+      var str = '?'
+      Object.entries(filterBody).map(item => {
+        if(item[1].trim().length > 0)
+          str += item[0]+'='+item[1]+'&'
+      })
+
+      return str
+    },
+
+    filter(filterBody) {
+      const str = this.parameters(filterBody)
+      this.$axios.get('biomedicalindicators'+str)
           .then((response) => {
             this.indicators = response.data
           })
