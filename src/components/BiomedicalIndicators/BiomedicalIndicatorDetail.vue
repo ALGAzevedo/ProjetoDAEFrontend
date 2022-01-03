@@ -14,13 +14,15 @@
           <span class="form-label d-block mb-2 ">Pick ... </span>
           <div class="form-check-inline">
             <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option1" autocomplete="off"
-                   value="QUALITATIVE">
+                   value="QUALITATIVE"
+                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <label class="btn btn-outline-primary" for="option1">Qualitative</label>
 
           </div>
           <div class="form-check-inline">
             <input type="radio" class="btn-check" name="options" v-model="editingBiomedical.newType" id="option2" autocomplete="off"
-                   value="QUANTITATIVE">
+                   value="QUANTITATIVE"
+                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <label class="btn btn-outline-primary" for="option2">Quantitative</label>
 
           </div>
@@ -39,20 +41,23 @@
 
           <div class="col-12 col-md-4">
             <label for="inputMin" class="form-label">Min</label>
-            <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min">
+            <input type="text" class="form-control" id="inputMin" v-model="editingBiomedical.min"
+                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <field-error-message :errors="errorsMsg" fieldName="min"></field-error-message>
           </div>
 
 
           <div class="col-12 col-md-4">
             <label for="inputMax" class="form-label">Max</label>
-            <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max">
+            <input type="text" class="form-control" id="inputMax" v-model="editingBiomedical.max"
+                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <field-error-message :errors="errorsMsg" fieldName="max"></field-error-message>
           </div>
 
           <div class="col-12 col-md-2">
             <label for="inputUnity" class="form-label">Unity</label>
-            <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity">
+            <input type="text" class="form-control" id="inputUnity" v-model="editingBiomedical.unity"
+                   :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
             <field-error-message :errors="errorsMsg" fieldName="unity"></field-error-message>
           </div>
         </div>
@@ -68,14 +73,27 @@
                 <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
               </div>
 
+        <div class="row px-0 mx-0 mt-3" v-if="editingBiomedical.newType === 'QUALITATIVE'">
+          <div class="col-12">
+            <div class="col-12 col-lg-3 mt-3">
+              <button type="button" class="btn btn-xs btn-dark btn-block" @click="AddField"
+                      v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+                <i class="bi bi-xs bi-plus-circle"></i> Add new field
+              </button>
+              <field-error-message :errors="errorsMsg" fieldName="quantiFields"></field-error-message>
+            </div>
+
+          </div>
+
             <div class="col-12 col-md-6 mb-1" v-for="(field, key) in quantiFields" :key="key">
               <label for="inputAlta" class="form-label">Value</label>
-              <div class="input-group">
-                <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta">
-                <button type="button" class="btn btn-sm btn-danger " @click="RemoveField(key)">
-                  <i class="bi-xs bi-trash"></i> Remove
-                </button>
-              </div>
+              <input type="text" v-model="field.name" placeholder="Add a value" class="form-control" id="inputAlta"
+                     :disabled="this.$store.state.user.userType === 'HealthcareProfessional' ? '' : disabled">
+              <button type="button" class="btn btn-sm btn-danger btn-block mt-2" @click="RemoveField(key)"
+                      v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+                <i class="bi bi-trash"></i>
+                Remove
+              </button>
             </div>
             </div>
           </div>
@@ -87,10 +105,25 @@
             <hr>
           </div>
 
-        <div class="form-group ">
-          <div class="d-grid gap-2 d-md-block">
-            <button class="btn btn-primary me-md-3 px-5" type="button" @click="save">Save</button>
-            <button class="btn btn-secondary px-5" type="button"  @click="cancel">Cancel</button>
+          <div class="d-flex mt-3 flex-wrap">
+            <div class="p-2">
+              <button
+                  type="button"
+                  class="btn btn-primary px-5"
+                  @click="save"
+                  v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+              Save
+              </button>
+            </div>
+            <div class="p-2">
+              <button
+                  type="button"
+                  class="btn btn-light px-5"
+                  @click="cancel"
+                  v-if="this.$store.state.user.userType !== 'HealthcareProfessional'">
+              Cancel
+              </button>
+            </div>
           </div>
         </div>
       </form>
