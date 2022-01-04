@@ -79,6 +79,15 @@
                 Patients Indicators
               </router-link>
                 </li>
+            <li class="nav-item" v-if="isHealthcareProfessional" >
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'HealthcareProfessionalIndicators'}"
+                  :to="{ name: 'HealthcareProfessionalIndicators'}"><i class="bi bi-house"></i>
+                Patients Indicators
+              </router-link>
+            </li>
+
             <li  class="nav-item" v-if="isPatient">
               <router-link
                   class="nav-link"

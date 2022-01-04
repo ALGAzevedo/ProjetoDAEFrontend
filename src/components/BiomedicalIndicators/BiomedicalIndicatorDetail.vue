@@ -10,6 +10,7 @@
                  :disabled="operation === 'update' ? '' : disabled">
           <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
         </div>
+
         <div class="form-group col-12 col-md-7">
           <span class="form-label d-block mb-2 ">Pick ... </span>
           <div class="form-check-inline">
@@ -95,7 +96,6 @@
           </div>
           </div>
           <!--        ./form-group-->
-        </div>
 
           <div class="col-12">
             <hr>
@@ -121,9 +121,8 @@
               </button>
             </div>
           </div>
-
       </form>
-    </div>
+  </div>
   </div>
 </template>
 
