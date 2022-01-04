@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       editingTreatment: this.newTreatmentType(),
-      value: null
+      value: null,
     }
   },
   // watch: {
@@ -177,9 +177,11 @@ export default {
     },
     save() {
       // console.log(this.$store.state.user.username)
-      this.editingTreatment.treatmentType = this.value
-      this.editingTreatment.prcCode = this.prcCode
-      this.editingTreatment.healthcareProfessionalUsername = this.$store.state.user.username;
+      if (this.operationType === 'insert') {
+        this.editingTreatment.treatmentType = this.value
+        this.editingTreatment.prcCode = this.prcCode
+        this.editingTreatment.healthcareProfessionalUsername = this.$store.state.user.username;
+      }
       this.$emit('save', this.editingTreatment)
     },
     cancel() {

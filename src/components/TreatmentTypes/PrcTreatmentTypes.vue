@@ -29,6 +29,7 @@
     :treatmentTypes="treatmentTypes"
     :show-delete-button="true"
     :show-edit-button="true"
+    @delete="deleteTreatment"
     @edit="editPrc"
     @cancel="cancel"
     ></treatment-types-table>
@@ -111,23 +112,20 @@ export default {
     cancel() {
       this.$router.back()
     },
-    // deleteConfirmed() {
-    //   this.$axios.delete('administrators/' + this.adminToDelete.username, this.adminToDelete)
-    //       .then(() => {
-    //         this.loadAdmins();
-    //         this.$toast.success(`Account ${this.adminToDelete.username} (${this.adminToDelete.name}) was deleted successfully.`)
-    //       })
-    //       .catch((error) => {
-    //         this.$toast.success('There was an issue deleting this account')
-    //         console.log(error)
-    //       })
-    // },
-    deleteAdmin(admin) {
-      /*TODO admin cant delete himself
-      if (admin.id != this.$store.state.user.id) {
-
-       */
-      this.adminToDelete = admin
+    deleteConfirmed() {
+      console.log(this.treatmentToDelete)
+      this.$axios.delete(this.treatmentToDelete.treatmentType + "/" + this.treatmentToDelete.code)
+          .then(() => {
+            this.loadPrcTreatmentTypes()
+            this.$toast.success(`Treatment #${this.treatmentToDelete.code} (${this.treatmentToDelete.name}) was deleted successfully.`)
+          })
+          .catch((error) => {
+            this.$toast.error('There was an issue deleting this treatment')
+            console.log(error)
+          })
+    },
+    deleteTreatment(treatment) {
+      this.treatmentToDelete = treatment
       let dlg = this.$refs.confirmationDialog
       dlg.show()
     }

@@ -114,7 +114,7 @@ export default {
             this.$toast.success(`Account ${this.adminToDelete.username} (${this.adminToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this account')
+            this.$toast.warning('There was an issue deleting this account')
             console.log(error)
           })
     },

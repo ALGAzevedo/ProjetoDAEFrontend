@@ -110,7 +110,7 @@ export default {
             this.$toast.success(`Account ${this.hpToDelete.username} (${this.hpToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this account')
+            this.$toast.error('There was an issue deleting this account')
             console.log(error)
           })
     },

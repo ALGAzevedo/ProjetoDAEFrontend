@@ -1,8 +1,8 @@
 <template>
   <confirmation-dialog
       ref="confirmationDialog"
-      confirmationBtn="Delete user"
-      :msg="`Do you really want to delete the user ${ prcToDeleteCode } ?`"
+      confirmationBtn="Delete prc"
+      :msg="`Do you really want to delete the PRC ${ prcToDelete } ?`"
       @confirmed="deleteConfirmed">
   </confirmation-dialog>
   <div class="d-flex justify-content-between">
@@ -26,10 +26,12 @@
   <hr>
   <prcs-table
       :prcs="prcs"
+      :errors="errors"
       :show-delete-button="true"
       :show-edit-button="true"
       :show-prc-button="true"
       @edit="editPrc"
+      @delete="deletePrc"
       @cancel="cancel"
   ></prcs-table>
 
@@ -50,6 +52,7 @@ export default {
     return {
       prcs: [],
       prcToDelete: null,
+      errors: null,
     }
   },
   computed: {
@@ -60,7 +63,7 @@ export default {
 
     totalPrcs() {
       return this.prcs.length
-    }
+    },
   },
   methods: {
     loadPrcs() {
@@ -76,7 +79,8 @@ export default {
       this.$router.push({name: 'NewAdministrator'})
     },
     editPrc(prc) {
-      this.$router.push({name: 'EditPrc', params: {prcCode: prc.code}})
+      console.log(prc)
+      this.$router.push({name: 'EditPrc', params: {prcCode: prc.code, username: prc.patientUsername}})
     },
     parameters(filterBody) {
       if(filterBody == null)
@@ -103,23 +107,19 @@ export default {
     cancel() {
       this.$router.back()
     },
-    // deleteConfirmed() {
-    //   this.$axios.delete('administrators/' + this.adminToDelete.username, this.adminToDelete)
-    //       .then(() => {
-    //         this.loadAdmins();
-    //         this.$toast.success(`Account ${this.adminToDelete.username} (${this.adminToDelete.name}) was deleted successfully.`)
-    //       })
-    //       .catch((error) => {
-    //         this.$toast.success('There was an issue deleting this account')
-    //         console.log(error)
-    //       })
-    // },
-    deleteAdmin(admin) {
-      /*TODO admin cant delete himself
-      if (admin.id != this.$store.state.user.id) {
-
-       */
-      this.adminToDelete = admin
+    deleteConfirmed() {
+      this.$axios.delete('prcs/' + this.prcToDelete.code)
+          .then(() => {
+            this.loadPrcs();
+            this.$toast.success(`PRC #${this.prcToDelete.code} (${this.prcToDelete.name}) was deleted successfully.`)
+          })
+          .catch((error) => {
+            this.$toast.error('There was an issue deleting this PRC')
+            console.log(error)
+          })
+    },
+    deletePrc(prc) {
+      this.prcToDelete = prc
       let dlg = this.$refs.confirmationDialog
       dlg.show()
     }

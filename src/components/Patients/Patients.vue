@@ -115,7 +115,7 @@ export default {
             this.$toast.success(`Patient ${this.patientToDelete.username} (${this.patientToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this account')
+            this.$toast.error('There was an issue deleting this account')
             console.log(error)
           })
     },

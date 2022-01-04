@@ -12,6 +12,7 @@
       <th class="align-middle">Gender</th>
       <th v-if="showSocialSecurityNumber" class="align-middle">Social Security</th>
       <th v-if="showEmergencyPhoneNumber" class="align-middle">Emergency Phone</th>
+      <th class="align-middle">Deleted</th>
       <th v-if="showIsSuperAdmin" class="align-middle">Super Admin</th>
     </tr>
     </thead>
@@ -27,6 +28,7 @@
       <td v-if="showSocialSecurityNumber" class="align-middle">{{ user.socialSecurityNumber }}</td>
       <td v-if="showEmergencyPhoneNumber" class="align-middle">{{ user.emergencyPhoneNumber }}</td>
       <td v-if="showIsSuperAdmin" class="align-middle">{{ user.isSuperAdmin }}</td>
+      <td class="align-middle">{{ user.isDeleted ?? '' }}</td>
       <td class="text-end align-middle">
         <div class="d-flex justify-content-end">
           <button type="button" class="btn btn-dark" @click="makeSuper(user)"
@@ -45,7 +47,7 @@
           <button class="btn btn-xs btn-light" @click="editClick(user)" v-if="showEditButton">
             <i class="bi bi-xs bi-pencil"></i>
           </button>
-          <button class="btn btn-xs btn-light" @click="deleteClick(user)" v-if="showDeleteButton">
+          <button class="btn btn-xs btn-light" @click="deleteClick(user)" v-if="!user.isDeleted">
             <i class="bi bi-xs bi-x-square-fill"></i>
           </button>
         </div>
