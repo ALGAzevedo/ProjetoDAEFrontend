@@ -31,12 +31,6 @@
           <field-error-message :errors="errorsMsg" fieldName="indicatorType"></field-error-message>
         </div>
 
-        <div class="form-group col-12 col-md-6">
-          <label for="fUserName" class="form-label">Name</label>
-          <input type="text" class="form-control" name="name" id="fUserName" placeholder="Indicator name"
-                 required v-model="editingBiomedical.name">
-          <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
-        </div>
 
         <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
           <div class="row mt-2">
@@ -100,7 +94,7 @@
             </div>
           </div>
           <!--        ./form-group-->
-
+        </div>
 
           <div class="col-12">
             <hr>
@@ -126,7 +120,7 @@
               </button>
             </div>
           </div>
-        </div>
+
       </form>
     </div>
   </div>
