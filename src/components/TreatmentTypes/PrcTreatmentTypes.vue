@@ -120,7 +120,7 @@ export default {
             this.$toast.success(`Treatment #${this.treatmentToDelete.code} (${this.treatmentToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this treatment')
+            this.$toast.error('There was an issue deleting this treatment')
             console.log(error)
           })
     },

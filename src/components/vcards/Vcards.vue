@@ -164,7 +164,7 @@ export default {
             this.loadVCards();
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this Vcard')
+            this.$toast.error('There was an issue deleting this Vcard')
             if (error.response.status == 405) {
               this.$toast.error(error.response.data.message)
             }

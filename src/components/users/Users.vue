@@ -86,7 +86,7 @@ export default {
             this.$socket.emit('deleteAdmin', this.userToDelete)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this account')
+            this.$toast.error('There was an issue deleting this account')
             console.log(error)
           })
     },

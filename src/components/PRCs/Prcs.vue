@@ -114,7 +114,7 @@ export default {
             this.$toast.success(`PRC #${this.prcToDelete.code} (${this.prcToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this PRC')
+            this.$toast.error('There was an issue deleting this PRC')
             console.log(error)
           })
     },

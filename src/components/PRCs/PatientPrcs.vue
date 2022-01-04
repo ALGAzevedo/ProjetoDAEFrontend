@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     loadPatient(username) {
-      console.log(username)
+      // console.log(username)
       this.$axios.get('patients/' + username)
           .then((response) => {
             this.user = response.data
@@ -110,15 +110,16 @@ export default {
       this.$router.back()
     },
     deleteConfirmed() {
-      console.log(this.prcToDelete)
+      // console.log(this.prcToDelete)
       this.$axios.delete('prcs/' + this.prcToDelete.code)
           .then(() => {
+            // console.log("deleted:", response.data)
             this.loadPatient(this.usernameIn)
             this.loadPatientPrcs(this.usernameIn)
             this.$toast.success(`PRC ${this.prcToDelete.code} (${this.prcToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.success('There was an issue deleting this PRC')
+            this.$toast.error('There was an issue deleting this PRC')
             console.log(error)
           })
     },
