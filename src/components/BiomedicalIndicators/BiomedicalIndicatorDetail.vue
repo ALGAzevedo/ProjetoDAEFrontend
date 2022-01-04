@@ -92,6 +92,7 @@
               </div>
             </div>
           </div>
+          </div>
           <!--        ./form-group-->
 
 
@@ -119,7 +120,6 @@
               </button>
             </div>
           </div>
-        </div>
       </form>
     </div>
   </div>

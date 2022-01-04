@@ -8,7 +8,7 @@
       <div class="form-group col-12 col-md-6">
         <label for="fUserName" class="form-label">Name</label>
         <input type="text" class="form-control" name="name" id="fUserName" placeholder="Nome"
-               required v-model="editingUser.name" :class="{ 'is-invalid': errorsMsg }">
+               required v-model="editingUser.name" >
         <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
       </div>
 
@@ -51,23 +51,7 @@
       </div>
 
 
-      <div class="form-group col-12 col-md-4">
-        <label for="inputEmail4" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
-               required v-model="editingUser.email"
-               :disabled="operationType === 'update' ? '' : disabled">
-        <field-error-message :errors="errorsMsg" fieldName="email"></field-error-message>
-      </div>
-
-        <div class="form-group col-12 col-md-4">
-          <label for="inputUsername" class="form-label">Username</label>
-          <input type="email" class="form-control" id="inputUsername" placeholder="Username"
-                 required v-model="editingUser.username"
-          :disabled="operationType === 'update' ? '' : disabled">
-          <field-error-message :errors="errorsMsg" fieldName="username"></field-error-message>
-        </div>
-
-      <div class="form-group col-12 col-md-4">
+      <div class="form-group col-12 col-md-6">
         <label for="inputAddress" class="form-label">Address</label>
         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"
                required v-model="editingUser.address">
@@ -88,15 +72,13 @@
         <field-error-message :errors="errorsMsg" fieldName="city"></field-error-message>
       </div>
 
-      <div class="form-group col-12 col-md-6">
-        <label for="inputAddress" class="form-label">Country</label>
-        <select id="inputCountry" class="form-select" v-model="editingUser.country">
-          <option v-for="country in countries" :value="country" v-bind:key="country">{{country}} </option>
-        </select>
-        <field-error-message :errors="errorsMsg" fieldName="country"></field-error-message>
-      </div>
-
-
+    <div class="form-group col-12 col-md-6">
+      <label for="inputAddress" class="form-label">Country</label>
+      <select id="inputCountry" class="form-select" v-model="editingUser.country">
+        <option v-for="country in countries" :value="country" v-bind:key="country">{{country}} </option>
+      </select>
+      <field-error-message :errors="errorsMsg" fieldName="country"></field-error-message>
+    </div>
 
       <div class="form-group col-12 col-md-4">
         <label for="inputEmergencyPhone" class="form-label">Emergency Phone Number</label>
