@@ -124,7 +124,7 @@ export default {
       },
     makeSuper(admin) {
       if(!admin.superAdmin) {
-        this.$axios.patch(admin.username+'/super', true)
+        this.$axios.patch('administrators/'+admin.username+'/super', true)
             .then((response) => {
               this.$toast.success('User is Super Admin Now')
               this.user = response.data.data

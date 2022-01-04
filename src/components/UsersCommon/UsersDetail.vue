@@ -12,19 +12,6 @@
         <field-error-message :errors="errorsMsg" fieldName="name"></field-error-message>
       </div>
 
-    <div class="form-group col-12 col-md-6">
-      <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
-             required v-model="editingUser.email">
-      <field-error-message :errors="errorsMsg" fieldName="email"></field-error-message>
-    </div>
-    <div class="form-group col-12 col-md-6">
-      <label for="inputUsername" class="form-label">Username</label>
-      <input type="email" class="form-control" id="inputUsername" placeholder="Username"
-             required v-model="editingUser.username">
-      <field-error-message :errors="errorsMsg" fieldName="username"></field-error-message>
-    </div>
-
 
       <div class="form-group col-12 col-md-6">
         <label for="inputAddress" class="form-label">Birthdate</label>
@@ -270,12 +257,12 @@ export default {
         flag = false
       }
 
-      if(this.showInstitutionalEmail && !this.editingUser.showInstitutionalPhone || this.editingUser.showInstitutionalPhone.trim().length == 0)
+      if(this.showInstitutionalEmail && (!this.editingUser.showInstitutionalPhone || this.editingUser.showInstitutionalPhone.trim().length == 0))
       {
         this.errorsMsg['institutionalPhone']='InstitutionalPhone cant be null'
         flag = false
       }
-      if(this.showInstitutionalPhoneNumber && !this.editingUser.showInstitutionalEmail || this.editingUser.showInstitutionalEmail.trim().length == 0)
+      if(this.showInstitutionalPhoneNumber && (!this.editingUser.showInstitutionalEmail || this.editingUser.showInstitutionalEmail.trim().length == 0))
       {
         this.errorsMsg['institutionalEmail']='InstitutionalEmail cant be null'
         flag = false
