@@ -31,7 +31,8 @@
       :show-institutional-email="true"
       :show-institutional-phone-number="true"
       :show-is-super-admin="false"
-      :show-document-list="false"
+      :show-make-super-admin="false"
+      :show-documents-list="false"
       @edit="editHP"
       @delete="deleteHP"
   ></users-table>

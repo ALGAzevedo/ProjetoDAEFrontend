@@ -28,11 +28,6 @@
   <div>
     <div class="row m-5">
       <div class="text-end">
-        <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewIndicator">
-          <i class="bi bi-xs bi-plus-circle"></i> Add Indicator
-        </button>
-      </div>
-      <div class="text-end">
         <button type="button" class="btn btn-success px-4 btn-adduser" @click="addNewDocument">
           <i class="bi bi-xs bi-plus-circle"></i> Add Document
         </button>

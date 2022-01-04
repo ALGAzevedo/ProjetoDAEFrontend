@@ -31,6 +31,7 @@
           <field-error-message :errors="errorsMsg" fieldName="indicatorType"></field-error-message>
         </div>
 
+
         <div class="form-group bg-lightz p-3z" v-if="editingBiomedical.newType === 'QUANTITATIVE'">
           <div class="row mt-2">
 
@@ -93,7 +94,7 @@
             </div>
           </div>
           <!--        ./form-group-->
-
+        </div>
 
           <div class="col-12">
             <hr>
@@ -119,7 +120,7 @@
               </button>
             </div>
           </div>
-        </div>
+
       </form>
     </div>
   </div>
