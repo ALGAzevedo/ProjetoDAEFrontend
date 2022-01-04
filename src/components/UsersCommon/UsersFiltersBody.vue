@@ -37,6 +37,12 @@
         ><i class="bi bi-search"></i>&nbsp; Filter</button>
       </div>
     </div>
+    <div class="mx-2 mt-2">
+      <button type="button" class="btn btn-success px-4 btn-adduser" @click="addPatient">
+        <i class="bi bi-xs bi-plus-circle"></i> Add New
+      </button>
+      <hr>
+    </div>
   </div>
 
 </template>

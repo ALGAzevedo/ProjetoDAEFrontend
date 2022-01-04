@@ -16,17 +16,11 @@
   <UsersFiltersBody
       :show-institutional-email="false"
       :show-institutional-phone="false"
+      @add="addPatient"
       @filter="filter"
     >
   </UsersFiltersBody>
   <hr>
-  <div class="mx-2 mt-2" v-if="usernameIn === ''">
-    <button type="button" class="btn btn-success px-4 btn-adduser" @click="addPatient">
-      <i class="bi bi-xs bi-plus-circle"></i> Add New
-    </button>
-    <hr>
-  </div>
-
   <div v-if="usernameIn !== ''">
     <div class="mx-2 mt-2">
       <button type="button" class="btn btn-success px-4 btn-adduser" @click="associatePatient">
