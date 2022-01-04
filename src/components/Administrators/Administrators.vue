@@ -94,6 +94,7 @@ export default {
     loadAdmins() {
       this.$axios.get('administrators')
           .then((response) => {
+            console.log(response)
             this.admins = response.data
           })
           .catch((error) => {
@@ -124,10 +125,9 @@ export default {
       },
     makeSuper(admin) {
       if(!admin.superAdmin) {
-        this.$axios.patch('administrators/'+admin.username+'/super', true)
-            .then((response) => {
+        this.$axios.patch('administrators/'+admin.username+'/super' )
+            .then(() => {
               this.$toast.success('User is Super Admin Now')
-              this.user = response.data.data
               this.$router.back()
             })
             .catch((error) => {
