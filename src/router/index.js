@@ -94,6 +94,15 @@ const routes = [
         component: Patients
     },
     {
+        path: '/MyPatients/:usernameIn/patients',
+        name: 'MyPatients',
+        component: Patients,
+        props: route => ({
+            usernameIn: route.params.usernameIn,
+
+        })
+    },
+    {
         path: '/Patient/new',
         name: 'NewPatient',
         component: Patient,

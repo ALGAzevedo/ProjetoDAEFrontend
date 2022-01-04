@@ -16,11 +16,37 @@
   <UsersFiltersBody
       :show-institutional-email="false"
       :show-institutional-phone="false"
-      @add="addPatient"
       @filter="filter"
     >
-
   </UsersFiltersBody>
+  <hr>
+  <div class="mx-2 mt-2" v-if="usernameIn === ''">
+    <button type="button" class="btn btn-success px-4 btn-adduser" @click="addPatient">
+      <i class="bi bi-xs bi-plus-circle"></i> Add New
+    </button>
+    <hr>
+  </div>
+
+  <div v-if="usernameIn !== ''">
+    <div class="mx-2 mt-2">
+      <button type="button" class="btn btn-success px-4 btn-adduser" @click="associatePatient">
+        <i class="bi bi-xs bi-plus-circle"></i> Associate Patient
+      </button>
+      <div class="col-3 text-start">
+        <label for="inputPatientUsername" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputPatientUsername" placeholder="Patient Username" v-model="patientUsernameAssociate">
+      </div>
+    </div>
+    <div class="mx-2 mt-2">
+      <button type="button" class="btn btn-success px-4 btn-adduser" @click="desassociatePatient">
+        <i class="bi bi-xs bi-plus-circle"></i> Desassociate Patient
+      </button>
+      <div class="col-3 text-start">
+        <label for="inputPatientUsernameDesassociate" class="form-label">Username</label>
+        <input type="text" class="form-control" id="inputPatientUsernameDesassociate" placeholder="Patient Username" v-model="patientUsernameDesassociate">
+      </div>
+    </div>
+  </div>
 
   <hr>
   <users-table
@@ -54,10 +80,19 @@ export default {
     UsersTable,
     UsersFiltersBody
   },
+  props: {
+    usernameIn: {
+      type: String,
+      required: false,
+      default: ''
+    },
+  },
   data() {
     return {
       patients: [],
       patientToDelete: null,
+      patientUsernameAssociate: '',
+      patientUsernameDesassociate: ''
     }
   },
   computed: {
@@ -68,6 +103,9 @@ export default {
 
     totalPatients() {
       return this.patients.length
+    },
+    loggedUser(){
+      return this.$store.state.user.username
     }
   },
   methods: {
@@ -93,6 +131,15 @@ export default {
             console.log(error)
           })
     },
+    loadHealthcareProfessionalPatients(username){
+      this.$axios.get('healthcareprofissionals/' + username + '/patients' )
+          .then((response) => {
+            this.patients = response.data
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+    },
     loadPatients() {
       this.$axios.get('patients')
           .then((response) => {
@@ -107,6 +154,30 @@ export default {
     },
     editPatient(patient) {
       this.$router.push({name: 'EditPatient', params: {usernameIn: patient.username}})
+    },
+    associatePatient(){
+      if (this.patientUsernameAssociate !== ''){
+        this.$axios.patch('healthcareprofissionals/' + this.loggedUser + "/patients/" + this.patientUsernameAssociate + '/associate')
+            .then(() => {
+              this.loadHealthcareProfessionalPatients(this.usernameIn)
+              this.$toast.success(`Patient ${this.patientUsername} was associated successfully.`)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
+    },
+    desassociatePatient(){
+      if (this.patientUsernameDesassociate !== ''){
+        this.$axios.patch('healthcareprofissionals/' + this.loggedUser + "/patients/" + this.patientUsernameDesassociate + '/desassociate')
+            .then(() => {
+              this.loadHealthcareProfessionalPatients(this.usernameIn)
+              this.$toast.success(`Patient ${this.patientUsername} was disassociated successfully.`)
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+      }
     },
     deleteConfirmed() {
       this.$axios.delete('patients/' + this.patientToDelete.username, this.patientToDelete)
@@ -134,7 +205,11 @@ export default {
     }
   },
   mounted() {
-    this.loadPatients()
+    if (this.usernameIn == '') {
+      this.loadPatients()
+    }else{
+      this.loadHealthcareProfessionalPatients(this.$store.state.user.username)
+    }
   }
 }
 </script>

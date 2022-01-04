@@ -78,6 +78,14 @@
                 My PRCs
               </router-link>
             </li>
+            <li  class="nav-item" v-if="isHealthcareProfessional">
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'MyPatients'}"
+                  :to="{ name: 'MyPatients', params: {usernameIn: this.$store.state.user.username}}"><i class="bi bi-house"></i>
+                My Patients
+              </router-link>
+            </li>
           </ul>
           <div class="d-block d-md-none nav-profile">
             <div class="dropdown-divider"></div>
