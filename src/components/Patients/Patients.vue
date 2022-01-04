@@ -33,10 +33,12 @@
       :show-institutional-phone-number="false"
       :show-is-super-admin="false"
       :show-document-list="true"
+      :show-make-super-admin="false"
       @edit="editPatient"
       @delete="deletePatient"
       @showPrcsList="showPrcsList"
       @showDocumentsClick="showDocumentsClick"
+
   ></users-table>
 </template>
 

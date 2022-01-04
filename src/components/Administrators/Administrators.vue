@@ -32,10 +32,12 @@
       :show-social-security-number="false"
       :show-institutional-email="false"
       :show-institutional-phone-number="false"
-      :show-pcr-list="false"
+      :show-is-super-admin="true"
+      :showPrcList="false"
       :showDocumentsList="false"
       @edit="editAdmin"
       @delete="deleteAdmin"
+      @makeSuper="makeSuper"
   ></users-table>
 </template>
 
@@ -116,15 +118,29 @@ export default {
           })
     },
     deleteAdmin(admin) {
-      /*TODO admin cant delete himself
-      if (admin.id != this.$store.state.user.id) {
-
-       */
         this.adminToDelete = admin
         let dlg = this.$refs.confirmationDialog
         dlg.show()
+      },
+    makeSuper(admin) {
+      if(!admin.superAdmin) {
+        this.$axios.patch(admin.username+'/super', true)
+            .then((response) => {
+              this.$toast.success('User is Super Admin Now')
+              this.user = response.data.data
+              this.$router.back()
+            })
+            .catch((error) => {
+              console.log(error.response)
+
+                this.$toast.error('User was not created due to unknown server error!')
+
+            })
+
       }
     },
+    },
+
   mounted() {
     this.loadAdmins()
   }

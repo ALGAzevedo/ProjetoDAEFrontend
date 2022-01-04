@@ -29,6 +29,9 @@
       <td v-if="showIsSuperAdmin" class="align-middle">{{ user.isSuperAdmin }}</td>
       <td class="text-end align-middle">
         <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-dark" @click="makeSuper(user)" v-if="showMakeSuperAdmin">Make Super
+
+          </button>
           <button class="btn btn-xs btn-light" @click="showDocumentsClick(user)" v-if="showDocumentsList">
             <i class="bi bi-file-earmark-pdf-fill"></i>
           </button>
@@ -93,6 +96,10 @@ export default {
     showDocumentsList:{
       type: Boolean,
       default: true
+    },
+    showMakeSuperAdmin:{
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -107,6 +114,9 @@ export default {
     },
     showDocumentsClick(user) {
       this.$emit('showDocumentsClick', user)
+    },
+    makeSuper(user) {
+      this.$emit('makeSuper', user)
     }
 
   }
