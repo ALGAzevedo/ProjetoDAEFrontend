@@ -29,7 +29,11 @@
       <td v-if="showIsSuperAdmin" class="align-middle">{{ user.isSuperAdmin }}</td>
       <td class="text-end align-middle">
         <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-dark" @click="makeSuper(user)" v-if="showMakeSuperAdmin">Make Super
+          <button type="button" class="btn btn-dark" @click="makeSuper(user)"
+                  v-if="this.$store.state.user.isSuperAdmin && showMakeSuperAdmin && user.superAdmin">Make Super
+
+          </button>
+          <button type="button" class="btn btn-dark" @click="makeSuper(user)" v-if="showMakeSuperAdmin && !user.superAdmin">Revoke Super
 
           </button>
           <button class="btn btn-xs btn-light" @click="showDocumentsClick(user)" v-if="showDocumentsList">
@@ -116,6 +120,7 @@ export default {
       this.$emit('showDocumentsClick', user)
     },
     makeSuper(user) {
+      console.log(this.$store.state.user)
       this.$emit('makeSuper', user)
     }
 
