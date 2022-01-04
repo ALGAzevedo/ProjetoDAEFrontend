@@ -112,14 +112,18 @@ export default {
     deleteConfirmed() {
       // console.log(this.prcToDelete)
       this.$axios.delete('prcs/' + this.prcToDelete.code)
-          .then(() => {
-            // console.log("deleted:", response.data)
+          .then((response) => {
+            console.log("deleted:", response.data)
             this.loadPatient(this.usernameIn)
             this.loadPatientPrcs(this.usernameIn)
             this.$toast.success(`PRC ${this.prcToDelete.code} (${this.prcToDelete.name}) was deleted successfully.`)
           })
           .catch((error) => {
-            this.$toast.error('There was an issue deleting this PRC')
+            if (error.response.status === 400){
+              this.$toast.error(error.response.data)
+            }else{
+              this.$toast.error('There was an issue deleting this PRC')
+            }
             console.log(error)
           })
     },
