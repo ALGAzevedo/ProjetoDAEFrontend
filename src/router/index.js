@@ -23,7 +23,7 @@ import TreatmentTypes from "../components/TreatmentTypes/PrcTreatmentTypes";
 import TreatmentType from "../components/TreatmentTypes/TreatmentType";
 import DocumentUpload from "../components/Patients/DocumentUpload";
 import DocumentTable from "../components/Patients/DocumentTable";
-import BiomedicalDataHistoryCharts from "../components/Charts/BiomedicalDataHistoryCharts";
+
 
 import store from '../store'
 
@@ -216,12 +216,7 @@ const routes = [
         component: DocumentTable,
         props: true
     },
-    {
-        path: '/BiomedicalDataHistoryCharts',
-        name: 'BiomedicalDataHistoryCharts',
-        component: BiomedicalDataHistoryCharts,
-        props: true
-    },
+
 
 
 
@@ -371,6 +366,43 @@ router.beforeEach((to, from, next) => {
             return
         }
     }
+    if (to.name == 'TreatmentTypes') {
+        if (sessionStorage.getItem('userType') != 'Patient' && sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'PatientPrcs') {
+        if (sessionStorage.getItem('userType') != 'Patient' && sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'NewTreatmentType') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'EditTreatmentType') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'Prcs') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'EditPrc') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+
 
 
     next()
