@@ -269,8 +269,9 @@ router.beforeEach((to, from, next) => {
             return
         }
     }
-    //ONLY SUPER ADMINS CAN CREATE NEW ADMINS
+
     if (to.name == 'NewAdministrator') {
+        console.log(store.state.user)
         if (sessionStorage.getItem('userType') != 'Administrator' || !store.state.user.superAdmin) {
             next(false)
             return
@@ -406,6 +407,12 @@ router.beforeEach((to, from, next) => {
         }
     }
     if (to.name == 'EditPrc') {
+        if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
+            next(false)
+            return
+        }
+    }
+    if (to.name == 'NewPrc') {
         if (sessionStorage.getItem('userType') != 'HealthcareProfessional')  {
             next(false)
             return

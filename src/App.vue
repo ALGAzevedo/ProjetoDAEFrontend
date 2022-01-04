@@ -23,9 +23,6 @@
               </router-link>
 
             </li>
-            <h6 class="sidebar-heading nav-link mt-3 mb-1">
-              <span>Patients</span>
-                </h6>
             <li  class="nav-item">
             <h6 class="sidebar-heading nav-link mt-3 mb-1">
               <span>Patients</span>
@@ -49,7 +46,7 @@
               </router-link>
             </li>
 
-            <li  class="nav-item">
+            <li  class="nav-item" v-if="isHealthcareProfessional">
             <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'Prcs'}"
