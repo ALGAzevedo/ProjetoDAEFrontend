@@ -26,6 +26,7 @@ import DocumentTable from "../components/Patients/DocumentTable";
 
 
 import store from '../store'
+import PatientChart from "../components/Charts/PatientChart";
 
 const routes = [
     {
@@ -88,6 +89,14 @@ const routes = [
         props: true
 
     },
+
+    {
+        path: '/PatientChart',
+        name: 'PatientChart',
+        component: PatientChart
+    },
+
+
     {
         path: '/Patients',
         name: 'Patients',
