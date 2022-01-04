@@ -26,7 +26,7 @@ import DocumentTable from "../components/Patients/DocumentTable";
 import BiomedicalDataHistoryCharts from "../components/Charts/BiomedicalDataHistoryCharts";
 
 import store from '../store'
-import PatientBiomedicalChart from "../components/Charts/PatientBiomedicalChart";
+import PatientChart from "../components/Charts/PatientChart";
 
 const routes = [
     {
@@ -91,9 +91,9 @@ const routes = [
     },
 
     {
-        path: '/PatientBiomedicalChart',
+        path: '/PatientChart',
         name: 'PatientChart',
-        component: PatientBiomedicalChart
+        component: PatientChart
     },
 
 

@@ -23,12 +23,9 @@
               </router-link>
 
             </li>
-            <h6 class="sidebar-heading nav-link mt-3 mb-1">
-              <span>Patients</span>
-                </h6>
             <li  class="nav-item">
             <h6 class="sidebar-heading nav-link mt-3 mb-1">
-              <span>Patients</span>
+              <span>Patient</span>
             </h6>
             </li>
             <li class="nav-item" v-if="isAdministrator || isHealthcareProfessional" >
@@ -65,12 +62,12 @@
               Indicators
             </router-link>
             </li>
-            <li class="nav-item" v-if="isPatient" >
+            <li class="nav-item" v-if="isHealthcareProfessional" >
               <router-link
                   class="nav-link"
                   :class="{active: $route.name === 'PatientChart'}"
                   :to="{ name: 'PatientChart'}"><i class="bi bi-house"></i>
-                PatientBiomedicalChart
+                PatientChart
               </router-link>
             </li>
 
