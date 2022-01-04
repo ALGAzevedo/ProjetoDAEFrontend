@@ -26,6 +26,7 @@
   <hr>
   <prcs-table
       :prcs="prcs"
+      :errors="errors"
       :show-delete-button="true"
       :show-edit-button="true"
       :show-prc-button="true"
@@ -56,6 +57,7 @@ export default {
       user: '',
       prcs: '',
       prcToDelete: null,
+      errors: null,
     }
   },
   computed: {
@@ -100,10 +102,6 @@ export default {
       this.$router.push({name: 'EditPrc', params: {prcCode: prc.code, username: this.usernameIn}})
     },
     deletePrc(prc) {
-      /*TODO admin cant delete himself
-      if (admin.id != this.$store.state.user.id) {
-
-       */
       this.prcToDelete = prc
       let dlg = this.$refs.confirmationDialog
       dlg.show()

@@ -73,14 +73,6 @@
                 Patients Indicators
               </router-link>
                 </li>
-            <li  class="nav-item">
-              <router-link
-                  class="nav-link"
-                  :class="{active: $route.name === 'TreatmentTypes'}"
-                  :to="{ name: 'TreatmentTypes'}"><i class="bi bi-house"></i>
-                TreatmentTypes
-              </router-link>
-            </li>
             <li  class="nav-item" v-if="isPatient">
               <router-link
                   class="nav-link"

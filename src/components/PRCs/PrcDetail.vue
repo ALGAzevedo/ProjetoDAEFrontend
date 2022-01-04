@@ -143,6 +143,22 @@ export default {
           })
       // }
     },
+    splitErrormessage(msg) {
+
+      var erros = msg.split(';');
+
+      var errosTransformed = [[], []];
+      for (var erro of erros) {
+        var temp = erro.split(':');
+        if (temp != undefined && temp.length == 2) {
+          var key = temp[0].trim()
+          var val = temp[1].trim()
+          errosTransformed[key] = val
+        }
+
+      }
+      this.errors = errosTransformed
+    },
     save() {
       this.errors = null
       if (this.operation == 'insert') {
@@ -181,7 +197,7 @@ export default {
       }
     },
     cancel() {
-      this.$emit('cancel', this.prc)
+      this.$router.back()
     },
   },
   mounted() {

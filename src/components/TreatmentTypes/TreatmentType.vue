@@ -85,7 +85,7 @@ export default {
     },
     save(treatment) {
       this.errors = null
-      if (this.operation == 'insert') {
+      if (this.operation === 'insert') {
         console.log(treatment)
         this.$axios.post(treatment.treatmentType, treatment)
             .then((response) => {
@@ -103,19 +103,17 @@ export default {
               }
             })
       } else {
-        this.$axios.put('administrators/' + this.admin.username, this.admin)
+        this.$axios.put(treatment.treatmentType + "/" + treatment.code, treatment)
             .then((response) => {
-              this.$toast.success('Admin "' + response.data.name + '" was updated successfully.')
-              this.admin = response.data
-              this.originalValueStr = this.dataAsString()
+              this.$toast.success('Treatment "' + response.data.name + '" was updated successfully.')
               this.$router.back()
             })
             .catch((error) => {
               if (error.response.status == 400) {
-                this.$toast.error('Admin #' + this.username + ' was not updated due to validation errors!')
+                this.$toast.error('Treatment #' + treatment.name + ' was not updated due to validation errors!')
                 this.errors = error.response.data
               } else {
-                this.$toast.error('Admin #' + this.username + ' was not updated due to unknown server error!')
+                this.$toast.error('Treatment #' + treatment.name + ' was not updated due to unknown server error!')
               }
             })
       }

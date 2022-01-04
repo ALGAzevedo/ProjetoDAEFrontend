@@ -8,6 +8,7 @@
       <th class="align-middle">End Date</th>
       <th class="align-middle">Patient</th>
       <th class="align-middle">Active</th>
+      <th class="align-middle">Deleted</th>
     </tr>
     </thead>
     <tbody>
@@ -17,11 +18,12 @@
       <td class="align-middle">{{ prc.endDate }}</td>
       <td class="align-middle">{{ prc.patientUsername }}</td>
       <td class="align-middle">{{ prc.isActive }}</td>
+      <td class="align-middle">{{ prc.isDeleted }}</td>
       <div class="d-flex justify-content-end">
         <button class="btn btn-xs btn-light" @click="editClick(prc)" v-if="showEditButton">
           <i class="bi bi-xs bi-pencil"></i>
         </button>
-        <button class="btn btn-xs btn-light" @click="deleteClick(prc)" v-if="showDeleteButton">
+        <button class="btn btn-xs btn-light" @click="deleteClick(prc)" v-if="!prc.isDeleted">
           <i class="bi bi-xs bi-x-square-fill"></i>
         </button>
       </div>
