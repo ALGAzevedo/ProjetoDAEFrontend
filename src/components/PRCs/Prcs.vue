@@ -1,10 +1,4 @@
 <template>
-  <confirmation-dialog
-      ref="confirmationDialog"
-      confirmationBtn="Delete user"
-      :msg="`Do you really want to delete the user ${ prcToDeleteCode } ?`"
-      @confirmed="deleteConfirmed">
-  </confirmation-dialog>
   <div class="d-flex justify-content-between">
     <div class="mx-2">
       <h3 class="mt-4">PRCs</h3>

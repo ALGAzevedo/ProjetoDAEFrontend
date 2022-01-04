@@ -81,6 +81,14 @@
                 TreatmentTypes
               </router-link>
             </li>
+            <li  class="nav-item" v-if="isPatient">
+              <router-link
+                  class="nav-link"
+                  :class="{active: $route.name === 'PatientPrcs'}"
+                  :to="{ name: 'PatientPrcs', params: {usernameIn: userName}}"><i class="bi bi-house"></i>
+                My PRCs
+              </router-link>
+            </li>
           </ul>
           <div class="d-block d-md-none nav-profile">
             <div class="dropdown-divider"></div>

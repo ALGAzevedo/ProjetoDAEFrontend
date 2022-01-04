@@ -34,7 +34,7 @@
           <div class="form-group col-12 col-md-12">
             <label for="patientUsername" class="form-label fs-5 fw-bold">Patient Username</label>
             <input type="text" class="form-control" name="name" id="patientUsername" placeholder="Patient Username"
-                   required v-model="prc.patientUsername">
+                   required readonly v-model="patientUsername">
             <field-error-message :errors="errors" fieldName="patientUsername"></field-error-message>
           </div>
         </div>
@@ -68,7 +68,7 @@
       </form>
     </div>
 
-    <PrcTreatmentTypes :prcCode="prcCode"></PrcTreatmentTypes>
+    <PrcTreatmentTypes :prcCode="prcCode" v-if="showTreatments"></PrcTreatmentTypes>
 
   </div>
 </template>
@@ -83,9 +83,15 @@ export default {
     PrcTreatmentTypes
   },
   props: {
+    username: {
+      type: String,
+      required: false,
+      default: ''
+    },
     prcCode: {
       type: Number,
-      required: true
+      required: false,
+      default: -1
     },
     operationType: {
       type: String,
@@ -107,6 +113,7 @@ export default {
         patientUsername: ''
       },
       errors: null,
+      showTreatments: false,
     }
   },
   watch: {
@@ -116,16 +123,15 @@ export default {
   },
   computed: {
     operation() {
-      return (!this.prc) ? 'insert' : 'update'
+      return (this.prcCode === -1) ? 'insert' : 'edit'
     },
+    patientUsername() {
+      return this.username;
+    }
   },
   methods: {
     loadPrc(prcCode) {
       this.errors = null
-      // if (!prcCode) {
-      // this.admin = this.newAdmin()
-      // this.originalValueStr = this.dataAsString()
-      // } else {
       this.$axios.get('prcs/' + prcCode)
           .then((response) => {
             //we need to take type of dto of admin data
@@ -157,6 +163,7 @@ export default {
               }
             })
       } else {
+        this.prc.patientUsername = this.username;
         this.$axios.put('prcs/' + this.prc.code, this.prc)
             .then((response) => {
               this.$toast.success('PRC "' + response.data.name + '" was updated successfully.')
@@ -178,7 +185,12 @@ export default {
     },
   },
   mounted() {
-    this.loadPrc(this.prcCode)
+    if (this.operation === 'edit') {
+      this.showTreatments = true;
+      this.loadPrc(this.prcCode)
+    }
+    console.log(this.username)
+    this.prc.patientUsername = this.username
   },
 }
 </script>

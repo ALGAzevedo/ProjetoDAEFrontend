@@ -9,6 +9,7 @@
       <th class="align-middle">Healthcare Professional</th>
       <th class="align-middle">PRC</th>
       <th class="align-middle">Treatment Type</th>
+      <th class="align-middle">Active</th>
     </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
       <td class="align-middle">{{ treatment.healthcareProfessional.name }}</td>
       <td class="align-middle">{{ treatment.prc.name }}</td>
       <td class="align-middle">{{ treatment.treatmentType.toUpperCase() }}</td>
+      <td class="align-middle">{{ treatment.isActive }}</td>
       <div class="d-flex justify-content-end">
         <button class="btn btn-xs btn-light" @click="editClick(treatment)" v-if="showEditButton">
           <i class="bi bi-xs bi-pencil"></i>

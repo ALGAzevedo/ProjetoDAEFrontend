@@ -124,11 +124,20 @@ const routes = [
         props: true
     },
     {
-        path: '/PRCs/:prcCode',
+        path: '/PRCs/:username/new',
+        name: 'NewPrc',
+        component: PrcDetail,
+        props: route => ({
+            username: route.params.username,
+        })
+    },
+    {
+        path: '/PRCs/:prcCode/:username',
         name: 'EditPrc',
         component: PrcDetail,
         props: route => ({
-            prcCode: route.params.prcCode
+            prcCode: parseInt(route.params.prcCode),
+            username: route.params.username,
         })
     },
     {
