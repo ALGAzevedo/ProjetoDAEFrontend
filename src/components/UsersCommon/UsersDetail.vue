@@ -257,16 +257,16 @@ export default {
         flag = false
       }
 
-      if(this.showInstitutionalEmail && (!this.editingUser.showInstitutionalPhone || this.editingUser.showInstitutionalPhone.trim().length == 0))
-      {
-        this.errorsMsg['institutionalPhone']='InstitutionalPhone cant be null'
-        flag = false
-      }
-      if(this.showInstitutionalPhoneNumber && (!this.editingUser.showInstitutionalEmail || this.editingUser.showInstitutionalEmail.trim().length == 0))
-      {
-        this.errorsMsg['institutionalEmail']='InstitutionalEmail cant be null'
-        flag = false
-      }
+      // if(this.showInstitutionalEmail && (!this.editingUser.showInstitutionalPhone || this.editingUser.showInstitutionalPhone.trim().length == 0))
+      // {
+      //   this.errorsMsg['institutionalPhone']='InstitutionalPhone cant be null'
+      //   flag = false
+      // }
+      // if(this.showInstitutionalPhoneNumber && (!this.editingUser.showInstitutionalEmail || this.editingUser.showInstitutionalEmail.trim().length == 0))
+      // {
+      //   this.errorsMsg['institutionalEmail']='InstitutionalEmail cant be null'
+      //   flag = false
+      // }
       return flag
     },
     save() {
