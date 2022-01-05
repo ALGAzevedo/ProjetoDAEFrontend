@@ -257,6 +257,19 @@ export default {
         flag = false
       }
 
+      if(this.showInstitutionalEmail && (!this.editingUser.institutionalPhone|| this.editingUser.institutionalPhone.trim().length == 0))
+      {
+        this.errorsMsg['institutionalPhone']='InstitutionalPhone cant be null'
+        flag = false
+      }
+      if(this.showInstitutionalPhoneNumber && (!this.editingUser.institutionalEmail || this.editingUser.institutionalEmail.trim().length == 0))
+      {
+        this.errorsMsg['institutionalEmail']='InstitutionalEmail cant be null'
+        flag = false
+      }
+
+
+
       // if(this.showInstitutionalEmail && (!this.editingUser.showInstitutionalPhone || this.editingUser.showInstitutionalPhone.trim().length == 0))
       // {
       //   this.errorsMsg['institutionalPhone']='InstitutionalPhone cant be null'
