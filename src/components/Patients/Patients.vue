@@ -16,6 +16,7 @@
   <UsersFiltersBody
       :show-institutional-email="false"
       :show-institutional-phone="false"
+      @add="addPatient"
       @filter="filter"
     >
   </UsersFiltersBody>
